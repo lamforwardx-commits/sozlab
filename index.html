@@ -2,418 +2,457 @@
 <html lang="az">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SözLab – Dilini İnkişaf Etdir</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>SözLab – Azərbaycan Dili Platforması</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet">
 <style>
-:root {
-  --bg: #0a0a0f;
-  --bg2: #111118;
-  --card: #16161f;
-  --card2: #1c1c28;
-  --border: #2a2a3a;
-  --border2: #333348;
-  --text: #e8e8f0;
-  --muted: #6b6b85;
-  --gold: #f0c040;
-  --gold2: #c89820;
-  --teal: #40d9c0;
-  --purple: #9B72CF;
-  --purple2: #7a55a8;
-  --red: #e05555;
-  --green: #40c080;
-  --font-head: 'Syne', sans-serif;
-  --font-body: 'DM Sans', sans-serif;
-  --radius: 16px;
-  --radius-sm: 10px;
+:root{
+  --bg:#0a0a0f;--bg2:#111118;--card:#16161f;--card2:#1c1c28;
+  --border:#2a2a3a;--border2:#333348;--text:#e8e8f0;--muted:#6b6b85;
+  --gold:#f0c040;--gold2:#c89820;--teal:#40d9c0;--purple:#9B72CF;
+  --purple2:#7a55a8;--red:#e05555;--green:#40c080;
+  --font-head:'Syne',sans-serif;--font-body:'DM Sans',sans-serif;
+  --radius:16px;--radius-sm:10px;
+  --nav-h:64px;
 }
-*{box-sizing:border-box;margin:0;padding:0}
-html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--font-body);overflow:hidden}
-
-/* ── CANVAS BG ── */
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{height:100%;overflow:hidden}
+body{height:100%;background:var(--bg);color:var(--text);font-family:var(--font-body);overflow:hidden;font-size:16px}
+button{font-family:var(--font-body)}
+input,textarea{font-family:var(--font-body)}
 #bgCanvas{position:fixed;inset:0;z-index:0;pointer-events:none}
 
 /* ── APP SHELL ── */
-.app{position:relative;z-index:1;height:100vh;display:flex;flex-direction:column}
-.screen{display:none;flex:1;overflow:hidden}
-.screen.active{display:flex;flex-direction:column}
+.app{position:relative;z-index:1;height:100%;display:flex;flex-direction:column}
+.screen{display:none;flex:1;overflow:hidden;flex-direction:column}
+.screen.active{display:flex}
 
 /* ── LOADING ── */
-#loadingOverlay{
-  position:fixed;inset:0;z-index:999;background:var(--bg);
-  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;
-  transition:opacity .4s;
-}
+#loadingOverlay{position:fixed;inset:0;z-index:9999;background:var(--bg);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;transition:opacity .4s}
 #loadingOverlay.hidden{opacity:0;pointer-events:none}
 .load-logo{font-family:var(--font-head);font-size:2.5rem;font-weight:800;
   background:linear-gradient(135deg,var(--gold),var(--teal));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
 .load-spin{width:36px;height:36px;border:3px solid var(--border2);border-top-color:var(--gold);border-radius:50%;animation:spin .7s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 
-/* ── LOGIN SCREEN ── */
-#loginScreen{
-  align-items:center;justify-content:center;padding:20px;
-  background:radial-gradient(ellipse at 30% 20%, #1a1030 0%, transparent 60%),
-             radial-gradient(ellipse at 70% 80%, #0a2020 0%, transparent 60%);
-}
-.login-card{
-  width:100%;max-width:420px;background:var(--card);border:1px solid var(--border);
-  border-radius:24px;padding:36px 32px;display:flex;flex-direction:column;gap:14px;
-  box-shadow:0 24px 80px #0008;position:relative;overflow:hidden;
-}
-.login-card::before{
-  content:'';position:absolute;inset:0;
-  background:radial-gradient(ellipse at 50% 0%, #9B72CF18 0%, transparent 60%);
-  pointer-events:none;
-}
-.login-logo{font-family:var(--font-head);font-size:2rem;font-weight:800;text-align:center;
+/* ── LOGIN ── */
+#loginScreen{align-items:center;justify-content:center;padding:20px;overflow-y:auto;
+  background:radial-gradient(ellipse at 30% 20%,#1a1030 0%,transparent 60%),
+             radial-gradient(ellipse at 70% 80%,#0a2020 0%,transparent 60%)}
+.login-card{width:100%;max-width:400px;background:var(--card);border:1px solid var(--border);
+  border-radius:24px;padding:32px 28px;display:flex;flex-direction:column;gap:14px;
+  box-shadow:0 24px 80px #0008;position:relative;overflow:hidden}
+.login-card::before{content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at 50% 0%,#9B72CF18 0%,transparent 60%);pointer-events:none}
+.login-logo{font-family:var(--font-head);font-size:1.9rem;font-weight:800;text-align:center;
   background:linear-gradient(135deg,var(--gold),var(--teal));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.login-tagline{text-align:center;color:var(--muted);font-size:.85rem;margin-top:-6px}
+.login-tagline{text-align:center;color:var(--muted);font-size:.82rem;margin-top:-6px}
 .feat-row{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
 .feat-pill{background:var(--card2);border:1px solid var(--border);border-radius:20px;
-  padding:5px 12px;font-size:.75rem;color:var(--muted)}
+  padding:5px 11px;font-size:.72rem;color:var(--muted)}
 .login-tabs{display:flex;background:var(--bg2);border-radius:var(--radius-sm);padding:4px;gap:4px}
 .login-tab{flex:1;padding:9px;border:none;background:transparent;color:var(--muted);
-  border-radius:8px;cursor:pointer;font-family:var(--font-body);font-size:.9rem;transition:.2s}
-.login-tab.active{background:var(--card2);color:var(--text);font-weight:600}
-.login-input{
-  padding:13px 16px;background:var(--bg2);border:1px solid var(--border);
-  border-radius:var(--radius-sm);color:var(--text);font-size:.95rem;font-family:var(--font-body);
-  outline:none;transition:.2s;
-}
+  border-radius:8px;cursor:pointer;font-size:.88rem;transition:.2s;font-weight:500}
+.login-tab.active{background:var(--card2);color:var(--text);font-weight:700}
+.login-input{padding:13px 16px;background:var(--bg2);border:1px solid var(--border);
+  border-radius:var(--radius-sm);color:var(--text);font-size:.95rem;outline:none;transition:.2s;width:100%}
 .login-input:focus{border-color:var(--purple);background:var(--card2)}
 .login-input::placeholder{color:var(--muted)}
-.btn-primary{
-  padding:14px;background:linear-gradient(135deg,var(--gold),var(--gold2));
+.btn-primary{padding:14px;background:linear-gradient(135deg,var(--gold),var(--gold2));
   border:none;border-radius:var(--radius-sm);color:#111;font-weight:700;
-  font-size:1rem;font-family:var(--font-head);cursor:pointer;transition:.15s;
-}
+  font-size:1rem;font-family:var(--font-head);cursor:pointer;transition:.15s;width:100%}
 .btn-primary:hover{filter:brightness(1.1)}
 .btn-primary:disabled{opacity:.5;cursor:not-allowed}
-.login-divider{text-align:center;color:var(--muted);font-size:.8rem;position:relative}
-.login-divider::before,.login-divider::after{
-  content:'';position:absolute;top:50%;width:40%;height:1px;background:var(--border);
-}
+.login-divider{text-align:center;color:var(--muted);font-size:.78rem;position:relative}
+.login-divider::before,.login-divider::after{content:'';position:absolute;top:50%;width:38%;height:1px;background:var(--border)}
 .login-divider::before{left:0}.login-divider::after{right:0}
-.btn-admin{
-  padding:13px;background:transparent;border:1px solid var(--purple);
+.btn-admin{padding:12px;background:transparent;border:1px solid var(--purple);
   border-radius:var(--radius-sm);color:var(--purple);font-weight:600;
-  font-size:.95rem;font-family:var(--font-body);cursor:pointer;transition:.2s;
-}
+  font-size:.92rem;cursor:pointer;transition:.2s;width:100%}
 .btn-admin:hover{background:var(--purple);color:#fff}
 .login-stats{display:flex;justify-content:center;gap:0;margin-top:4px}
 .l-stat{flex:1;text-align:center}
 .l-stat .num{font-family:var(--font-head);font-size:1.3rem;font-weight:700;color:var(--gold)}
-.l-stat .lbl{font-size:.7rem;color:var(--muted)}
+.l-stat .lbl{font-size:.68rem;color:var(--muted)}
 .l-div{width:1px;background:var(--border);margin:4px 0}
 
 /* ── MAIN DASHBOARD ── */
-#mainDashboard{flex-direction:column}
-.top-bar{
-  display:flex;align-items:center;padding:14px 20px;gap:12px;
-  background:var(--card);border-bottom:1px solid var(--border);flex-shrink:0;
-}
-.top-logo{font-family:var(--font-head);font-weight:800;font-size:1.2rem;
-  background:linear-gradient(135deg,var(--gold),var(--teal));-webkit-background-clip:text;-webkit-text-fill-color:transparent;
-  flex:1;
-}
-.top-stat{display:flex;align-items:center;gap:5px;font-size:.85rem;color:var(--muted)}
+.top-bar{display:flex;align-items:center;padding:12px 16px;gap:10px;
+  background:var(--card);border-bottom:1px solid var(--border);flex-shrink:0;min-height:54px}
+.top-logo{font-family:var(--font-head);font-weight:800;font-size:1.15rem;
+  background:linear-gradient(135deg,var(--gold),var(--teal));-webkit-background-clip:text;-webkit-text-fill-color:transparent;flex:1}
+.top-stat{display:flex;align-items:center;gap:4px;font-size:.82rem;color:var(--muted);
+  background:var(--card2);border:1px solid var(--border);border-radius:20px;padding:4px 10px}
 .top-stat span{color:var(--gold);font-weight:700;font-family:var(--font-head)}
-.avatar-btn{
-  width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--purple),var(--teal));
+.avatar-btn{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--purple),var(--teal));
   border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;
-  font-weight:700;font-size:1rem;color:#fff;font-family:var(--font-head);flex-shrink:0;
-}
-.main-content{flex:1;overflow-y:auto;padding:16px 20px 100px}
-.bottom-nav{
-  display:flex;background:var(--card);border-top:1px solid var(--border);
-  padding:8px 4px;flex-shrink:0;position:sticky;bottom:0;
-}
-.nav-btn{
-  flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;
-  padding:6px 2px;border:none;background:transparent;color:var(--muted);
-  cursor:pointer;transition:.15s;border-radius:var(--radius-sm);font-family:var(--font-body);
-}
+  font-weight:700;font-size:.95rem;color:#fff;font-family:var(--font-head);flex-shrink:0}
+.main-content{flex:1;overflow-y:auto;padding:14px 16px 80px;-webkit-overflow-scrolling:touch}
+.bottom-nav{display:flex;background:var(--card);border-top:1px solid var(--border);
+  padding:6px 4px;flex-shrink:0;position:sticky;bottom:0;
+  padding-bottom:max(6px, env(safe-area-inset-bottom))}
+.nav-btn{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;
+  padding:5px 2px;border:none;background:transparent;color:var(--muted);
+  cursor:pointer;transition:.15s;border-radius:var(--radius-sm);min-width:0}
 .nav-btn.active{color:var(--gold)}
-.nav-btn .icon{font-size:1.2rem}
-.nav-btn .lbl{font-size:.65rem}
+.nav-btn .icon{font-size:1.15rem}
+.nav-btn .lbl{font-size:.58rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;width:100%;text-align:center}
 
 /* ── VIEWS ── */
 .view{display:none}.view.active{display:block}
 
-/* ── HOME VIEW ── */
-.section-title{font-family:var(--font-head);font-size:1rem;font-weight:700;margin-bottom:12px;color:var(--text)}
-.daily-card{
-  background:linear-gradient(135deg,#1a1028,#0f2020);
-  border:1px solid var(--border2);border-radius:var(--radius);padding:20px;
-  margin-bottom:16px;position:relative;overflow:hidden;
-}
-.daily-card::before{
-  content:'📖';position:absolute;right:16px;top:16px;font-size:2.5rem;opacity:.15;
-}
-.daily-label{font-size:.7rem;color:var(--teal);text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px}
-.daily-word{font-family:var(--font-head);font-size:1.6rem;font-weight:800;color:var(--text);margin-bottom:4px}
-.daily-meaning{color:var(--muted);font-size:.9rem;margin-bottom:12px}
-.daily-tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
-.tag{background:var(--card2);border:1px solid var(--border);border-radius:20px;
-  padding:3px 10px;font-size:.72rem;color:var(--muted)}
-.btn-sm{
-  padding:9px 18px;border:none;border-radius:var(--radius-sm);cursor:pointer;
-  font-family:var(--font-body);font-size:.85rem;font-weight:600;transition:.15s;
-}
-.btn-teal{background:var(--teal);color:#0a1a18}
-.btn-teal:hover{filter:brightness(1.1)}
-.announce-card{
-  background:var(--card);border:1px solid var(--border2);border-radius:var(--radius);
-  padding:14px 16px;margin-bottom:10px;border-left:3px solid var(--gold);
-}
+/* ── SECTION TITLE ── */
+.section-title{font-family:var(--font-head);font-size:.95rem;font-weight:700;margin-bottom:12px;color:var(--text);
+  display:flex;align-items:center;gap:8px}
+
+/* ── HOME ── */
+.daily-card{background:linear-gradient(135deg,#1a1028,#0f2020);
+  border:1px solid var(--border2);border-radius:var(--radius);padding:18px;
+  margin-bottom:14px;position:relative;overflow:hidden}
+.daily-card::before{content:'📖';position:absolute;right:14px;top:14px;font-size:2.2rem;opacity:.12}
+.daily-label{font-size:.68rem;color:var(--teal);text-transform:uppercase;letter-spacing:.1em;margin-bottom:5px}
+.daily-word{font-family:var(--font-head);font-size:1.5rem;font-weight:800;color:var(--text);margin-bottom:3px}
+.daily-meaning{color:var(--muted);font-size:.88rem;margin-bottom:10px}
+.daily-tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.tag{background:var(--card2);border:1px solid var(--border);border-radius:20px;padding:3px 10px;font-size:.7rem;color:var(--muted)}
+.tag.syn{border-color:#2a3a2a;color:var(--green)}
+.tag.ant{border-color:#3a2a2a;color:var(--red)}
+
+/* ── XP BAR ── */
+.xp-bar-wrap{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px;margin-bottom:14px}
+.xp-row{display:flex;justify-content:space-between;margin-bottom:7px;align-items:center}
+.xp-label{font-size:.82rem;color:var(--muted)}
+.xp-val{font-family:var(--font-head);font-weight:700;color:var(--gold)}
+.xp-bar{height:8px;background:var(--border);border-radius:4px;overflow:hidden}
+.xp-fill{height:100%;background:linear-gradient(90deg,var(--gold2),var(--gold));border-radius:4px;transition:width .5s}
+.stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px}
+.stat-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:12px;text-align:center}
+.stat-card .val{font-family:var(--font-head);font-size:1.3rem;font-weight:800;color:var(--gold)}
+.stat-card .lbl{font-size:.68rem;color:var(--muted);margin-top:2px}
+
+/* ── ANNOUNCE ── */
+.announce-card{background:var(--card);border:1px solid var(--border2);border-radius:var(--radius);
+  padding:13px 15px;margin-bottom:9px;border-left:3px solid var(--gold)}
 .announce-card.success{border-left-color:var(--green)}
 .announce-card.warning{border-left-color:#e09040}
 .announce-card.promo{border-left-color:var(--purple)}
-.announce-title{font-weight:600;font-size:.9rem;margin-bottom:4px}
-.announce-body{color:var(--muted);font-size:.82rem;line-height:1.5}
-.announce-date{color:var(--muted);font-size:.7rem;margin-top:6px}
+.announce-title{font-weight:600;font-size:.88rem;margin-bottom:4px}
+.announce-body{color:var(--muted);font-size:.8rem;line-height:1.5}
+.announce-date{color:var(--muted);font-size:.68rem;margin-top:5px}
 
-/* ── XP BAR ── */
-.xp-bar-wrap{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
-  padding:16px;margin-bottom:16px}
-.xp-row{display:flex;justify-content:space-between;margin-bottom:8px;align-items:center}
-.xp-label{font-size:.85rem;color:var(--muted)}
-.xp-val{font-family:var(--font-head);font-weight:700;color:var(--gold)}
-.xp-bar{height:8px;background:var(--border);border-radius:4px;overflow:hidden}
-.xp-fill{height:100%;background:linear-gradient(90deg,var(--gold2),var(--gold));border-radius:4px;transition:width .5s ease}
-.stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}
-.stat-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
-  padding:14px;text-align:center}
-.stat-card .val{font-family:var(--font-head);font-size:1.4rem;font-weight:800;color:var(--gold)}
-.stat-card .lbl{font-size:.7rem;color:var(--muted);margin-top:2px}
+/* ── ALPHABET SECTION ── */
+.alpha-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:14px}
+.alpha-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;cursor:pointer}
+.alpha-header h3{font-family:var(--font-head);font-size:.95rem;font-weight:700}
+.alpha-toggle{color:var(--muted);font-size:1.2rem;transition:.2s}
+.alpha-toggle.open{transform:rotate(180deg)}
+.alpha-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(52px,1fr));gap:6px}
+.alpha-letter{background:var(--card2);border:1px solid var(--border);border-radius:10px;
+  padding:10px 6px;text-align:center;cursor:pointer;transition:.2s}
+.alpha-letter:hover,.alpha-letter.active{border-color:var(--gold);background:#1e1e10}
+.alpha-az{font-family:var(--font-head);font-size:1.1rem;font-weight:700;color:var(--gold)}
+.alpha-name{font-size:.58rem;color:var(--muted);margin-top:1px}
+.alpha-detail{margin-top:12px;padding:14px;background:var(--bg2);border-radius:var(--radius-sm);display:none}
+.alpha-detail.show{display:block}
+.alpha-d-letter{font-family:var(--font-head);font-size:2rem;font-weight:800;color:var(--gold);margin-bottom:6px}
+.alpha-d-info{font-size:.85rem;color:var(--muted);line-height:1.6}
+.alpha-d-words{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.alpha-word-pill{background:var(--card2);border:1px solid var(--border);border-radius:20px;
+  padding:4px 12px;font-size:.75rem;color:var(--text)}
 
-/* ── GAMES VIEW ── */
-.games-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px}
-.game-card{
-  background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
-  padding:20px 14px;text-align:center;cursor:pointer;transition:.2s;
-}
-.game-card:hover{border-color:var(--purple);transform:translateY(-2px)}
-.game-icon{font-size:2rem;margin-bottom:8px}
-.game-name{font-family:var(--font-head);font-weight:700;font-size:.9rem;margin-bottom:4px}
-.game-desc{font-size:.75rem;color:var(--muted)}
-.game-xp{font-size:.7rem;color:var(--gold);margin-top:6px;font-weight:600}
+/* ── GAMES ── */
+.games-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:16px}
+.game-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+  padding:18px 12px;text-align:center;cursor:pointer;transition:.2s;position:relative;overflow:hidden}
+.game-card:hover,.game-card:active{border-color:var(--purple);transform:translateY(-2px)}
+.game-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(155,114,207,.05),transparent);opacity:0;transition:.3s}
+.game-card:hover::before{opacity:1}
+.game-icon{font-size:1.9rem;margin-bottom:7px}
+.game-name{font-family:var(--font-head);font-weight:700;font-size:.88rem;margin-bottom:3px}
+.game-desc{font-size:.72rem;color:var(--muted)}
+.game-xp{font-size:.68rem;color:var(--gold);margin-top:5px;font-weight:600}
+.game-difficulty{position:absolute;top:8px;right:8px;font-size:.6rem;
+  background:var(--card2);border:1px solid var(--border);border-radius:20px;padding:2px 7px;color:var(--muted)}
 
-/* QUIZ */
-.quiz-box{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px}
-.quiz-q{font-size:1.1rem;font-weight:600;margin-bottom:18px;line-height:1.5}
-.quiz-opts{display:flex;flex-direction:column;gap:10px}
-.quiz-opt{
-  padding:12px 16px;background:var(--card2);border:1px solid var(--border);
+/* ── GAME AREA ── */
+.game-header{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.btn-outline{padding:9px 16px;background:transparent;border:1px solid var(--border2);
+  border-radius:var(--radius-sm);color:var(--text);cursor:pointer;transition:.15s;font-size:.85rem;white-space:nowrap}
+.btn-outline:hover{border-color:var(--text)}
+.game-title-bar{font-family:var(--font-head);font-size:1rem;font-weight:700}
+.game-progress{flex:1;display:flex;align-items:center;gap:8px;justify-content:flex-end}
+.game-prog-text{font-size:.75rem;color:var(--muted)}
+.game-prog-bar{width:60px;height:5px;background:var(--border);border-radius:3px;overflow:hidden}
+.game-prog-fill{height:100%;background:var(--gold);border-radius:3px;transition:width .3s}
+
+.quiz-box{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:18px}
+.quiz-q{font-size:1.05rem;font-weight:600;margin-bottom:16px;line-height:1.5}
+.quiz-word-big{font-family:var(--font-head);font-size:1.6rem;font-weight:800;color:var(--gold);margin-bottom:6px}
+.quiz-hint{font-size:.82rem;color:var(--muted);margin-bottom:14px}
+.quiz-opts{display:flex;flex-direction:column;gap:8px}
+.quiz-opt{padding:13px 16px;background:var(--card2);border:1.5px solid var(--border);
   border-radius:var(--radius-sm);cursor:pointer;transition:.2s;font-size:.9rem;text-align:left;
-  color:var(--text);font-family:var(--font-body);
-}
-.quiz-opt:hover{border-color:var(--purple)}
-.quiz-opt.correct{background:#1a3a2a;border-color:var(--green);color:var(--green)}
-.quiz-opt.wrong{background:#3a1a1a;border-color:var(--red);color:var(--red)}
-.quiz-result{text-align:center;padding:20px;font-size:1.1rem;font-weight:600}
+  color:var(--text);position:relative;overflow:hidden}
+.quiz-opt:hover:not(:disabled){border-color:var(--purple);background:#1a1a28}
+.quiz-opt.correct{background:#0a2a1a;border-color:var(--green);color:var(--green)}
+.quiz-opt.wrong{background:#2a0a0a;border-color:var(--red);color:var(--red)}
+.quiz-opt:disabled{cursor:default}
+.quiz-result{text-align:center;padding:24px;font-size:1.05rem;font-weight:600;line-height:1.8}
+.quiz-result .score{font-family:var(--font-head);font-size:2rem;font-weight:800;color:var(--gold)}
+.quiz-result .grade{font-size:.85rem;color:var(--muted);margin-top:6px}
 
-/* FILL BLANK */
-.fill-input{
-  width:100%;padding:12px 14px;background:var(--bg2);border:1px solid var(--border2);
-  border-radius:var(--radius-sm);color:var(--text);font-size:1rem;font-family:var(--font-body);
-  outline:none;margin:12px 0;
-}
+.fill-input{width:100%;padding:13px 14px;background:var(--bg2);border:1.5px solid var(--border2);
+  border-radius:var(--radius-sm);color:var(--text);font-size:1rem;outline:none;margin:12px 0}
 .fill-input:focus{border-color:var(--teal)}
 
-/* ── VOCAB VIEW ── */
-.vocab-search{
-  width:100%;padding:12px 14px;background:var(--card);border:1px solid var(--border);
-  border-radius:var(--radius-sm);color:var(--text);font-size:.9rem;font-family:var(--font-body);
-  outline:none;margin-bottom:12px;
-}
+.match-container{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.match-col-title{font-size:.78rem;color:var(--muted);text-align:center;margin-bottom:8px;font-weight:600}
+.match-items{display:flex;flex-direction:column;gap:7px}
+.match-item{padding:11px;background:var(--card2);border:1.5px solid var(--border);
+  border-radius:var(--radius-sm);cursor:pointer;transition:.2s;font-size:.85rem;text-align:center;
+  min-height:44px;display:flex;align-items:center;justify-content:center}
+.match-item:hover:not(.matched):not(.wrong-flash){border-color:var(--purple)}
+.match-item.selected{border-color:var(--gold);background:#1e1e0a}
+.match-item.matched{background:#0a2a1a;border-color:var(--green);color:var(--green);opacity:.7;pointer-events:none}
+.match-item.wrong-flash{background:#2a0a0a;border-color:var(--red);animation:shake .3s}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+
+.flash-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+  padding:32px 20px;text-align:center;cursor:pointer;min-height:160px;
+  display:flex;align-items:center;justify-content:center;flex-direction:column;
+  user-select:none;transition:transform .15s;position:relative;overflow:hidden}
+.flash-card:active{transform:scale(.97)}
+.flash-card::after{content:'Çevirmək üçün toxun';position:absolute;bottom:12px;font-size:.7rem;color:var(--muted)}
+.flash-front{font-family:var(--font-head);font-size:2rem;font-weight:800;color:var(--gold)}
+.flash-back{font-size:1.1rem;color:var(--teal);font-weight:600}
+.flash-label{font-size:.72rem;color:var(--muted);margin-bottom:10px}
+.flash-actions{display:flex;gap:10px;margin-top:14px}
+.flash-btn{flex:1;padding:13px;border:none;border-radius:var(--radius-sm);cursor:pointer;font-weight:700;font-size:.9rem;transition:.15s}
+.flash-btn.no{background:#2a1010;color:var(--red);border:1.5px solid var(--red)}
+.flash-btn.yes{background:#0a2a1a;color:var(--green);border:1.5px solid var(--green)}
+
+.btn-sm{padding:10px 18px;border:none;border-radius:var(--radius-sm);cursor:pointer;
+  font-size:.85rem;font-weight:600;transition:.15s}
+.btn-teal{background:var(--teal);color:#0a1a18}
+.btn-teal:hover{filter:brightness(1.1)}
+
+/* ── VOCAB ── */
+.vocab-search{width:100%;padding:12px 14px;background:var(--card);border:1px solid var(--border);
+  border-radius:var(--radius-sm);color:var(--text);font-size:.9rem;outline:none;margin-bottom:12px}
 .vocab-search:focus{border-color:var(--purple)}
-.word-card{
-  background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
-  padding:14px 16px;margin-bottom:10px;cursor:pointer;transition:.2s;
-}
+.vocab-filter{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.vf-btn{padding:5px 12px;background:var(--card2);border:1px solid var(--border);border-radius:20px;
+  color:var(--muted);cursor:pointer;font-size:.75rem;transition:.15s}
+.vf-btn.active{background:var(--purple);border-color:var(--purple);color:#fff}
+.word-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+  padding:14px 16px;margin-bottom:9px;cursor:pointer;transition:.2s}
 .word-card:hover{border-color:var(--border2)}
 .word-card.learned{border-left:3px solid var(--green)}
 .word-en{font-family:var(--font-head);font-weight:700;font-size:1rem}
-.word-az{color:var(--muted);font-size:.85rem;margin-top:2px}
+.word-az{color:var(--muted);font-size:.83rem;margin-top:2px}
 .word-detail{margin-top:10px;padding-top:10px;border-top:1px solid var(--border);display:none}
 .word-card.open .word-detail{display:block}
-.word-ex{font-size:.82rem;color:var(--muted);font-style:italic;margin-bottom:8px}
-.btn-learn{
-  padding:7px 14px;background:var(--green);border:none;border-radius:8px;
-  color:#0a1a10;font-weight:600;font-size:.8rem;cursor:pointer;
-}
+.word-ex{font-size:.8rem;color:var(--muted);font-style:italic;margin-bottom:10px;line-height:1.5}
+.word-ex-az{font-size:.78rem;color:var(--purple);margin-bottom:10px;line-height:1.5}
+.btn-learn{padding:7px 14px;background:var(--green);border:none;border-radius:8px;
+  color:#0a1a10;font-weight:600;font-size:.78rem;cursor:pointer}
 .btn-learned{background:var(--card2);border:1px solid var(--green);color:var(--green)}
 
-/* ── CREATIVE VIEW ── */
-.story-prompt{
-  background:linear-gradient(135deg,#1a1028,#0f1a28);border:1px solid var(--border2);
-  border-radius:var(--radius);padding:16px;margin-bottom:14px;
-}
-.story-prompt-label{font-size:.7rem;color:var(--purple);text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px}
-.story-prompt-text{font-size:.95rem;font-weight:500}
-textarea.story-area{
-  width:100%;min-height:130px;padding:14px;background:var(--card);border:1px solid var(--border);
-  border-radius:var(--radius-sm);color:var(--text);font-family:var(--font-body);font-size:.9rem;
-  outline:none;resize:vertical;line-height:1.6;margin-bottom:10px;
-}
+/* ── CREATIVE ── */
+.story-prompt{background:linear-gradient(135deg,#1a1028,#0f1a28);border:1px solid var(--border2);
+  border-radius:var(--radius);padding:15px;margin-bottom:13px}
+.story-prompt-label{font-size:.68rem;color:var(--purple);text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px}
+.story-prompt-text{font-size:.92rem;font-weight:500;line-height:1.5}
+textarea.story-area{width:100%;min-height:120px;padding:13px;background:var(--card);border:1px solid var(--border);
+  border-radius:var(--radius-sm);color:var(--text);font-size:.9rem;outline:none;resize:vertical;line-height:1.6;margin-bottom:10px}
 textarea.story-area:focus{border-color:var(--purple)}
-.story-card{
-  background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
-  padding:14px 16px;margin-bottom:10px;
-}
-.story-meta{display:flex;align-items:center;gap:10px;margin-bottom:8px}
-.story-avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--purple),var(--teal));
-  display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.85rem;flex-shrink:0}
-.story-author{font-weight:600;font-size:.85rem}
-.story-date{font-size:.72rem;color:var(--muted);margin-left:auto}
-.story-text{font-size:.88rem;line-height:1.6;color:var(--text)}
-.story-footer{display:flex;justify-content:flex-end;margin-top:8px}
-.like-btn{background:transparent;border:1px solid var(--border);border-radius:20px;
-  padding:4px 12px;color:var(--muted);cursor:pointer;font-size:.8rem;transition:.15s}
-.like-btn:hover{border-color:var(--red);color:var(--red)}
+.char-count{font-size:.72rem;color:var(--muted);margin-top:-8px;margin-bottom:10px;text-align:right}
+.story-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+  padding:14px 16px;margin-bottom:9px}
+.story-meta{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.story-avatar{width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--purple),var(--teal));
+  display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700;flex-shrink:0}
+.story-author{font-weight:600;font-size:.82rem}
+.story-date{font-size:.68rem;color:var(--muted);margin-left:auto}
+.story-text{font-size:.85rem;color:var(--text);line-height:1.6}
 
-/* ── LEADERBOARD VIEW ── */
-.lb-row{
-  display:flex;align-items:center;gap:12px;padding:12px 14px;
-  background:var(--card);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:8px;
-}
-.lb-row.me{border-color:var(--gold);background:#1a1508}
-.lb-rank{font-family:var(--font-head);font-weight:800;font-size:1rem;width:28px;text-align:center;color:var(--muted)}
-.lb-rank.top1{color:#FFD700}.lb-rank.top2{color:#C0C0C0}.lb-rank.top3{color:#CD7F32}
-.lb-avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--purple),var(--teal));
-  display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.9rem;flex-shrink:0}
-.lb-name{flex:1;font-weight:600;font-size:.9rem}
-.lb-xp{font-family:var(--font-head);font-weight:700;color:var(--gold)}
+/* ── LEADERBOARD ── */
+.lb-row{display:flex;align-items:center;gap:10px;padding:12px 14px;
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius-sm);margin-bottom:7px;transition:.2s}
+.lb-row.me{border-color:var(--gold);background:#1e1e08}
+.lb-rank{min-width:28px;text-align:center;font-family:var(--font-head);font-weight:700;color:var(--muted);font-size:.9rem}
+.lb-rank.top1{font-size:1.2rem}
+.lb-rank.top2,.lb-rank.top3{font-size:1.1rem}
+.lb-avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--purple),var(--teal));
+  display:flex;align-items:center;justify-content:center;font-size:.85rem;font-weight:700;flex-shrink:0}
+.lb-name{font-size:.88rem;font-weight:600}
+.lb-sub{font-size:.7rem;color:var(--muted)}
+.lb-xp{font-family:var(--font-head);font-size:.95rem;font-weight:700;color:var(--gold);margin-left:auto}
 
-/* ── PROFILE VIEW ── */
-.profile-header{
-  background:linear-gradient(135deg,#1a1028,#0f2020);border:1px solid var(--border);
-  border-radius:var(--radius);padding:24px;text-align:center;margin-bottom:16px;
-}
-.profile-big-av{
-  width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,var(--purple),var(--teal));
-  display:flex;align-items:center;justify-content:center;font-size:1.8rem;font-weight:800;
-  color:#fff;margin:0 auto 12px;font-family:var(--font-head);
-}
-.profile-name{font-family:var(--font-head);font-size:1.3rem;font-weight:800}
-.profile-level{color:var(--gold);font-size:.85rem;margin-top:4px}
-.profile-section{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:12px}
-.profile-section h3{font-family:var(--font-head);font-size:.9rem;margin-bottom:12px;color:var(--muted)}
-.profile-input{
-  width:100%;padding:11px 14px;background:var(--bg2);border:1px solid var(--border);
-  border-radius:var(--radius-sm);color:var(--text);font-family:var(--font-body);font-size:.9rem;
-  outline:none;margin-bottom:10px;
-}
+/* ── PROFILE ── */
+.profile-header{background:linear-gradient(135deg,#1a1028,#0a1a20);border:1px solid var(--border2);
+  border-radius:var(--radius);padding:20px;text-align:center;margin-bottom:14px}
+.profile-big-av{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,var(--purple),var(--teal));
+  display:flex;align-items:center;justify-content:center;font-family:var(--font-head);font-size:1.6rem;font-weight:800;
+  margin:0 auto 10px}
+.profile-name{font-family:var(--font-head);font-size:1.2rem;font-weight:700}
+.profile-level{color:var(--muted);font-size:.82rem;margin-top:2px}
+.profile-section{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+  padding:16px;margin-bottom:10px}
+.profile-section h3{font-family:var(--font-head);font-size:.9rem;font-weight:700;margin-bottom:12px}
+.profile-input{width:100%;padding:11px 14px;background:var(--bg2);border:1px solid var(--border);
+  border-radius:var(--radius-sm);color:var(--text);font-size:.9rem;outline:none;margin-bottom:10px}
 .profile-input:focus{border-color:var(--purple)}
-.btn-danger{padding:10px 18px;background:transparent;border:1px solid var(--red);
-  border-radius:var(--radius-sm);color:var(--red);cursor:pointer;font-family:var(--font-body);font-size:.85rem}
+.btn-danger{padding:10px 18px;border:1px solid var(--red);background:transparent;color:var(--red);
+  border-radius:var(--radius-sm);cursor:pointer;font-size:.85rem;font-weight:600;transition:.15s}
 .btn-danger:hover{background:var(--red);color:#fff}
-.btn-outline{padding:10px 18px;background:transparent;border:1px solid var(--border2);
-  border-radius:var(--radius-sm);color:var(--text);cursor:pointer;font-family:var(--font-body);font-size:.85rem}
-.btn-outline:hover{border-color:var(--text)}
 
 /* ── AI VIEW ── */
-.ai-chat{display:flex;flex-direction:column;gap:12px;margin-bottom:14px;min-height:200px}
-.ai-msg{max-width:85%;padding:12px 14px;border-radius:14px;font-size:.88rem;line-height:1.6}
-.ai-msg.user{align-self:flex-end;background:var(--purple2);color:#fff;border-bottom-right-radius:4px}
-.ai-msg.bot{align-self:flex-start;background:var(--card2);border:1px solid var(--border);border-bottom-left-radius:4px}
-.ai-input-row{display:flex;gap:8px}
-.ai-input{
-  flex:1;padding:12px 14px;background:var(--card);border:1px solid var(--border);
-  border-radius:var(--radius-sm);color:var(--text);font-family:var(--font-body);font-size:.9rem;outline:none;
-}
+.ai-chat{flex:1;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:10px;
+  max-height:calc(100vh - 280px);min-height:200px;-webkit-overflow-scrolling:touch}
+.ai-msg{max-width:85%;padding:11px 14px;border-radius:var(--radius);font-size:.88rem;line-height:1.6;word-break:break-word}
+.ai-msg.bot{background:var(--card2);border:1px solid var(--border);align-self:flex-start;border-bottom-left-radius:4px}
+.ai-msg.user{background:linear-gradient(135deg,var(--purple2),var(--purple));color:#fff;align-self:flex-end;border-bottom-right-radius:4px}
+.ai-typing{display:flex;gap:4px;align-items:center;padding:4px 0}
+.ai-typing span{width:6px;height:6px;border-radius:50%;background:var(--muted);animation:blink 1s infinite}
+.ai-typing span:nth-child(2){animation-delay:.2s}
+.ai-typing span:nth-child(3){animation-delay:.4s}
+@keyframes blink{0%,80%,100%{opacity:.3}40%{opacity:1}}
+.ai-input-row{display:flex;gap:8px;padding:12px 16px;background:var(--card);border-top:1px solid var(--border);
+  flex-shrink:0}
+.ai-input{flex:1;padding:11px 14px;background:var(--bg2);border:1px solid var(--border);
+  border-radius:var(--radius-sm);color:var(--text);font-size:.9rem;outline:none}
 .ai-input:focus{border-color:var(--purple)}
-.ai-send{padding:12px 16px;background:var(--purple);border:none;border-radius:var(--radius-sm);
-  color:#fff;cursor:pointer;font-size:1rem}
+.ai-send{padding:11px 16px;background:var(--purple);border:none;border-radius:var(--radius-sm);
+  color:#fff;cursor:pointer;font-size:1rem;transition:.15s;flex-shrink:0}
+.ai-send:hover{background:var(--purple2)}
+.ai-chips{display:flex;gap:6px;flex-wrap:wrap;padding:0 16px 10px;flex-shrink:0}
+.ai-chip{padding:6px 12px;background:var(--card2);border:1px solid var(--border);border-radius:20px;
+  font-size:.75rem;color:var(--muted);cursor:pointer;transition:.15s;white-space:nowrap}
+.ai-chip:hover{border-color:var(--purple);color:var(--text)}
 
-/* ── ADMIN SCREEN ── */
-#adminScreen{background:var(--bg2)}
-.admin-bar{
-  display:flex;align-items:center;padding:14px 20px;gap:12px;
-  background:var(--card);border-bottom:1px solid var(--border);
-}
-.admin-title{font-family:var(--font-head);font-weight:800;font-size:1.1rem;flex:1;color:var(--purple)}
-.admin-content{flex:1;overflow-y:auto;padding:16px 20px 80px}
-.admin-tabs{display:flex;gap:8px;margin-bottom:16px;overflow-x:auto;padding-bottom:4px}
-.admin-tab{
-  padding:8px 16px;background:var(--card);border:1px solid var(--border);border-radius:20px;
-  color:var(--muted);cursor:pointer;font-size:.85rem;white-space:nowrap;font-family:var(--font-body);transition:.15s;
-}
-.admin-tab.active{background:var(--purple);border-color:var(--purple);color:#fff}
+/* ── ADMIN ── */
+.admin-bar{display:flex;align-items:center;padding:12px 16px;gap:12px;
+  background:var(--card);border-bottom:1px solid var(--border);flex-shrink:0;flex-wrap:wrap}
+.admin-title{font-family:var(--font-head);font-weight:800;font-size:1.05rem;flex:1}
+.admin-content{flex:1;overflow-y:auto;padding:14px 16px 20px;-webkit-overflow-scrolling:touch}
+
+/* admin tabs as scrollable row */
+.admin-tabs{display:flex;gap:6px;overflow-x:auto;margin-bottom:16px;padding-bottom:4px;
+  scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.admin-tabs::-webkit-scrollbar{display:none}
+.admin-tab{flex-shrink:0;padding:8px 16px;border:none;background:var(--card2);color:var(--muted);
+  border-radius:20px;cursor:pointer;font-size:.8rem;transition:.2s;border:1px solid var(--border)}
+.admin-tab.active{background:var(--purple);border-color:var(--purple);color:#fff;font-weight:600}
+
 .admin-stats-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:16px}
-.admin-stat{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px;text-align:center}
-.admin-stat .val{font-family:var(--font-head);font-size:1.5rem;font-weight:800;color:var(--purple)}
-.admin-stat .lbl{font-size:.72rem;color:var(--muted)}
+.admin-stat{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+  padding:16px;text-align:center}
+.admin-stat .val{font-family:var(--font-head);font-size:1.8rem;font-weight:800;color:var(--gold)}
+.admin-stat .lbl{font-size:.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-top:2px}
+
 .admin-section{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:12px}
-.admin-section h3{font-family:var(--font-head);font-size:.9rem;margin-bottom:12px;color:var(--muted)}
-.admin-input{
-  width:100%;padding:10px 14px;background:var(--bg2);border:1px solid var(--border);
-  border-radius:var(--radius-sm);color:var(--text);font-family:var(--font-body);font-size:.88rem;
-  outline:none;margin-bottom:8px;
-}
+.admin-section h3{font-family:var(--font-head);font-size:.92rem;font-weight:700;margin-bottom:12px}
+.admin-input{width:100%;padding:11px 14px;background:var(--bg2);border:1px solid var(--border);
+  border-radius:var(--radius-sm);color:var(--text);font-size:.88rem;outline:none;margin-bottom:10px;display:block}
 .admin-input:focus{border-color:var(--purple)}
-.type-select{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px}
-.type-btn{padding:5px 12px;background:var(--card2);border:1px solid var(--border);border-radius:20px;
-  color:var(--muted);cursor:pointer;font-size:.78rem;font-family:var(--font-body);transition:.15s}
+.admin-input::placeholder{color:var(--muted)}
+textarea.admin-input{resize:vertical;min-height:80px;line-height:1.5}
+
+.type-select{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.type-btn{padding:6px 13px;background:var(--card2);border:1px solid var(--border);border-radius:20px;
+  color:var(--muted);cursor:pointer;font-size:.75rem;transition:.15s}
 .type-btn.active{background:var(--purple);border-color:var(--purple);color:#fff}
-.admin-user-row{display:flex;align-items:center;gap:10px;padding:10px;background:var(--card2);border-radius:var(--radius-sm);margin-bottom:6px}
-.admin-user-av{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,var(--purple),var(--teal));
-  display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:700;flex-shrink:0}
-.admin-user-name{flex:1;font-size:.85rem;font-weight:600}
-.admin-user-xp{font-size:.78rem;color:var(--gold)}
+
+.admin-user-row{display:flex;align-items:center;gap:10px;padding:11px 13px;
+  background:var(--card2);border-radius:var(--radius-sm);margin-bottom:7px}
+.admin-user-av{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--purple),var(--teal));
+  display:flex;align-items:center;justify-content:center;font-size:.82rem;font-weight:700;flex-shrink:0}
+.admin-user-info{flex:1;min-width:0}
+.admin-user-name{font-size:.85rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.admin-user-sub{font-size:.7rem;color:var(--muted);margin-top:1px}
+.admin-user-xp{font-size:.8rem;color:var(--gold);font-weight:600;white-space:nowrap}
+.admin-badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:.65rem;font-weight:700;
+  margin-left:6px;background:var(--purple);color:#fff}
+.admin-action-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.admin-btn-sm{padding:7px 14px;border:none;border-radius:var(--radius-sm);cursor:pointer;font-size:.78rem;font-weight:600;transition:.15s}
+.admin-btn-del{background:#2a0a0a;color:var(--red);border:1px solid var(--red)}
+.admin-btn-del:hover{background:var(--red);color:#fff}
+.admin-btn-xp{background:#0a2a1a;color:var(--green);border:1px solid var(--green)}
+.admin-btn-xp:hover{background:var(--green);color:#0a1a10}
+.admin-chart{background:var(--card2);border-radius:var(--radius-sm);padding:14px;margin-top:10px}
+.admin-chart-bar-row{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.admin-chart-label{font-size:.72rem;color:var(--muted);min-width:80px;text-align:right}
+.admin-chart-bar{flex:1;height:20px;background:var(--border);border-radius:4px;overflow:hidden}
+.admin-chart-fill{height:100%;border-radius:4px;transition:width .8s}
+.admin-chart-val{font-size:.72rem;color:var(--gold);min-width:32px;font-weight:600}
+.admin-word-editor{display:grid;gap:10px}
+.admin-word-list{max-height:300px;overflow-y:auto;margin-top:10px}
+.admin-word-item{display:flex;align-items:center;gap:8px;padding:9px 12px;
+  background:var(--card2);border-radius:var(--radius-sm);margin-bottom:6px}
+.admin-word-item .en{font-weight:600;font-size:.85rem;flex:1}
+.admin-word-item .az{font-size:.8rem;color:var(--muted);flex:1}
+.admin-word-del{background:none;border:none;color:var(--red);cursor:pointer;font-size:1.1rem;padding:4px}
 
 /* ── TOAST ── */
-#toast{
-  position:fixed;bottom:90px;left:50%;transform:translateX(-50%) translateY(20px);
-  background:var(--card2);border:1px solid var(--border2);color:var(--text);
-  padding:10px 20px;border-radius:20px;font-size:.85rem;opacity:0;
-  transition:.3s;pointer-events:none;z-index:999;white-space:nowrap;
-  box-shadow:0 8px 32px #0008;
-}
+#toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(20px);
+  background:var(--card2);border:1.5px solid var(--border2);color:var(--text);
+  padding:10px 22px;border-radius:22px;font-size:.84rem;opacity:0;
+  transition:.3s;pointer-events:none;z-index:9998;white-space:nowrap;
+  box-shadow:0 8px 32px #0008;max-width:90vw;text-align:center}
 #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
 /* ── SCROLLBAR ── */
-::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:transparent}
 ::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px}
 
-@media(max-width:480px){
-  .login-card{padding:28px 20px}
-  .games-grid{grid-template-columns:1fr 1fr}
+/* ── RESPONSIVE ── */
+@media(max-width:380px){
+  .games-grid{grid-template-columns:repeat(2,1fr)}
+  .admin-stats-grid{grid-template-columns:repeat(2,1fr)}
+  .nav-btn .lbl{font-size:.52rem}
+  .login-card{padding:24px 18px}
+}
+@media(min-width:600px){
+  .games-grid{grid-template-columns:repeat(3,1fr)}
+  .admin-stats-grid{grid-template-columns:repeat(4,1fr)}
+  .main-content{max-width:640px;margin:0 auto}
+}
+@media(min-width:900px){
+  .games-grid{grid-template-columns:repeat(3,1fr)}
+  .top-bar,.main-content,.ai-input-row,.ai-chips,.bottom-nav{max-width:720px;margin-left:auto;margin-right:auto}
+  .bottom-nav{border-radius:24px 24px 0 0;border:1px solid var(--border)}
 }
 </style>
 </head>
 <body>
-
 <canvas id="bgCanvas"></canvas>
-
 <div id="loadingOverlay">
   <div class="load-logo">SözLab</div>
   <div class="load-spin"></div>
 </div>
-
 <div id="toast"></div>
-
 <div class="app">
 
-<!-- ═══════════════════════════════ LOGIN ═══════════════════════════════ -->
+<!-- ═══ LOGIN ═══ -->
 <div class="screen active" id="loginScreen">
   <div class="login-card">
     <div class="login-logo">SözLab</div>
-    <div class="login-tagline">Dilini inkişaf etdir, gələcəyini parlat</div>
+    <div class="login-tagline">Azərbaycan dilini öyrən, inkişaf et</div>
     <div class="feat-row">
-      <div class="feat-pill">🎮 Oyunlar</div>
+      <div class="feat-pill">🎮 6 Oyun</div>
+      <div class="feat-pill">🔤 Əlifba</div>
       <div class="feat-pill">📚 Lüğət</div>
-      <div class="feat-pill">✍️ Yaradıcılıq</div>
-      <div class="feat-pill">🤖 AI</div>
+      <div class="feat-pill">🤖 AI Köməkçi</div>
     </div>
     <div class="login-tabs">
       <button class="login-tab active" data-mode="login">Giriş</button>
       <button class="login-tab" data-mode="register">Qeydiyyat</button>
     </div>
-    <input type="text" id="studentName" class="login-input" placeholder="İstifadəçi adı" autocomplete="off">
+    <input type="text" id="studentName" class="login-input" placeholder="İstifadəçi adı" autocomplete="off" autocapitalize="none">
     <button id="loginBtn" class="btn-primary">🚀 Daxil Ol</button>
     <div class="login-divider">admin üçün</div>
     <button id="adminBtn" class="btn-admin">🔐 Admin Paneli</button>
@@ -427,46 +466,49 @@ textarea.story-area:focus{border-color:var(--purple)}
   </div>
 </div>
 
-<!-- ═══════════════════════════════ MAIN DASHBOARD ═══════════════════════════════ -->
+<!-- ═══ MAIN ═══ -->
 <div class="screen" id="mainDashboard">
   <div class="top-bar">
     <div class="top-logo">SözLab</div>
     <div class="top-stat">🔥<span id="topStreak">0</span></div>
-    <div class="top-stat">⭐<span id="topXP">0</span></div>
+    <div class="top-stat">⭐<span id="topXP">0</span> XP</div>
     <button class="avatar-btn" id="avatarBtn">?</button>
   </div>
   <div class="main-content" id="mainContent">
-    <!-- views injected here -->
     <div class="view active" id="viewHome"></div>
+    <div class="view" id="viewAlpha"></div>
     <div class="view" id="viewGames"></div>
     <div class="view" id="viewVocab"></div>
     <div class="view" id="viewCreative"></div>
     <div class="view" id="viewLeaderboard"></div>
     <div class="view" id="viewProfile"></div>
-    <div class="view" id="viewAI"></div>
+    <div class="view" id="viewAI" style="display:none;flex-direction:column;height:100%"></div>
   </div>
   <nav class="bottom-nav">
-    <button class="nav-btn active" data-view="Home"><span class="icon">🏠</span><span class="lbl">Ana Səhifə</span></button>
+    <button class="nav-btn active" data-view="Home"><span class="icon">🏠</span><span class="lbl">Əsas</span></button>
+    <button class="nav-btn" data-view="Alpha"><span class="icon">🔤</span><span class="lbl">Əlifba</span></button>
     <button class="nav-btn" data-view="Games"><span class="icon">🎮</span><span class="lbl">Oyunlar</span></button>
     <button class="nav-btn" data-view="Vocab"><span class="icon">📚</span><span class="lbl">Lüğət</span></button>
-    <button class="nav-btn" data-view="Creative"><span class="icon">✍️</span><span class="lbl">Yaradıcı</span></button>
     <button class="nav-btn" data-view="AI"><span class="icon">🤖</span><span class="lbl">AI</span></button>
   </nav>
 </div>
 
-<!-- ═══════════════════════════════ ADMIN ═══════════════════════════════ -->
+<!-- ═══ ADMIN ═══ -->
 <div class="screen" id="adminScreen">
   <div class="admin-bar">
     <div class="admin-title">⚙️ Admin Paneli</div>
-    <button class="btn-outline" id="adminLogoutBtn">← Çıx</button>
+    <button class="btn-outline" id="adminLogoutBtn" style="font-size:.8rem;padding:7px 13px">← Çıx</button>
   </div>
   <div class="admin-content">
     <div class="admin-tabs">
       <button class="admin-tab active" data-atab="stats">📊 Statistika</button>
       <button class="admin-tab" data-atab="users">👥 İstifadəçilər</button>
+      <button class="admin-tab" data-atab="words">📝 Sözlər</button>
       <button class="admin-tab" data-atab="stories">📖 Hekayələr</button>
       <button class="admin-tab" data-atab="announce">📢 Duyurular</button>
     </div>
+
+    <!-- STATS -->
     <div id="atab-stats">
       <div class="admin-stats-grid">
         <div class="admin-stat"><div class="val" id="aStatUsers">0</div><div class="lbl">İstifadəçi</div></div>
@@ -474,25 +516,62 @@ textarea.story-area:focus{border-color:var(--purple)}
         <div class="admin-stat"><div class="val" id="aStatWords">0</div><div class="lbl">Söz</div></div>
         <div class="admin-stat"><div class="val" id="aStatActive">0</div><div class="lbl">Bugün Aktiv</div></div>
       </div>
+      <div class="admin-section">
+        <h3>📈 XP Paylama (İlk 5)</h3>
+        <div class="admin-chart" id="adminChart"><p style="color:var(--muted);font-size:.82rem">Yüklənir...</p></div>
+      </div>
+      <div class="admin-section">
+        <h3>🔔 Sistem Məlumatı</h3>
+        <div id="sysInfo" style="font-size:.82rem;color:var(--muted);line-height:1.8"></div>
+      </div>
     </div>
+
+    <!-- USERS -->
     <div id="atab-users" style="display:none">
+      <div class="admin-section">
+        <h3>🔍 Axtarış</h3>
+        <input class="admin-input" id="userSearch" placeholder="Ad axtar..." style="margin-bottom:0">
+      </div>
       <div id="adminUsersList"><p style="color:var(--muted)">Yüklənir...</p></div>
     </div>
+
+    <!-- WORDS -->
+    <div id="atab-words" style="display:none">
+      <div class="admin-section">
+        <h3>➕ Yeni Söz Əlavə Et</h3>
+        <div class="admin-word-editor">
+          <input class="admin-input" id="wEn" placeholder="İngilis sözü (məs: Abundant)" style="margin-bottom:0">
+          <input class="admin-input" id="wAz" placeholder="Azərbaycan mənası (məs: Bol, çoxlu)" style="margin-bottom:0">
+          <input class="admin-input" id="wEx" placeholder="Nümunə cümlə (ingiliscə)" style="margin-bottom:0">
+          <input class="admin-input" id="wTags" placeholder="Teqlər vergüllə (məs: B2,Adj)" style="margin-bottom:0">
+          <button class="btn-primary" id="addWordBtn" style="margin-top:4px">➕ Söz Əlavə Et</button>
+        </div>
+      </div>
+      <div class="admin-section">
+        <h3>📋 Mövcud Sözlər (<span id="wordCount">0</span>)</h3>
+        <input class="admin-input" id="wordSearch" placeholder="Söz axtar..." style="margin-bottom:8px">
+        <div class="admin-word-list" id="adminWordList"></div>
+      </div>
+    </div>
+
+    <!-- STORIES -->
     <div id="atab-stories" style="display:none">
       <div id="adminStoriesList"><p style="color:var(--muted)">Yüklənir...</p></div>
     </div>
+
+    <!-- ANNOUNCE -->
     <div id="atab-announce" style="display:none">
       <div class="admin-section">
-        <h3>Yeni Duyuru</h3>
+        <h3>📢 Yeni Duyuru</h3>
         <input class="admin-input" id="aTitle" placeholder="Başlıq">
-        <textarea class="admin-input" id="aBody" rows="3" placeholder="Məzmun" style="resize:vertical"></textarea>
+        <textarea class="admin-input" id="aBody" rows="3" placeholder="Məzmun"></textarea>
         <div class="type-select">
           <button class="type-btn active" data-type="info">ℹ️ Info</button>
           <button class="type-btn" data-type="success">✅ Uğur</button>
           <button class="type-btn" data-type="warning">⚠️ Xəbərdarlıq</button>
           <button class="type-btn" data-type="promo">🎁 Promo</button>
         </div>
-        <button class="btn-primary" id="aSendBtn" style="margin-top:4px">📢 Göndər</button>
+        <button class="btn-primary" id="aSendBtn">📢 Göndər</button>
       </div>
       <div id="adminAnnounceList"></div>
     </div>
@@ -503,84 +582,119 @@ textarea.story-area:focus{border-color:var(--purple)}
 
 <script type="module">
 import{createClient}from'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
-
-// ══════════════════════════════════════════════════════
-// CONFIG
-// ══════════════════════════════════════════════════════
 const SUPABASE_URL='https://sxqsrgywbjvxfdvpvhmg.supabase.co';
 const SUPABASE_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN4cXNyZ3l3Ymp2eGZkdnB2aG1nIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg5NDQ0MjksImV4cCI6MjA5NDUyMDQyOX0.__sfViaJdjfcRX9rTKLWpGKriHQjVHMyNNXBgzt3N2A';
 const ADMIN_PASS='Admin205';
 const sb=createClient(SUPABASE_URL,SUPABASE_KEY);
 
-// ══════════════════════════════════════════════════════
-// WORDS
-// ══════════════════════════════════════════════════════
-const WORDS=[
-  {en:'Ambiguous',az:'Qeyri-müəyyən',ex:'The instructions were ambiguous.',tags:['B2','Adj']},
-  {en:'Benevolent',az:'Xeyirxah',ex:'She was a benevolent leader.',tags:['C1','Adj']},
-  {en:'Candid',az:'Açıqürəkli',ex:'He gave a candid response.',tags:['B2','Adj']},
-  {en:'Diligent',az:'Səylə çalışan',ex:'She is a diligent student.',tags:['B2','Adj']},
-  {en:'Eloquent',az:'Nitiqcil',ex:'An eloquent speech moved the crowd.',tags:['C1','Adj']},
-  {en:'Frugal',az:'Qənaətcil',ex:'He lives a frugal lifestyle.',tags:['B2','Adj']},
-  {en:'Gregarious',az:'Ünsiyyətcil',ex:'She is very gregarious at parties.',tags:['C1','Adj']},
-  {en:'Haughty',az:'Lovğa',ex:'His haughty manner offended others.',tags:['C1','Adj']},
-  {en:'Innovative',az:'Yenilikçi',ex:'The startup had innovative ideas.',tags:['B2','Adj']},
-  {en:'Jubilant',az:'Sevincdən coşan',ex:'The team was jubilant after winning.',tags:['C1','Adj']},
-  {en:'Kinetic',az:'Kinetik/hərəkətli',ex:'The art installation was kinetic.',tags:['C1','Adj']},
-  {en:'Lucid',az:'Aydın, anlaşıqlı',ex:'Give a lucid explanation.',tags:['C1','Adj']},
-  {en:'Meticulous',az:'Dəqiq, diqqətli',ex:'She is meticulous about details.',tags:['C1','Adj']},
-  {en:'Nostalgic',az:'Keçmişə həsrətli',ex:'Old songs make me nostalgic.',tags:['B2','Adj']},
-  {en:'Obsolete',az:'Köhnəlmiş',ex:'Fax machines are obsolete now.',tags:['B2','Adj']},
-  {en:'Persevere',az:'Dözümlü olmaq',ex:'You must persevere through hardship.',tags:['B2','Verb']},
-  {en:'Quintessential',az:'Tipik, ən səciyyəvi',ex:'Pizza is the quintessential Italian food.',tags:['C2','Adj']},
-  {en:'Resilient',az:'Davamlı',ex:'Children are resilient beings.',tags:['B2','Adj']},
-  {en:'Serene',az:'Sakit, dinc',ex:'The lake looked serene at dawn.',tags:['B2','Adj']},
-  {en:'Tenacious',az:'Inadkar',ex:'A tenacious athlete never gives up.',tags:['C1','Adj']},
+// ══════════════════════════════════════════════
+// AZƏRBAYCAN ƏLİFBASI
+// ══════════════════════════════════════════════
+const ALPHABET=[
+  {l:'A',name:'A',sound:'a kimi "alma"',words:['alma','arı','at','ay','ata']},
+  {l:'B',name:'B',sound:'b kimi "balıq"',words:['balıq','bağ','bala','baş','bəy']},
+  {l:'C',name:'C',sound:'c kimi "ceyran"',words:['ceyran','cib','can','cox','cur']},
+  {l:'Ç',name:'Ç',sound:'ç kimi "çiçək"',words:['çiçək','çay','çörək','çəmən','çadır']},
+  {l:'D',name:'D',sound:'d kimi "dağ"',words:['dağ','daş','dəmir','dil','don']},
+  {l:'E',name:'E',sound:'e kimi "ev"',words:['ev','el','eşik','evi','elm']},
+  {l:'Ə',name:'Ə',sound:'ə kimi "əl"',words:['əl','ər','əkin','əsil','ət']},
+  {l:'F',name:'F',sound:'f kimi "fırtına"',words:['fırtına','fil','firəng','fənn','fərd']},
+  {l:'G',name:'G',sound:'g kimi "gül"',words:['gül','göz','gəmi','günəş','gözəl']},
+  {l:'Ğ',name:'Ğ',sound:'ğ kimi "dağ sonu"',words:['dağ','bağ','ağac','yağış','mağara']},
+  {l:'H',name:'H',sound:'h kimi "hava"',words:['hava','həyat','həkim','hər','hikmət']},
+  {l:'X',name:'X',sound:'x kimi "xalça"',words:['xalça','xəyal','xeyir','xor','xoş']},
+  {l:'I',name:'I',sound:'ı kimi "ışıq"',words:['ışıq','istilik','iqlim','irəli','insan']},
+  {l:'İ',name:'İ',sound:'i kimi "ip"',words:['ip','inci','ilk','ilan','işıq']},
+  {l:'J',name:'J',sound:'j kimi "jurnal"',words:['jurnal','jurnalist','jalüzi']},
+  {l:'K',name:'K',sound:'k kimi "kitab"',words:['kitab','kənd','köy','kişi','küçə']},
+  {l:'Q',name:'Q',sound:'q kimi "qaya"',words:['qaya','qar','qanad','qəlb','qız']},
+  {l:'L',name:'L',sound:'l kimi "lale"',words:['lale','limon','lazım','leylək','ləpə']},
+  {l:'M',name:'M',sound:'m kimi "mavi"',words:['mavi','meşə','mektəb','məktub','mənzil']},
+  {l:'N',name:'N',sound:'n kimi "nər"',words:['nər','nar','nəfəs','nəhəng','nişan']},
+  {l:'O',name:'O',sound:'o kimi "od"',words:['od','ocaq','ordu','obraz','oyun']},
+  {l:'Ö',name:'Ö',sound:'ö kimi "öz"',words:['öz','ölkə','ömür','öküz','ögey']},
+  {l:'P',name:'P',sound:'p kimi "paltar"',words:['paltar','pəncərə','pişik','payız','pilaf']},
+  {l:'R',name:'R',sound:'r kimi "rəng"',words:['rəng','rəqs','ruzi','raz','ruh']},
+  {l:'S',name:'S',sound:'s kimi "su"',words:['su','səma','saat','söz','sual']},
+  {l:'Ş',name:'Ş',sound:'ş kimi "şəhər"',words:['şəhər','şam','şirin','şair','şəkil']},
+  {l:'T',name:'T',sound:'t kimi "torpaq"',words:['torpaq','tərəf','tən','təbii','tarix']},
+  {l:'U',name:'U',sound:'u kimi "uçmaq"',words:['uçmaq','ulduz','uşaq','uzun','ümid']},
+  {l:'Ü',name:'Ü',sound:'ü kimi "üz"',words:['üz','üzüm','ülviyyat','ürək','üfüq']},
+  {l:'V',name:'V',sound:'v kimi "vətən"',words:['vətən','vaxt','var','vüsal','varlı']},
+  {l:'Y',name:'Y',sound:'y kimi "yaz"',words:['yaz','yol','yem','yuxu','yer']},
+  {l:'Z',name:'Z',sound:'z kimi "zəng"',words:['zəng','zamanlar','zəif','zoğal','zirvə']},
 ];
 
-// ══════════════════════════════════════════════════════
-// AZERBAIJANI WORDS (sinonim/antonim oyunları üçün)
-// ══════════════════════════════════════════════════════
-const allWords=[
-  {word:"qaraşmaq",meaning:"Diqqətlə baxmaq",synonyms:["baxmaq","nəzər yetirmək"],antonyms:["yayınmaq","görməmək"]},
-  {word:"əlvan",meaning:"Rəngarəng, müxtəlif rəngli",synonyms:["rəngarəng","çoxrəngli"],antonyms:["tək rəngli","boz"]},
-  {word:"gözəl",meaning:"Xoş görünüşlü, yaraşıqlı",synonyms:["yaraşıqlı","xoşagələn"],antonyms:["çirkin","eybəcər"]},
-  {word:"bilmək",meaning:"Məlumat sahibi olmaq",synonyms:["tanımaq","xəbərdar olmaq"],antonyms:["bilməmək","cahil olmaq"]},
-  {word:"sevmək",meaning:"Məhəbbət hissi bəsləmək",synonyms:["məhəbbət etmək","bağlanmaq"],antonyms:["nifrət etmək","sevməmək"]},
-  {word:"oxumaq",meaning:"Mətn üzərindən göz gəzdirmək",synonyms:["kitab oxumaq","mütaliə etmək"],antonyms:["yazmaq","dinləmək"]},
-  {word:"yazmaq",meaning:"Sözləri kağıza köçürmək",synonyms:["qələmə almaq","mətni yazmaq"],antonyms:["oxumaq","silmək"]},
-  {word:"danışmaq",meaning:"Söz söyləmək, nitq etmək",synonyms:["söhbət etmək","nitq etmək"],antonyms:["susmaq","dinləmək"]},
-  {word:"yemək",meaning:"Qida qəbul etmək",synonyms:["istehlak etmək","dad etmək"],antonyms:["ac qalmaq","içmək"]},
-  {word:"içmək",meaning:"Mayeni udmaq",synonyms:["şərbət içmək","su içmək"],antonyms:["tökülmək","yemək"]},
-  {word:"getmək",meaning:"Bir yerdən başqa yerə keçmək",synonyms:["yollanmaq","hərəkət etmək"],antonyms:["gəlmək","durmaq"]},
-  {word:"gəlmək",meaning:"Hərəkət edərək çatmaq",synonyms:["yetişmək","çatmaq"],antonyms:["getmək","uzaqlaşmaq"]},
-  {word:"böyük",meaning:"Ölçüsü geniş olan",synonyms:["iri","kəlan"],antonyms:["kiçik","balaca"]},
-  {word:"kiçik",meaning:"Ölçüsü az olan",synonyms:["balaca","xırda"],antonyms:["böyük","iri"]},
-  {word:"sürətli",meaning:"Tez hərəkət edən",synonyms:["cəld","iti"],antonyms:["yavaş","ləng"]},
+// ══════════════════════════════════════════════
+// SÖZLƏR
+// ══════════════════════════════════════════════
+let WORDS=[
+  {en:'Ambiguous',az:'Qeyri-müəyyən',ex:'The instructions were ambiguous.',exAz:'Təlimatlar qeyri-müəyyən idi.',tags:['B2','Sif']},
+  {en:'Benevolent',az:'Xeyirxah',ex:'She was a benevolent leader.',exAz:'O, xeyirxah bir rəhbər idi.',tags:['C1','Sif']},
+  {en:'Candid',az:'Açıqürəkli',ex:'He gave a candid response.',exAz:'O, açıqürəkli cavab verdi.',tags:['B2','Sif']},
+  {en:'Diligent',az:'Səylə çalışan',ex:'She is a diligent student.',exAz:'O, səylə çalışan tələbədir.',tags:['B2','Sif']},
+  {en:'Eloquent',az:'Nitiqcil',ex:'An eloquent speech moved the crowd.',exAz:'Nitiqcil çıxış kütləni hərəkətə gətirdi.',tags:['C1','Sif']},
+  {en:'Frugal',az:'Qənaətcil',ex:'He lives a frugal lifestyle.',exAz:'O, qənaətcil həyat tərzi ilə yaşayır.',tags:['B2','Sif']},
+  {en:'Gregarious',az:'Ünsiyyətcil',ex:'She is very gregarious at parties.',exAz:'O, məclislərdə çox ünsiyyətcildir.',tags:['C1','Sif']},
+  {en:'Haughty',az:'Lovğa',ex:'His haughty manner offended others.',exAz:'Onun lovğa münasibəti başqalarını incitdi.',tags:['C1','Sif']},
+  {en:'Innovative',az:'Yenilikçi',ex:'The startup had innovative ideas.',exAz:'Startapın yenilikçi ideyaları var idi.',tags:['B2','Sif']},
+  {en:'Jubilant',az:'Sevincdən coşan',ex:'The team was jubilant after winning.',exAz:'Komanda qazandıqdan sonra sevincdən coşdu.',tags:['C1','Sif']},
+  {en:'Lucid',az:'Aydın, anlaşıqlı',ex:'Give a lucid explanation.',exAz:'Aydın izahat ver.',tags:['C1','Sif']},
+  {en:'Meticulous',az:'Dəqiq, diqqətli',ex:'She is meticulous about details.',exAz:'O, detallar barədə dəqiq davranır.',tags:['C1','Sif']},
+  {en:'Nostalgic',az:'Keçmişə həsrətli',ex:'Old songs make me nostalgic.',exAz:'Köhnə mahnılar məni keçmişə həsrət edir.',tags:['B2','Sif']},
+  {en:'Obsolete',az:'Köhnəlmiş',ex:'Fax machines are obsolete now.',exAz:'Faks cihazları artıq köhnəlmişdir.',tags:['B2','Sif']},
+  {en:'Persevere',az:'Dözümlü olmaq',ex:'You must persevere through hardship.',exAz:'Çətinliklər qarşısında dözümlü olmalısan.',tags:['B2','Fel']},
+  {en:'Resilient',az:'Davamlı, dözümlü',ex:'Children are resilient beings.',exAz:'Uşaqlar davamlı varlıqlardır.',tags:['B2','Sif']},
+  {en:'Serene',az:'Sakit, dinc',ex:'The lake looked serene at dawn.',exAz:'Göl şəfəqdə sakit görünürdü.',tags:['B2','Sif']},
+  {en:'Tenacious',az:'İnadkar',ex:'A tenacious athlete never gives up.',exAz:'İnadkar idmançı heç vaxt təslim olmaz.',tags:['C1','Sif']},
+  {en:'Vivid',az:'Parlaq, canlı',ex:'She has a vivid imagination.',exAz:'Onun parlaq təxəyyülü var.',tags:['B2','Sif']},
+  {en:'Wary',az:'Ehtiyatlı',ex:'Be wary of strangers.',exAz:'Yad adamlardan ehtiyatlı ol.',tags:['B2','Sif']},
 ];
 
-// ══════════════════════════════════════════════════════
+// ══════════════════════════════════════════════
+// AZERBAIJANI WORDS (sinonim/antonim)
+// ══════════════════════════════════════════════
+const AZ_WORDS=[
+  {word:'gözəl',meaning:'Xoş görünüşlü, yaraşıqlı',synonyms:['yaraşıqlı','xoşagələn','göyçək'],antonyms:['çirkin','eybəcər']},
+  {word:'böyük',meaning:'Ölçüsü geniş olan',synonyms:['iri','kəlan','nəhəng'],antonyms:['kiçik','balaca','xırda']},
+  {word:'sürətli',meaning:'Tez hərəkət edən',synonyms:['cəld','iti','çevik'],antonyms:['yavaş','ləng','ağır']},
+  {word:'ağıllı',meaning:'Düşüncəli, zirək',synonyms:['zirək','düşüncəli','dərrakəli'],antonyms:['axmaq','gic','qanmaz']},
+  {word:'sevincli',meaning:'Sevinc içində olan',synonyms:['şad','xoşbəxt','məsud'],antonyms:['kədərli','qüssəli','üzgün']},
+  {word:'güclü',meaning:'Qüvvəti olan',synonyms:['qüvvəli','möhkəm','dəyanətli'],antonyms:['zəif','gücsüz','aciz']},
+  {word:'yeni',meaning:'Köhnə olmayan, təzə',synonyms:['təzə','müasir','novator'],antonyms:['köhnə','qədim','əski']},
+  {word:'işıqlı',meaning:'İşığı olan, aydın',synonyms:['aydın','nurlu','parlaq'],antonyms:['qaranlıq','tutqun','dumanlı']},
+  {word:'sadə',meaning:'Mürəkkəb olmayan',synonyms:['asan','aydın','anlaşıqlı'],antonyms:['mürəkkəb','çətin','dolaşıq']},
+  {word:'ədalətli',meaning:'Haqq-hesabı düz olan',synonyms:['haqlı','düzgün','insaflı'],antonyms:['ədalətsiz','haqsız','zalım']},
+  {word:'şirin',meaning:'Dadı şirin olan, sevimli',synonyms:['dadlı','sevimli','gözəl'],antonyms:['acı','ikrahverici','çirkin']},
+  {word:'uzun',meaning:'Uzunluğu çox olan',synonyms:['hündür','uzunluqlu','dartımlı'],antonyms:['qısa','gödək','kiçik']},
+  {word:'səs-küylü',meaning:'Çox səs çıxaran',synonyms:['gurultulu','hay-küylü','gürültülü'],antonyms:['sakit','sessiz','dinc']},
+  {word:'cəsur',meaning:'Qorxu bilməyən',synonyms:['igid','mərd','qoçaq'],antonyms:['qorxaq','ürəksiz','cəsarətsiz']},
+  {word:'mehriban',meaning:'Yaxşı münasibətli',synonyms:['sevecən','xoşrəftar','nəvazişkar'],antonyms:['soyuq','kobud','əxlaqsız']},
+];
+
+// ══════════════════════════════════════════════
 // STATE
-// ══════════════════════════════════════════════════════
-let currentUser=null; // {id, username, display_name, xp, level, streak, learned}
+// ══════════════════════════════════════════════
+let currentUser=null;
 let loginMode='login';
 let dailyWord=null;
 let dailyClaimed=false;
 let aiHistory=[];
 let currentGame=null;
-let quizIdx=0;
-let quizScore=0;
+let quizIdx=0,quizScore=0;
 let announceType='info';
+let alphaOpen=null;
 
-// ══════════════════════════════════════════════════════
+// ══════════════════════════════════════════════
 // UTILS
-// ══════════════════════════════════════════════════════
+// ══════════════════════════════════════════════
 function showToast(msg,color='gold'){
   const t=document.getElementById('toast');
   t.textContent=msg;
   t.style.borderColor=`var(--${color})`;
   t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'),2600);
+  clearTimeout(t._tid);
+  t._tid=setTimeout(()=>t.classList.remove('show'),2800);
 }
 function showScreen(id){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
@@ -589,99 +703,78 @@ function showScreen(id){
 function hideLoading(){
   const o=document.getElementById('loadingOverlay');
   o.classList.add('hidden');
-  setTimeout(()=>o.style.display='none',400);
+  setTimeout(()=>o.style.display='none',450);
 }
-function xpForLevel(lvl){return lvl*100;}
+function xpForLevel(l){return l*100;}
 function levelFromXP(xp){let l=1;while(xp>=xpForLevel(l))xp-=xpForLevel(l++);return l;}
+function rnd(arr){return arr[Math.floor(Math.random()*arr.length)];}
+function shuffle(arr){const a=[...arr];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
 
-// ══════════════════════════════════════════════════════
-// BACKGROUND CANVAS
-// ══════════════════════════════════════════════════════
-(function initCanvas(){
+// ══════════════════════════════════════════════
+// CANVAS BG
+// ══════════════════════════════════════════════
+(function(){
   const c=document.getElementById('bgCanvas');
   const ctx=c.getContext('2d');
   let W,H,pts=[];
-  function resize(){W=c.width=innerWidth;H=c.height=innerHeight;pts=Array.from({length:40},()=>({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.3,vy:(Math.random()-.5)*.3,r:Math.random()*1.5+.5}));}
+  function resize(){W=c.width=innerWidth;H=c.height=innerHeight;
+    pts=Array.from({length:35},()=>({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.25,vy:(Math.random()-.5)*.25,r:Math.random()*1.2+.4}));}
   resize();window.addEventListener('resize',resize);
   function draw(){
     ctx.clearRect(0,0,W,H);
-    pts.forEach(p=>{
-      p.x+=p.vx;p.y+=p.vy;
+    pts.forEach(p=>{p.x+=p.vx;p.y+=p.vy;
       if(p.x<0||p.x>W)p.vx*=-1;if(p.y<0||p.y>H)p.vy*=-1;
-      ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-      ctx.fillStyle='rgba(155,114,207,.4)';ctx.fill();
-    });
-    pts.forEach((a,i)=>pts.slice(i+1).forEach(b=>{
-      const d=Math.hypot(a.x-b.x,a.y-b.y);
-      if(d<120){ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);
-        ctx.strokeStyle=`rgba(155,114,207,${.15*(1-d/120)})`;ctx.stroke();}
-    }));
-    requestAnimationFrame(draw);
-  }draw();
+      ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle='rgba(155,114,207,.35)';ctx.fill();});
+    pts.forEach((a,i)=>pts.slice(i+1).forEach(b=>{const d=Math.hypot(a.x-b.x,a.y-b.y);
+      if(d<110){ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);
+        ctx.strokeStyle=`rgba(155,114,207,${.12*(1-d/110)})`;ctx.stroke();}}));
+    requestAnimationFrame(draw);}draw();
 })();
 
-// ══════════════════════════════════════════════════════
-// SUPABASE HELPERS
-// ══════════════════════════════════════════════════════
-async function getProfile(username){
-  try{
-    const {data}=await sb.from('profiles').select().eq('username',username).single();
-    return data||null;
-  }catch(e){return null;}
-}
-async function createProfile(username){
-  try{
-    const {data}=await sb.from('profiles').insert([{
-      username,display_name:username,xp:0,level:1,streak:0,
-      learned:[],last_visit:new Date().toDateString()
-    }]).select().single();
-    return data||null;
-  }catch(e){return null;}
-}
-async function saveProfile(updates){
-  if(!currentUser)return;
-  try{await sb.from('profiles').update(updates).eq('username',currentUser.username);}catch(e){}
-}
+// ══════════════════════════════════════════════
+// SUPABASE
+// ══════════════════════════════════════════════
+async function getProfile(u){try{const{data}=await sb.from('profiles').select().eq('username',u).single();return data||null;}catch(e){return null;}}
+async function createProfile(u){
+  try{const{data}=await sb.from('profiles').insert([{username:u,display_name:u,xp:0,level:1,streak:0,learned:[],last_visit:new Date().toDateString()}]).select().single();return data||null;}catch(e){return null;}}
+async function saveProfile(updates){if(!currentUser)return;try{await sb.from('profiles').update(updates).eq('username',currentUser.username);}catch(e){}}
 async function addXP(amount,reason=''){
   if(!currentUser)return;
-  currentUser.xp+=amount;
-  currentUser.level=levelFromXP(currentUser.xp);
-  showToast(`+${amount} XP ${reason}`,'gold');
-  updateTopBar();
+  currentUser.xp+=amount;currentUser.level=levelFromXP(currentUser.xp);
+  showToast(`+${amount} XP ${reason}`,'gold');updateTopBar();
   await saveProfile({xp:currentUser.xp,level:currentUser.level});
 }
 async function updateStreak(){
   if(!currentUser)return;
-  const today=new Date().toDateString();
-  if(currentUser.last_visit===today)return;
-  const yesterday=new Date(Date.now()-86400000).toDateString();
-  currentUser.streak=currentUser.last_visit===yesterday?currentUser.streak+1:1;
+  const today=new Date().toDateString();if(currentUser.last_visit===today)return;
+  const yday=new Date(Date.now()-86400000).toDateString();
+  currentUser.streak=currentUser.last_visit===yday?currentUser.streak+1:1;
   currentUser.last_visit=today;
   await saveProfile({streak:currentUser.streak,last_visit:today});
 }
 
-// ══════════════════════════════════════════════════════
+// ══════════════════════════════════════════════
 // DAILY WORD
-// ══════════════════════════════════════════════════════
+// ══════════════════════════════════════════════
 function pickDailyWord(){
   const seed=new Date().toDateString();
-  let h=0;for(let c of seed)h=(h*31+c.charCodeAt(0))>>>0;
+  let h=0;for(const c of seed)h=(h*31+c.charCodeAt(0))>>>0;
   dailyWord=WORDS[h%WORDS.length];
 }
 
-// ══════════════════════════════════════════════════════
-// LOGIN FLOW
-// ══════════════════════════════════════════════════════
+// ══════════════════════════════════════════════
+// LOGIN
+// ══════════════════════════════════════════════
 async function doLogin(){
   const username=document.getElementById('studentName').value.trim().toLowerCase().replace(/[^a-z0-9_]/g,'');
-  if(!username||username.length<2){showToast('Ən az 2 simvol daxil edin!','red');return;}
+  if(!username||username.length<2){showToast('Ən az 2 hərf daxil edin!','red');return;}
   const btn=document.getElementById('loginBtn');
   btn.disabled=true;btn.textContent='Yüklənir...';
   try{
     let profile=await getProfile(username);
     if(loginMode==='login'){
       if(!profile){showToast('Bu ad tapılmadı. Qeydiyyatdan keçin!','red');return;}
-    } else {
+    }else{
       if(profile){showToast('Bu ad artıq mövcuddur!','red');return;}
       profile=await createProfile(username);
       if(!profile){showToast('Qeydiyyat xətası!','red');return;}
@@ -689,89 +782,81 @@ async function doLogin(){
     currentUser=profile;
     await updateStreak();
     dailyClaimed=localStorage.getItem('dc_'+username)===new Date().toDateString();
-    showScreen('mainDashboard');
-    updateTopBar();
-    switchView('Home');
-    renderHome();
+    showScreen('mainDashboard');updateTopBar();switchView('Home');renderHome();
     showToast(`Xoş gəldin, ${currentUser.display_name}! 👋`,'gold');
   }catch(e){showToast('Xəta baş verdi!','red');console.error(e);}
-  finally{btn.disabled=false;btn.textContent='🚀 Daxil Ol';}
+  finally{btn.disabled=false;btn.textContent=loginMode==='login'?'🚀 Daxil Ol':'📝 Qeydiyyat';}
 }
 
-// ══════════════════════════════════════════════════════
+// ══════════════════════════════════════════════
 // TOP BAR
-// ══════════════════════════════════════════════════════
+// ══════════════════════════════════════════════
 function updateTopBar(){
   if(!currentUser)return;
   document.getElementById('topStreak').textContent=currentUser.streak||0;
   document.getElementById('topXP').textContent=currentUser.xp||0;
-  const av=document.getElementById('avatarBtn');
-  av.textContent=(currentUser.display_name||currentUser.username||'?')[0].toUpperCase();
+  document.getElementById('avatarBtn').textContent=(currentUser.display_name||'?')[0].toUpperCase();
 }
 
-// ══════════════════════════════════════════════════════
-// VIEW SWITCHING
-// ══════════════════════════════════════════════════════
+// ══════════════════════════════════════════════
+// VIEW SWITCH
+// ══════════════════════════════════════════════
 function switchView(name){
-  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
-  document.getElementById('view'+name).classList.add('active');
-  document.querySelectorAll('.nav-btn').forEach(b=>{
-    b.classList.toggle('active',b.dataset.view===name);
-  });
-  const renders={Home:renderHome,Games:renderGames,Vocab:renderVocab,Creative:renderCreative,Leaderboard:renderLeaderboard,Profile:renderProfile,AI:renderAI};
+  document.querySelectorAll('.view').forEach(v=>{v.classList.remove('active');v.style.display='none';});
+  const target=document.getElementById('view'+name);
+  if(target){target.classList.add('active');target.style.display=name==='AI'?'flex':'block';}
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.toggle('active',b.dataset.view===name));
+  const renders={Home:renderHome,Alpha:renderAlpha,Games:renderGames,Vocab:renderVocab,
+    Creative:renderCreative,Leaderboard:renderLeaderboard,Profile:renderProfile,AI:renderAI};
   if(renders[name])renders[name]();
 }
 
-// ══════════════════════════════════════════════════════
-// HOME VIEW
-// ══════════════════════════════════════════════════════
+// ══════════════════════════════════════════════
+// HOME
+// ══════════════════════════════════════════════
 function renderHome(){
   const v=document.getElementById('viewHome');
   const u=currentUser;
   const xpInLevel=u.xp-[...Array(u.level-1)].reduce((s,_,i)=>s+xpForLevel(i+1),0);
-  const xpNeeded=xpForLevel(u.level);
-  const pct=Math.min(100,Math.round(xpInLevel/xpNeeded*100));
+  const pct=Math.min(100,Math.round(xpInLevel/xpForLevel(u.level)*100));
   v.innerHTML=`
     <div class="xp-bar-wrap">
       <div class="xp-row"><span class="xp-label">Səviyyə ${u.level}</span><span class="xp-val">${u.xp} XP</span></div>
       <div class="xp-bar"><div class="xp-fill" style="width:${pct}%"></div></div>
+      <div style="font-size:.7rem;color:var(--muted);margin-top:5px">Növbəti səviyyəyə: ${xpForLevel(u.level)-xpInLevel} XP</div>
     </div>
     <div class="stats-row">
-      <div class="stat-card"><div class="val">${u.streak}</div><div class="lbl">🔥 Gün</div></div>
-      <div class="stat-card"><div class="val">${(u.learned||[]).length}</div><div class="lbl">📖 Söz</div></div>
+      <div class="stat-card"><div class="val">${u.streak}</div><div class="lbl">🔥 Gün Seriyası</div></div>
+      <div class="stat-card"><div class="val">${(u.learned||[]).length}</div><div class="lbl">📖 Öyrənilən Söz</div></div>
       <div class="stat-card"><div class="val">${u.level}</div><div class="lbl">⭐ Səviyyə</div></div>
     </div>
     <div class="section-title">📅 Günün Sözü</div>
     <div class="daily-card">
-      <div class="daily-label">Günün sözü</div>
+      <div class="daily-label">Bugünkü söz</div>
       <div class="daily-word">${dailyWord.en}</div>
       <div class="daily-meaning">${dailyWord.az}</div>
-      <div class="daily-tags">${dailyWord.tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div>
-      <div class="daily-ex" style="color:var(--muted);font-size:.82rem;font-style:italic;margin-bottom:12px">"${dailyWord.ex}"</div>
+      <div style="font-size:.8rem;color:var(--muted);font-style:italic;margin-bottom:10px">"${dailyWord.ex}"</div>
+      <div style="font-size:.78rem;color:var(--purple);margin-bottom:12px">"${dailyWord.exAz||''}"</div>
+      <div class="daily-tags">${(dailyWord.tags||[]).map(t=>`<span class="tag">${t}</span>`).join('')}</div>
       ${dailyClaimed
-        ?'<span style="color:var(--green);font-size:.85rem">✅ XP qazanıldı!</span>'
-        :`<button class="btn-sm btn-teal" id="claimDailyBtn">+5 XP Al</button>`}
+        ?'<span style="color:var(--green);font-size:.85rem">✅ Bu günkü XP alındı!</span>'
+        :'<button class="btn-sm btn-teal" id="claimDailyBtn">+5 XP Al</button>'}
     </div>
     <div class="section-title">📢 Duyurular</div>
-    <div id="homeAnnouncements"><p style="color:var(--muted);font-size:.85rem">Yüklənir...</p></div>
-  `;
+    <div id="homeAnnouncements"><p style="color:var(--muted);font-size:.83rem">Yüklənir...</p></div>`;
   if(!dailyClaimed){
     document.getElementById('claimDailyBtn')?.addEventListener('click',async()=>{
-      dailyClaimed=true;
-      localStorage.setItem('dc_'+currentUser.username,new Date().toDateString());
-      await addXP(5,'– Günün sözü');
-      renderHome();
-    });
+      dailyClaimed=true;localStorage.setItem('dc_'+currentUser.username,new Date().toDateString());
+      await addXP(5,'– Günün sözü');renderHome();});
   }
   loadAnnouncements();
 }
 
 async function loadAnnouncements(){
-  const div=document.getElementById('homeAnnouncements');
-  if(!div)return;
+  const div=document.getElementById('homeAnnouncements');if(!div)return;
   let data=[];
   try{const r=await sb.from('announcements').select().order('created_at',{ascending:false}).limit(5);data=r.data||[];}catch(e){}
-  if(!data.length){div.innerHTML='<p style="color:var(--muted);font-size:.85rem">Hələ duyuru yoxdur.</p>';return;}
+  if(!data.length){div.innerHTML='<p style="color:var(--muted);font-size:.83rem">Hələ duyuru yoxdur.</p>';return;}
   div.innerHTML=data.map(a=>`
     <div class="announce-card ${a.type||'info'}">
       <div class="announce-title">${a.title}</div>
@@ -780,50 +865,110 @@ async function loadAnnouncements(){
     </div>`).join('');
 }
 
-// ══════════════════════════════════════════════════════
+// ══════════════════════════════════════════════
+// ALPHABET VIEW
+// ══════════════════════════════════════════════
+function renderAlpha(){
+  const v=document.getElementById('viewAlpha');
+  v.innerHTML=`
+    <div class="section-title">🔤 Azərbaycan Əlifbası</div>
+    <div class="alpha-card">
+      <div class="alpha-header" id="alphaToggleBtn">
+        <h3>Azərbaycan əlifbası 32 hərfdən ibarətdir</h3>
+        <span class="alpha-toggle" id="alphaArrow">▼</span>
+      </div>
+      <div class="alpha-grid" id="alphaGrid" style="display:grid"></div>
+      <div class="alpha-detail" id="alphaDetail"></div>
+    </div>
+    <div class="alpha-card" style="margin-top:14px">
+      <h3 style="font-family:var(--font-head);font-size:.92rem;font-weight:700;margin-bottom:12px">📌 Əlifba haqqında</h3>
+      <div style="font-size:.83rem;color:var(--muted);line-height:1.8">
+        • Azərbaycan əlifbası 1991-ci ildən latın qrafikasına əsaslanır<br>
+        • 23 samit, 9 sait hərfdən ibarətdir<br>
+        • Xüsusi hərflər: Ə, Ğ, X, I, İ, Ö, Ş, Ü, Q, Ç<br>
+        • Böyük əlifba: A B C Ç D E Ə F G Ğ H X I İ J K Q L M N O Ö P R S Ş T U Ü V Y Z
+      </div>
+    </div>`;
+  const grid=document.getElementById('alphaGrid');
+  ALPHABET.forEach((item,idx)=>{
+    const div=document.createElement('div');
+    div.className='alpha-letter';
+    div.innerHTML=`<div class="alpha-az">${item.l}</div><div class="alpha-name">${item.name}</div>`;
+    div.onclick=()=>{
+      document.querySelectorAll('.alpha-letter').forEach(x=>x.classList.remove('active'));
+      div.classList.add('active');
+      const det=document.getElementById('alphaDetail');
+      det.classList.add('show');
+      det.innerHTML=`
+        <div class="alpha-d-letter">${item.l} ${item.l.toLowerCase()}</div>
+        <div class="alpha-d-info">🔊 Tələffüz: <b>${item.sound}</b></div>
+        <div style="margin-top:8px;font-size:.8rem;color:var(--muted)">Bu hərflə başlayan sözlər:</div>
+        <div class="alpha-d-words">${item.words.map(w=>`<span class="alpha-word-pill">${w}</span>`).join('')}</div>`;
+    };
+    grid.appendChild(div);
+  });
+}
+
+// ══════════════════════════════════════════════
 // GAMES VIEW
-// ══════════════════════════════════════════════════════
+// ══════════════════════════════════════════════
 function renderGames(){
   if(currentGame)return;
   const v=document.getElementById('viewGames');
   v.innerHTML=`
-    <div class="section-title">🎮 Oyunlar (+10 XP)</div>
+    <div class="section-title">🎮 Oyunlar</div>
+    <div style="font-size:.78rem;color:var(--muted);margin-bottom:12px">Oyun seç, XP qazan, liderboardda yüksəl!</div>
     <div class="games-grid">
       <div class="game-card" data-game="quiz">
+        <div class="game-difficulty">Orta</div>
         <div class="game-icon">🧠</div>
-        <div class="game-name">Quiz</div>
-        <div class="game-desc">Sözün mənasını tap</div>
+        <div class="game-name">Mənası Nədir?</div>
+        <div class="game-desc">İngilis sözünün Azərbaycan mənasını tap</div>
         <div class="game-xp">+10 XP</div>
       </div>
       <div class="game-card" data-game="fill">
+        <div class="game-difficulty">Orta</div>
         <div class="game-icon">✏️</div>
-        <div class="game-name">Boşluqları Doldur</div>
-        <div class="game-desc">Cümləni tamamla</div>
+        <div class="game-name">Boşluğu Doldur</div>
+        <div class="game-desc">Cümlədəki çatışmayan sözü tap</div>
         <div class="game-xp">+10 XP</div>
       </div>
       <div class="game-card" data-game="match">
+        <div class="game-difficulty">Çətin</div>
         <div class="game-icon">🔗</div>
         <div class="game-name">Uyğunlaşdır</div>
-        <div class="game-desc">İngilis-Azərbaycan</div>
+        <div class="game-desc">İngilis-Azərbaycan cütlərini tap</div>
         <div class="game-xp">+10 XP</div>
       </div>
       <div class="game-card" data-game="flash">
+        <div class="game-difficulty">Asan</div>
         <div class="game-icon">⚡</div>
-        <div class="game-name">Flashcard</div>
-        <div class="game-desc">Sürətli təkrar</div>
+        <div class="game-name">Flashkart</div>
+        <div class="game-desc">Kartı çevir, mənasını öyrən</div>
         <div class="game-xp">+10 XP</div>
       </div>
       <div class="game-card" data-game="synonym">
+        <div class="game-difficulty">Orta</div>
         <div class="game-icon">🔄</div>
         <div class="game-name">Sinonim Tap</div>
-        <div class="game-desc">Eyni məna daşıyan sözü seç</div>
+        <div class="game-desc">Eyni mənalı Azərbaycan sözünü tap</div>
         <div class="game-xp">+10 XP</div>
       </div>
       <div class="game-card" data-game="antonym">
+        <div class="game-difficulty">Orta</div>
         <div class="game-icon">🔀</div>
         <div class="game-name">Antonim Tap</div>
-        <div class="game-desc">Əks mənalı sözü seç</div>
+        <div class="game-desc">Əks mənalı Azərbaycan sözünü tap</div>
         <div class="game-xp">+10 XP</div>
+      </div>
+    </div>
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px;margin-top:4px">
+      <div style="font-size:.82rem;font-weight:600;margin-bottom:8px">💡 Necə işləyir?</div>
+      <div style="font-size:.78rem;color:var(--muted);line-height:1.7">
+        • Hər oyunu tamamladıqda XP qazanırsın<br>
+        • XP toplayaraq yeni səviyyəyə keçirsən<br>
+        • Liderboardda yüksək yer tut!<br>
+        • Gün seriyasını (streak) saxla, bonus qazan
       </div>
     </div>`;
   v.querySelectorAll('.game-card').forEach(c=>c.addEventListener('click',()=>startGame(c.dataset.game)));
@@ -840,284 +985,380 @@ function startGame(type){
   else if(type==='antonym')startAntonym(v);
 }
 
-function gameBack(){currentGame=null;renderGames();}
+function gameBack(){currentGame=null;renderGames();document.getElementById('viewGames').scrollTop=0;}
 
-// QUIZ
+function gameHeader(v,title,current,total){
+  const pct=Math.round((current/total)*100);
+  v.innerHTML=`
+    <div class="game-header">
+      <button class="btn-outline" id="gback">← Geri</button>
+      <div class="game-title-bar">${title}</div>
+      <div class="game-progress">
+        <span class="game-prog-text">${current}/${total}</span>
+        <div class="game-prog-bar"><div class="game-prog-fill" style="width:${pct}%"></div></div>
+      </div>
+    </div>`;
+  document.getElementById('gback').onclick=gameBack;
+}
+
+// ── QUIZ ──
 function startQuiz(v){
-  const pool=[...WORDS].sort(()=>Math.random()-.5).slice(0,5);
-  quizIdx=0;quizScore=0;
+  const pool=shuffle([...WORDS]).slice(0,5);
+  let idx=0,score=0;
   function showQ(){
-    if(quizIdx>=pool.length){
-      v.innerHTML=`<button class="btn-outline" onclick="void(0)" id="qback" style="margin-bottom:16px">← Oyunlar</button>
-        <div class="quiz-box"><div class="quiz-result">🎉 Nəticə: ${quizScore}/${pool.length}<br><br>
-        ${quizScore>=4?'+10 XP qazandın!':'Yenə cəhd et!'}</div></div>`;
-      document.getElementById('qback').onclick=async()=>{if(quizScore>=4)await addXP(10,'– Quiz');gameBack();};
+    if(idx>=pool.length){
+      const won=score>=4;
+      v.innerHTML=`<button class="btn-outline" id="gback" style="margin-bottom:14px">← Oyunlar</button>
+        <div class="quiz-box">
+          <div class="quiz-result">
+            ${won?'🎉':'😊'}
+            <div class="score">${score}/${pool.length}</div>
+            <div class="grade">${won?'Əla! +10 XP qazandın!':'Daha yaxşısı üçün yenidən cəhd et!'}</div>
+            ${won?'':'<div style="font-size:.78rem;color:var(--muted);margin-top:8px">4 düzgün cavab lazımdır</div>'}
+          </div>
+          <button class="btn-primary" id="retryBtn" style="margin-top:14px">🔄 Yenidən Oyna</button>
+        </div>`;
+      document.getElementById('gback').onclick=gameBack;
+      if(won)addXP(10,'– Mənası Nədir?');
+      document.getElementById('retryBtn').onclick=()=>startQuiz(v);
       return;
     }
-    const w=pool[quizIdx];
-    const wrongs=WORDS.filter(x=>x.en!==w.en).sort(()=>Math.random()-.5).slice(0,3);
-    const opts=[...wrongs,w].sort(()=>Math.random()-.5);
-    v.innerHTML=`<button class="btn-outline" id="qback" style="margin-bottom:16px">← Oyunlar</button>
-      <div class="quiz-box">
-        <div style="color:var(--muted);font-size:.8rem;margin-bottom:8px">Sual ${quizIdx+1}/${pool.length}</div>
-        <div class="quiz-q">"${w.en}" sözünün mənası nədir?</div>
-        <div class="quiz-opts">${opts.map((o,i)=>`<button class="quiz-opt" data-i="${i}" data-correct="${o.en===w.en}">${o.az}</button>`).join('')}</div>
+    const w=pool[idx];
+    const wrongs=shuffle(WORDS.filter(x=>x.en!==w.en)).slice(0,3);
+    const opts=shuffle([...wrongs,w]);
+    gameHeader(v,'🧠 Mənası Nədir?',idx+1,pool.length);
+    v.innerHTML+=`
+      <div class="quiz-box" style="margin-top:12px">
+        <div style="font-size:.75rem;color:var(--muted);margin-bottom:8px">Bu ingilis sözünün mənası nədir?</div>
+        <div class="quiz-word-big">${w.en}</div>
+        <div class="quiz-hint" style="font-style:italic">"${w.ex}"</div>
+        <div class="quiz-opts">${opts.map(o=>`<button class="quiz-opt" data-correct="${o.en===w.en}">${o.az}</button>`).join('')}</div>
       </div>`;
-    document.getElementById('qback').onclick=gameBack;
+    document.getElementById('gback').onclick=gameBack;
     v.querySelectorAll('.quiz-opt').forEach(btn=>btn.addEventListener('click',function(){
-      v.querySelectorAll('.quiz-opt').forEach(b=>b.disabled=true);
-      if(this.dataset.correct==='true'){this.classList.add('correct');quizScore++;}
-      else{this.classList.add('wrong');v.querySelector('[data-correct="true"]').classList.add('correct');}
-      setTimeout(()=>{quizIdx++;showQ();},900);
+      v.querySelectorAll('.quiz-opt').forEach(b=>{b.disabled=true;});
+      if(this.dataset.correct==='true'){this.classList.add('correct');score++;showToast('✅ Düzgün!','teal');}
+      else{this.classList.add('wrong');v.querySelector('[data-correct="true"]').classList.add('correct');showToast('❌ Yanlış!','red');}
+      setTimeout(()=>{idx++;showQ();},1000);
     }));
   }
   showQ();
 }
 
-// FILL BLANK
+// ── FILL BLANK ──
 function startFill(v){
-  const pool=[...WORDS].sort(()=>Math.random()-.5).slice(0,4);
+  const pool=shuffle([...WORDS]).slice(0,4);
   let idx=0,score=0;
   function showF(){
     if(idx>=pool.length){
-      v.innerHTML=`<button class="btn-outline" id="fback" style="margin-bottom:16px">← Oyunlar</button>
-        <div class="quiz-box"><div class="quiz-result">🎉 ${score}/${pool.length} düzgün!<br>${score>=3?'+10 XP!':''}</div></div>`;
-      document.getElementById('fback').onclick=async()=>{if(score>=3)await addXP(10,'– Boşluq');gameBack();};
+      const won=score>=3;
+      v.innerHTML=`<button class="btn-outline" id="gback" style="margin-bottom:14px">← Oyunlar</button>
+        <div class="quiz-box">
+          <div class="quiz-result">
+            ${won?'🎉':'😊'}
+            <div class="score">${score}/${pool.length}</div>
+            <div class="grade">${won?'Əla! +10 XP qazandın!':'3 düzgün cavab lazımdır'}</div>
+          </div>
+          <button class="btn-primary" id="retryBtn" style="margin-top:14px">🔄 Yenidən Oyna</button>
+        </div>`;
+      document.getElementById('gback').onclick=gameBack;
+      if(won)addXP(10,'– Boşluğu Doldur');
+      document.getElementById('retryBtn').onclick=()=>startFill(v);
       return;
     }
     const w=pool[idx];
-    const blanked=w.ex.replace(new RegExp(w.en,'gi'),'_____');
-    v.innerHTML=`<button class="btn-outline" id="fback" style="margin-bottom:16px">← Oyunlar</button>
-      <div class="quiz-box">
-        <div style="color:var(--muted);font-size:.8rem;margin-bottom:8px">Sual ${idx+1}/${pool.length}</div>
-        <div class="quiz-q">Mənası: <b>${w.az}</b><br><br>${blanked}</div>
-        <input class="fill-input" id="fillIn" placeholder="Cavabı daxil edin..." autocomplete="off">
-        <button class="btn-sm btn-teal" id="fillCheck">Yoxla</button>
+    const blanked=w.ex.replace(new RegExp('\\b'+w.en+'\\b','gi'),'_____');
+    gameHeader(v,'✏️ Boşluğu Doldur',idx+1,pool.length);
+    v.innerHTML+=`
+      <div class="quiz-box" style="margin-top:12px">
+        <div style="font-size:.75rem;color:var(--muted);margin-bottom:10px">Mənası: <b style="color:var(--text)">${w.az}</b></div>
+        <div class="quiz-q" style="font-size:.95rem;line-height:1.8">${blanked}</div>
+        <input class="fill-input" id="fillIn" placeholder="İngilis sözünü daxil edin..." autocomplete="off" autocapitalize="none" spellcheck="false">
+        <div style="display:flex;gap:8px">
+          <button class="btn-sm btn-teal" id="fillCheck" style="flex:1">✓ Yoxla</button>
+          <button class="btn-sm" style="background:var(--card2);border:1px solid var(--border);flex:1;color:var(--muted)" id="fillSkip">Keç →</button>
+        </div>
+        <div style="font-size:.72rem;color:var(--muted);margin-top:8px">İpucu: İlk hərf — <b style="color:var(--gold)">${w.en[0].toUpperCase()}</b></div>
       </div>`;
-    document.getElementById('fback').onclick=gameBack;
-    document.getElementById('fillCheck').onclick=()=>{
+    document.getElementById('gback').onclick=gameBack;
+    const check=()=>{
       const ans=document.getElementById('fillIn').value.trim().toLowerCase();
-      if(ans===w.en.toLowerCase()){score++;showToast('Düzgün! ✅','teal');}
-      else showToast(`Cavab: ${w.en}`,'red');
+      if(ans===w.en.toLowerCase()){score++;showToast('✅ Düzgün! +10 XP','teal');spawnConfetti();}
+      else showToast(`❌ Düzgün cavab: ${w.en}`,'red');
       setTimeout(()=>{idx++;showF();},900);
     };
-    document.getElementById('fillIn').addEventListener('keydown',e=>{if(e.key==='Enter')document.getElementById('fillCheck').click();});
+    document.getElementById('fillCheck').onclick=check;
+    document.getElementById('fillSkip').onclick=()=>{showToast(`Cavab: ${w.en}`,'muted');setTimeout(()=>{idx++;showF();},700);};
+    document.getElementById('fillIn').addEventListener('keydown',e=>{if(e.key==='Enter')check();});
+    document.getElementById('fillIn').focus();
   }
   showF();
 }
 
-// MATCH GAME
+// ── MATCH ──
 function startMatch(v){
-  const pool=[...WORDS].sort(()=>Math.random()-.5).slice(0,5);
-  let selLeft=null,selRight=null,matched=0,attempts=0;
-  const lefts=[...pool].sort(()=>Math.random()-.5);
-  const rights=[...pool].sort(()=>Math.random()-.5);
+  const pool=shuffle([...WORDS]).slice(0,5);
+  let selLeft=null,selRight=null,matched=0;
+  const lefts=shuffle([...pool]);
+  const rights=shuffle([...pool]);
+
   function render(){
-    v.innerHTML=`<button class="btn-outline" id="mback" style="margin-bottom:16px">← Oyunlar</button>
-      <div class="section-title">Uyğun cütü tap</div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
-        <div>${lefts.map((w,i)=>`<div class="quiz-opt" data-li="${i}" style="margin-bottom:6px;${w._matched?'opacity:.3':''}">${w.en}</div>`).join('')}</div>
-        <div>${rights.map((w,i)=>`<div class="quiz-opt" data-ri="${i}" style="margin-bottom:6px;${w._matched?'opacity:.3':''}">${w.az}</div>`).join('')}</div>
+    gameHeader(v,'🔗 Uyğunlaşdır',matched,pool.length);
+    v.innerHTML+=`
+      <div style="font-size:.75rem;color:var(--muted);margin:8px 0 12px">Sol — İngilis, Sağ — Azərbaycan. Cütü tap!</div>
+      <div class="match-container">
+        <div>
+          <div class="match-col-title">İngilis</div>
+          <div class="match-items" id="matchLeft">
+            ${lefts.map((w,i)=>`<div class="match-item${w._matched?' matched':''}" data-li="${i}">${w._matched?'✓':w.en}</div>`).join('')}
+          </div>
+        </div>
+        <div>
+          <div class="match-col-title">Azərbaycan</div>
+          <div class="match-items" id="matchRight">
+            ${rights.map((w,i)=>`<div class="match-item${w._matched?' matched':''}" data-ri="${i}">${w._matched?'✓':w.az}</div>`).join('')}
+          </div>
+        </div>
       </div>`;
-    document.getElementById('mback').onclick=gameBack;
+    document.getElementById('gback').onclick=gameBack;
+
     v.querySelectorAll('[data-li]').forEach(b=>b.addEventListener('click',function(){
-      if(lefts[this.dataset.li]._matched)return;
-      v.querySelectorAll('[data-li]').forEach(x=>x.style.borderColor='');
-      selLeft=+this.dataset.li;this.style.borderColor='var(--purple)';
-      checkMatch();
+      if(lefts[+this.dataset.li]._matched)return;
+      v.querySelectorAll('[data-li]').forEach(x=>x.classList.remove('selected'));
+      selLeft=+this.dataset.li;this.classList.add('selected');tryMatch();
     }));
     v.querySelectorAll('[data-ri]').forEach(b=>b.addEventListener('click',function(){
-      if(rights[this.dataset.ri]._matched)return;
-      v.querySelectorAll('[data-ri]').forEach(x=>x.style.borderColor='');
-      selRight=+this.dataset.ri;this.style.borderColor='var(--teal)';
-      checkMatch();
+      if(rights[+this.dataset.ri]._matched)return;
+      v.querySelectorAll('[data-ri]').forEach(x=>x.classList.remove('selected'));
+      selRight=+this.dataset.ri;this.classList.add('selected');tryMatch();
     }));
   }
-  function checkMatch(){
+
+  function tryMatch(){
     if(selLeft===null||selRight===null)return;
-    attempts++;
     if(lefts[selLeft].en===rights[selRight].en){
       lefts[selLeft]._matched=rights[selRight]._matched=true;
       matched++;selLeft=selRight=null;
       if(matched===pool.length){
         setTimeout(async()=>{
-          v.innerHTML=`<div class="quiz-box"><div class="quiz-result">🎉 Hamısını tapdın!<br>+10 XP!</div></div>`;
-          await addXP(10,'– Uyğunlaşdır');
-          setTimeout(gameBack,1500);
-        },300);return;
+          v.innerHTML=`<button class="btn-outline" id="gback" style="margin-bottom:14px">← Oyunlar</button>
+            <div class="quiz-box"><div class="quiz-result">🎉<div class="score">${pool.length}/${pool.length}</div><div class="grade">Hamısını tapdın! +10 XP!</div></div>
+            <button class="btn-primary" id="retryBtn" style="margin-top:14px">🔄 Yenidən Oyna</button></div>`;
+          document.getElementById('gback').onclick=gameBack;
+          document.getElementById('retryBtn').onclick=()=>startMatch(v);
+          await addXP(10,'– Uyğunlaşdır');spawnConfetti();
+        },200);return;
       }
-    } else {selLeft=selRight=null;}
-    render();
+      render();
+    }else{
+      const lEl=v.querySelector(`[data-li="${selLeft}"]`);
+      const rEl=v.querySelector(`[data-ri="${selRight}"]`);
+      lEl&&lEl.classList.add('wrong-flash');rEl&&rEl.classList.add('wrong-flash');
+      setTimeout(()=>{
+        v.querySelectorAll('.wrong-flash').forEach(x=>x.classList.remove('wrong-flash','selected'));
+        selLeft=selRight=null;
+      },500);
+    }
   }
   render();
 }
 
-// FLASHCARD
+// ── FLASHCARD ──
 function startFlash(v){
-  const pool=[...WORDS].sort(()=>Math.random()-.5).slice(0,8);
-  let idx=0,flipped=false;
+  const pool=shuffle([...WORDS]).slice(0,8);
+  let idx=0,flipped=false,known=0;
   function show(){
     if(idx>=pool.length){
-      v.innerHTML=`<div class="quiz-box"><div class="quiz-result">⚡ Flashcard tamamlandı!<br>+10 XP!</div></div>`;
-      addXP(10,'– Flashcard');setTimeout(gameBack,1500);return;
+      v.innerHTML=`<button class="btn-outline" id="gback" style="margin-bottom:14px">← Oyunlar</button>
+        <div class="quiz-box"><div class="quiz-result">⚡<div class="score">${known}/${pool.length}</div><div class="grade">Bildilər: ${known} · Bilinmədilər: ${pool.length-known}<br>+10 XP!</div></div>
+        <button class="btn-primary" id="retryBtn" style="margin-top:14px">🔄 Yenidən Oyna</button></div>`;
+      document.getElementById('gback').onclick=gameBack;
+      document.getElementById('retryBtn').onclick=()=>startFlash(v);
+      addXP(10,'– Flashkart');return;
     }
     const w=pool[idx];
-    v.innerHTML=`<button class="btn-outline" id="flback" style="margin-bottom:16px">← Oyunlar</button>
-      <div style="color:var(--muted);font-size:.8rem;margin-bottom:12px">Kart ${idx+1}/${pool.length}</div>
-      <div class="quiz-box" id="flashCard" style="cursor:pointer;min-height:140px;display:flex;align-items:center;justify-content:center;flex-direction:column;user-select:none">
-        <div style="font-size:1.5rem;font-weight:700;font-family:var(--font-head)">${flipped?w.az:w.en}</div>
-        <div style="color:var(--muted);font-size:.78rem;margin-top:10px">${flipped?'Azərbaycan':'İngilis'} · Çevirmək üçün klik et</div>
+    gameHeader(v,'⚡ Flashkart',idx+1,pool.length);
+    v.innerHTML+=`
+      <div class="flash-card" id="flashCard">
+        <div class="flash-label">${flipped?'Azərbaycan':'İngilis'}</div>
+        <div class="${flipped?'flash-back':'flash-front'}">${flipped?w.az:w.en}</div>
+        ${flipped?`<div style="font-size:.75rem;color:var(--muted);margin-top:8px;font-style:italic">"${w.ex}"</div>`:''}
       </div>
-      <div style="display:flex;gap:10px;margin-top:12px;justify-content:center">
-        <button class="btn-sm" style="background:var(--red);color:#fff" id="fNo">❌ Bilmirəm</button>
-        <button class="btn-sm btn-teal" id="fYes">✅ Bilirəm</button>
+      <div class="flash-actions">
+        <button class="flash-btn no" id="fNo">❌ Bilmirəm</button>
+        <button class="flash-btn yes" id="fYes">✅ Bilirəm</button>
       </div>`;
-    document.getElementById('flback').onclick=gameBack;
+    document.getElementById('gback').onclick=gameBack;
     document.getElementById('flashCard').onclick=()=>{flipped=!flipped;show();};
     document.getElementById('fNo').onclick=()=>{flipped=false;idx++;show();};
-    document.getElementById('fYes').onclick=()=>{flipped=false;idx++;show();};
+    document.getElementById('fYes').onclick=()=>{known++;flipped=false;idx++;show();};
   }
   show();
 }
 
-// SYNONYM GAME
+// ── SYNONYM ──
 function startSynonym(v){
-  function rand(arr){return arr[Math.floor(Math.random()*arr.length)];}
-  const w=rand(allWords.filter(x=>x.synonyms.length>0));
-  const correct=rand(w.synonyms);
-  const wrong=[...allWords].filter(x=>x.word!==w.word).sort(()=>Math.random()-.5).slice(0,2).map(x=>x.word);
-  const options=[correct,...wrong].sort(()=>Math.random()-.5);
-  let answered=false;
-  v.innerHTML=`<button class="btn-outline" id="synback" style="margin-bottom:16px">← Oyunlar</button>
-    <div class="quiz-box">
-      <div style="color:var(--muted);font-size:.8rem;margin-bottom:8px">Sinonim Tap</div>
-      <div class="quiz-q" style="font-size:1.3rem;text-align:center;margin-bottom:6px">"${w.word}"</div>
-      <div style="color:var(--muted);font-size:.85rem;margin-bottom:16px;text-align:center">Bu sözün sinonimlərindən birini seç:</div>
-      <div class="quiz-opts">${options.map(o=>`<button class="quiz-opt" data-correct="${o===correct}">${o}</button>`).join('')}</div>
-    </div>`;
-  document.getElementById('synback').onclick=gameBack;
-  v.querySelectorAll('.quiz-opt').forEach(btn=>btn.addEventListener('click',async function(){
-    if(answered)return; answered=true;
-    v.querySelectorAll('.quiz-opt').forEach(b=>b.disabled=true);
-    if(this.dataset.correct==='true'){
-      this.classList.add('correct');
-      showToast('Düzgün! +10 XP ✅','teal');
-      await addXP(10,'– Sinonim');
-      spawnConfetti();
-    } else {
-      this.classList.add('wrong');
-      v.querySelector('[data-correct="true"]').classList.add('correct');
-      showToast('Yanlış! Yenidən cəhd et.','red');
+  const pool=shuffle([...AZ_WORDS]).slice(0,5);
+  let idx=0,score=0;
+  function showS(){
+    if(idx>=pool.length){
+      const won=score>=4;
+      v.innerHTML=`<button class="btn-outline" id="gback" style="margin-bottom:14px">← Oyunlar</button>
+        <div class="quiz-box"><div class="quiz-result">${won?'🎉':'😊'}<div class="score">${score}/${pool.length}</div>
+        <div class="grade">${won?'+10 XP qazandın!':'4 düzgün lazımdır'}</div></div>
+        <button class="btn-primary" id="retryBtn" style="margin-top:14px">🔄 Yenidən Oyna</button></div>`;
+      document.getElementById('gback').onclick=gameBack;
+      if(won)addXP(10,'– Sinonim Tap');
+      document.getElementById('retryBtn').onclick=()=>startSynonym(v);
+      return;
     }
-    setTimeout(gameBack,1400);
-  }));
+    const w=pool[idx];
+    const correct=rnd(w.synonyms);
+    const wrongs=shuffle(AZ_WORDS.filter(x=>x.word!==w.word)).slice(0,3).map(x=>x.word);
+    const opts=shuffle([correct,...wrongs.slice(0,2)]);
+    gameHeader(v,'🔄 Sinonim Tap',idx+1,pool.length);
+    v.innerHTML+=`
+      <div class="quiz-box" style="margin-top:12px">
+        <div style="font-size:.75rem;color:var(--muted);margin-bottom:8px">Bu sözün sinonimlərindən birini seç:</div>
+        <div class="quiz-word-big">${w.word}</div>
+        <div class="quiz-hint">${w.meaning}</div>
+        <div class="quiz-opts">${opts.map(o=>`<button class="quiz-opt" data-correct="${o===correct}">${o}</button>`).join('')}</div>
+      </div>`;
+    document.getElementById('gback').onclick=gameBack;
+    v.querySelectorAll('.quiz-opt').forEach(btn=>btn.addEventListener('click',function(){
+      v.querySelectorAll('.quiz-opt').forEach(b=>b.disabled=true);
+      if(this.dataset.correct==='true'){this.classList.add('correct');score++;showToast('✅ Düzgün!','teal');}
+      else{this.classList.add('wrong');v.querySelector('[data-correct="true"]').classList.add('correct');showToast('❌ Yanlış!','red');}
+      setTimeout(()=>{idx++;showS();},1000);
+    }));
+  }
+  showS();
 }
 
-// ANTONYM GAME
+// ── ANTONYM ──
 function startAntonym(v){
-  function rand(arr){return arr[Math.floor(Math.random()*arr.length)];}
-  const w=rand(allWords.filter(x=>x.antonyms.length>0));
-  const correct=rand(w.antonyms);
-  const wrong=[...allWords].filter(x=>x.word!==w.word).sort(()=>Math.random()-.5).slice(0,2).map(x=>x.word);
-  const options=[correct,...wrong].sort(()=>Math.random()-.5);
-  let answered=false;
-  v.innerHTML=`<button class="btn-outline" id="antback" style="margin-bottom:16px">← Oyunlar</button>
-    <div class="quiz-box">
-      <div style="color:var(--muted);font-size:.8rem;margin-bottom:8px">Antonim Tap</div>
-      <div class="quiz-q" style="font-size:1.3rem;text-align:center;margin-bottom:6px">"${w.word}"</div>
-      <div style="color:var(--muted);font-size:.85rem;margin-bottom:16px;text-align:center">Bu sözün antonimini seç:</div>
-      <div class="quiz-opts">${options.map(o=>`<button class="quiz-opt" data-correct="${o===correct}">${o}</button>`).join('')}</div>
-    </div>`;
-  document.getElementById('antback').onclick=gameBack;
-  v.querySelectorAll('.quiz-opt').forEach(btn=>btn.addEventListener('click',async function(){
-    if(answered)return; answered=true;
-    v.querySelectorAll('.quiz-opt').forEach(b=>b.disabled=true);
-    if(this.dataset.correct==='true'){
-      this.classList.add('correct');
-      showToast('Düzgün! +10 XP ✅','teal');
-      await addXP(10,'– Antonim');
-      spawnConfetti();
-    } else {
-      this.classList.add('wrong');
-      v.querySelector('[data-correct="true"]').classList.add('correct');
-      showToast('Yanlış! Yenidən cəhd et.','red');
+  const pool=shuffle([...AZ_WORDS]).slice(0,5);
+  let idx=0,score=0;
+  function showA(){
+    if(idx>=pool.length){
+      const won=score>=4;
+      v.innerHTML=`<button class="btn-outline" id="gback" style="margin-bottom:14px">← Oyunlar</button>
+        <div class="quiz-box"><div class="quiz-result">${won?'🎉':'😊'}<div class="score">${score}/${pool.length}</div>
+        <div class="grade">${won?'+10 XP qazandın!':'4 düzgün lazımdır'}</div></div>
+        <button class="btn-primary" id="retryBtn" style="margin-top:14px">🔄 Yenidən Oyna</button></div>`;
+      document.getElementById('gback').onclick=gameBack;
+      if(won)addXP(10,'– Antonim Tap');
+      document.getElementById('retryBtn').onclick=()=>startAntonym(v);
+      return;
     }
-    setTimeout(gameBack,1400);
-  }));
+    const w=pool[idx];
+    const correct=rnd(w.antonyms);
+    const wrongs=shuffle(AZ_WORDS.filter(x=>x.word!==w.word)).slice(0,3).map(x=>x.word);
+    const opts=shuffle([correct,...wrongs.slice(0,2)]);
+    gameHeader(v,'🔀 Antonim Tap',idx+1,pool.length);
+    v.innerHTML+=`
+      <div class="quiz-box" style="margin-top:12px">
+        <div style="font-size:.75rem;color:var(--muted);margin-bottom:8px">Bu sözün antonimini seç:</div>
+        <div class="quiz-word-big">${w.word}</div>
+        <div class="quiz-hint">${w.meaning}</div>
+        <div class="quiz-opts">${opts.map(o=>`<button class="quiz-opt" data-correct="${o===correct}">${o}</button>`).join('')}</div>
+      </div>`;
+    document.getElementById('gback').onclick=gameBack;
+    v.querySelectorAll('.quiz-opt').forEach(btn=>btn.addEventListener('click',function(){
+      v.querySelectorAll('.quiz-opt').forEach(b=>b.disabled=true);
+      if(this.dataset.correct==='true'){this.classList.add('correct');score++;showToast('✅ Düzgün!','teal');}
+      else{this.classList.add('wrong');v.querySelector('[data-correct="true"]').classList.add('correct');showToast('❌ Yanlış!','red');}
+      setTimeout(()=>{idx++;showA();},1000);
+    }));
+  }
+  showA();
 }
 
-// CONFETTI
+// ── CONFETTI ──
 function spawnConfetti(){
   const colors=['var(--gold)','var(--teal)','var(--purple)','var(--red)','var(--green)'];
-  for(let i=0;i<28;i++){
+  if(!document.getElementById('_cstyle')){
+    const s=document.createElement('style');s.id='_cstyle';
+    s.textContent='@keyframes _cfall{to{top:110vh;transform:translateX(80px) rotate(720deg);opacity:0}}';
+    document.head.appendChild(s);}
+  for(let i=0;i<30;i++){
     const c=document.createElement('div');
-    c.style.cssText=`position:fixed;width:9px;height:9px;border-radius:2px;top:-10px;z-index:999;pointer-events:none;
+    c.style.cssText=`position:fixed;width:9px;height:9px;border-radius:2px;top:-12px;z-index:9999;pointer-events:none;
       left:${Math.random()*100}%;background:${colors[Math.floor(Math.random()*colors.length)]};
-      animation:confettiFall ${2+Math.random()}s linear ${Math.random()*0.4}s forwards`;
-    document.body.appendChild(c);
-    setTimeout(()=>c.remove(),3200);
-  }
-  if(!document.getElementById('confettiStyle')){
-    const s=document.createElement('style');
-    s.id='confettiStyle';
-    s.textContent='@keyframes confettiFall{to{top:110vh;transform:translateX(80px) rotate(720deg);opacity:0}}';
-    document.head.appendChild(s);
-  }
+      animation:_cfall ${1.8+Math.random()*1.2}s linear ${Math.random()*0.4}s forwards`;
+    document.body.appendChild(c);setTimeout(()=>c.remove(),3500);}
 }
 
-// ══════════════════════════════════════════════════════
+// ══════════════════════════════════════════════
 // VOCAB VIEW
-// ══════════════════════════════════════════════════════
+// ══════════════════════════════════════════════
+let vocabFilter='all';
 function renderVocab(){
   const v=document.getElementById('viewVocab');
-  v.innerHTML=`<div class="section-title">📚 Söz Lüğəti</div>
-    <input class="vocab-search" id="vocabSearch" placeholder="🔍 Axtar...">
-    <div id="wordList"></div>`;
-  renderWordList('');
+  v.innerHTML=`
+    <div class="section-title">📚 Söz Lüğəti</div>
+    <input class="vocab-search" id="vocabSearch" placeholder="🔍 Söz axtar...">
+    <div class="vocab-filter">
+      <button class="vf-btn active" data-vf="all">Hamısı</button>
+      <button class="vf-btn" data-vf="learned">Öyrənilənlər</button>
+      <button class="vf-btn" data-vf="B2">B2</button>
+      <button class="vf-btn" data-vf="C1">C1</button>
+    </div>
+    <div id="vocabList"></div>`;
+  v.querySelectorAll('.vf-btn').forEach(b=>b.addEventListener('click',function(){
+    v.querySelectorAll('.vf-btn').forEach(x=>x.classList.remove('active'));
+    this.classList.add('active');vocabFilter=this.dataset.vf;
+    renderWordList(document.getElementById('vocabSearch').value||'');
+  }));
   document.getElementById('vocabSearch').addEventListener('input',function(){renderWordList(this.value);});
+  renderWordList('');
 }
+
 function renderWordList(q){
-  const list=document.getElementById('wordList');
+  let filtered=[...WORDS];
+  if(q)filtered=filtered.filter(w=>w.en.toLowerCase().includes(q.toLowerCase())||w.az.toLowerCase().includes(q.toLowerCase()));
+  if(vocabFilter==='learned')filtered=filtered.filter(w=>(currentUser.learned||[]).includes(w.en));
+  else if(vocabFilter!=='all')filtered=filtered.filter(w=>w.tags&&w.tags.includes(vocabFilter));
+  const list=document.getElementById('vocabList');
   if(!list)return;
-  const filtered=WORDS.filter(w=>w.en.toLowerCase().includes(q.toLowerCase())||w.az.toLowerCase().includes(q.toLowerCase()));
+  if(!filtered.length){list.innerHTML='<p style="color:var(--muted);font-size:.83rem">Söz tapılmadı.</p>';return;}
   list.innerHTML=filtered.map(w=>{
     const learned=(currentUser.learned||[]).includes(w.en);
     return`<div class="word-card${learned?' learned':''}" data-en="${w.en}">
       <div style="display:flex;justify-content:space-between;align-items:center">
         <div><div class="word-en">${w.en}</div><div class="word-az">${w.az}</div></div>
-        <div class="tag">${w.tags[0]}</div>
+        <div class="tag">${(w.tags||[])[0]||''}</div>
       </div>
       <div class="word-detail">
-        <div class="word-ex">"${w.ex}"</div>
+        <div class="word-ex">🇬🇧 "${w.ex}"</div>
+        ${w.exAz?`<div class="word-ex-az">🇦🇿 "${w.exAz}"</div>`:''}
         <button class="btn-learn${learned?' btn-learned':''}" data-wrd="${w.en}">${learned?'✅ Öyrənildi':'📌 Öyrəndim'}</button>
       </div>
     </div>`;
   }).join('');
   list.querySelectorAll('.word-card').forEach(c=>c.addEventListener('click',function(e){
-    if(e.target.classList.contains('btn-learn'))return;
-    this.classList.toggle('open');
-  }));
+    if(e.target.classList.contains('btn-learn'))return;this.classList.toggle('open');}));
   list.querySelectorAll('.btn-learn').forEach(b=>b.addEventListener('click',async function(e){
-    e.stopPropagation();
-    const wrd=this.dataset.wrd;
+    e.stopPropagation();const wrd=this.dataset.wrd;
     if(!(currentUser.learned||[]).includes(wrd)){
       currentUser.learned=[...(currentUser.learned||[]),wrd];
-      await saveProfile({learned:currentUser.learned});
-      await addXP(2,'– Yeni söz');
+      await saveProfile({learned:currentUser.learned});await addXP(2,'– Yeni söz');
       renderWordList(document.getElementById('vocabSearch')?.value||'');
     }
   }));
 }
 
-// ══════════════════════════════════════════════════════
+// ══════════════════════════════════════════════
 // CREATIVE VIEW
-// ══════════════════════════════════════════════════════
+// ══════════════════════════════════════════════
 const STORY_PROMPTS=[
-  'Gəmidə tufan zamanı bir sirli qonaq gəldi...',
+  'Gəmidə tufan zamanı sirli bir qonaq gəldi...',
   'Şəhərin ortasında anidən işıqlar söndü...',
   'Kitabxanada qədim bir xəritə tapdım...',
   'Robotlar insanlardan üzr istəməyə başladı...',
   'Körpünün altında gizli bir dünya var idi...',
+  'Dağın zirvəsindən gözlənilməz bir işarə gördüm...',
+  'Uşaqlıqda itirdiyim oyuncağı anidən tapdım...',
 ];
 function renderCreative(){
   const v=document.getElementById('viewCreative');
@@ -1125,33 +1366,33 @@ function renderCreative(){
   v.innerHTML=`
     <div class="section-title">✍️ Yaradıcı Yazı (+15 XP)</div>
     <div class="story-prompt">
-      <div class="story-prompt-label">💡 Mövzu</div>
+      <div class="story-prompt-label">💡 Bu mövzudan başla</div>
       <div class="story-prompt-text">${prompt}</div>
     </div>
-    <textarea class="story-area" id="storyArea" placeholder="Hekayənizi buraya yazın..."></textarea>
+    <textarea class="story-area" id="storyArea" placeholder="Hekayənizi buraya yazın... (ən az 30 simvol)" maxlength="1000"></textarea>
+    <div class="char-count"><span id="charCount">0</span>/1000</div>
     <button class="btn-primary" id="submitStory" style="margin-bottom:20px">📤 Paylaş (+15 XP)</button>
     <div class="section-title">📖 Son Hekayələr</div>
-    <div id="storiesList"><p style="color:var(--muted);font-size:.85rem">Yüklənir...</p></div>
-  `;
+    <div id="storiesList"><p style="color:var(--muted);font-size:.83rem">Yüklənir...</p></div>`;
+  document.getElementById('storyArea').addEventListener('input',function(){
+    document.getElementById('charCount').textContent=this.value.length;});
   document.getElementById('submitStory').addEventListener('click',async()=>{
     const text=document.getElementById('storyArea').value.trim();
-    if(text.length<20){showToast('Ən az 20 simvol yazın!','red');return;}
+    if(text.length<30){showToast('Ən az 30 simvol yazın!','red');return;}
     try{
       await sb.from('stories').insert([{username:currentUser.username,display_name:currentUser.display_name,text,likes:0}]);
-      await addXP(15,'– Hekayə');
-      document.getElementById('storyArea').value='';
-      loadStories();
-      showToast('Hekayə paylaşıldı! 🎉','teal');
+      await addXP(15,'– Hekayə');document.getElementById('storyArea').value='';
+      document.getElementById('charCount').textContent='0';
+      loadStories();showToast('Hekayə paylaşıldı! 🎉','teal');spawnConfetti();
     }catch(e){showToast('Xəta!','red');}
   });
   loadStories();
 }
 async function loadStories(){
-  const div=document.getElementById('storiesList');
-  if(!div)return;
+  const div=document.getElementById('storiesList');if(!div)return;
   let data=[];
   try{const r=await sb.from('stories').select().order('created_at',{ascending:false}).limit(20);data=r.data||[];}catch(e){}
-  if(!data.length){div.innerHTML='<p style="color:var(--muted);font-size:.85rem">Hələ hekayə yoxdur.</p>';return;}
+  if(!data.length){div.innerHTML='<p style="color:var(--muted);font-size:.83rem">Hələ hekayə yoxdur.</p>';return;}
   div.innerHTML=data.map(s=>`
     <div class="story-card">
       <div class="story-meta">
@@ -1163,9 +1404,9 @@ async function loadStories(){
     </div>`).join('');
 }
 
-// ══════════════════════════════════════════════════════
+// ══════════════════════════════════════════════
 // LEADERBOARD
-// ══════════════════════════════════════════════════════
+// ══════════════════════════════════════════════
 async function renderLeaderboard(){
   const v=document.getElementById('viewLeaderboard');
   v.innerHTML=`<div class="section-title">🏆 Liderboard</div><p style="color:var(--muted)">Yüklənir...</p>`;
@@ -1174,122 +1415,173 @@ async function renderLeaderboard(){
   const medals=['🥇','🥈','🥉'];
   v.innerHTML=`<div class="section-title">🏆 Liderboard</div>`+
     data.map((u,i)=>`
-      <div class="lb-row${u.username===currentUser.username?' me':''}">
+      <div class="lb-row${u.username===currentUser?.username?' me':''}">
         <div class="lb-rank${i<3?' top'+(i+1):''}">${medals[i]||i+1}</div>
         <div class="lb-avatar">${(u.display_name||u.username||'?')[0].toUpperCase()}</div>
-        <div>
-          <div class="lb-name">${u.display_name||u.username}${u.username===currentUser.username?' (sən)':''}</div>
-          <div style="font-size:.72rem;color:var(--muted)">Səviyyə ${u.level} · 🔥${u.streak}</div>
+        <div style="flex:1;min-width:0">
+          <div class="lb-name">${u.display_name||u.username}${u.username===currentUser?.username?' 👈':''}</div>
+          <div class="lb-sub">Sə. ${u.level} · 🔥${u.streak} gün</div>
         </div>
         <div class="lb-xp">${u.xp} XP</div>
       </div>`).join('');
 }
 
-// ══════════════════════════════════════════════════════
-// PROFILE VIEW
-// ══════════════════════════════════════════════════════
+// ══════════════════════════════════════════════
+// PROFILE
+// ══════════════════════════════════════════════
 function renderProfile(){
-  const u=currentUser;
-  const v=document.getElementById('viewProfile');
+  const u=currentUser;const v=document.getElementById('viewProfile');
   v.innerHTML=`
     <div class="profile-header">
       <div class="profile-big-av">${(u.display_name||u.username||'?')[0].toUpperCase()}</div>
       <div class="profile-name">${u.display_name||u.username}</div>
-      <div class="profile-level">Səviyyə ${u.level} · ${u.xp} XP</div>
+      <div class="profile-level">Səviyyə ${u.level} · ${u.xp} XP · 🔥${u.streak} gün</div>
     </div>
     <div class="profile-section">
-      <h3>Ad dəyişdir</h3>
+      <h3>✏️ Ad dəyişdir</h3>
       <input class="profile-input" id="newName" value="${u.display_name||u.username}" placeholder="Yeni ad">
       <button class="btn-sm btn-teal" id="saveNameBtn">Yadda saxla</button>
     </div>
     <div class="profile-section">
-      <h3>Hesab</h3>
-      <div style="display:flex;gap:10px">
-        <button class="btn-outline" id="logoutBtn">🚪 Çıxış</button>
-        <button class="btn-danger" id="deleteBtn">🗑️ Hesabı sil</button>
+      <h3>📊 Statistikam</h3>
+      <div style="font-size:.83rem;color:var(--muted);line-height:1.8">
+        Öyrənilən sözlər: <b style="color:var(--text)">${(u.learned||[]).length}</b><br>
+        Ümumi XP: <b style="color:var(--gold)">${u.xp}</b><br>
+        Gün seriyası: <b style="color:var(--teal)">🔥${u.streak}</b>
       </div>
     </div>
-  `;
+    <div class="profile-section">
+      <h3>⚙️ Hesab</h3>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button class="btn-outline" id="logoutBtn">🚪 Çıxış</button>
+        <button class="btn-danger" id="deleteBtn">🗑️ Hesabı Sil</button>
+      </div>
+    </div>`;
   document.getElementById('saveNameBtn').addEventListener('click',async()=>{
     const name=document.getElementById('newName').value.trim();
     if(!name){showToast('Ad boş ola bilməz!','red');return;}
-    currentUser.display_name=name;
-    await saveProfile({display_name:name});
+    currentUser.display_name=name;await saveProfile({display_name:name});
     updateTopBar();renderProfile();showToast('Ad yeniləndi!','teal');
   });
   document.getElementById('logoutBtn').addEventListener('click',()=>{
     currentUser=null;aiHistory=[];currentGame=null;
-    showScreen('loginScreen');
-    document.getElementById('studentName').value='';
-    showToast('Çıxış edildi','muted');
+    showScreen('loginScreen');document.getElementById('studentName').value='';showToast('Çıxış edildi','muted');
   });
   document.getElementById('deleteBtn').addEventListener('click',async()=>{
     if(!confirm('Hesabınızı silmək istədiyinizdən əminsiniz?'))return;
-    try{
-      await sb.from('stories').delete().eq('username',currentUser.username);
-      await sb.from('profiles').delete().eq('username',currentUser.username);
-    }catch(e){}
+    try{await sb.from('stories').delete().eq('username',currentUser.username);
+      await sb.from('profiles').delete().eq('username',currentUser.username);}catch(e){}
     currentUser=null;showScreen('loginScreen');showToast('Hesab silindi','red');
   });
 }
 
-// ══════════════════════════════════════════════════════
-// AI VIEW
-// ══════════════════════════════════════════════════════
+// ══════════════════════════════════════════════
+// AI VIEW — yalnız SözLab haqqında
+// ══════════════════════════════════════════════
 function renderAI(){
   const v=document.getElementById('viewAI');
+  if(v.querySelector('.ai-chat'))return;
   v.innerHTML=`
-    <div class="section-title">🤖 Fərdi AI Müəllim</div>
+    <div style="padding:14px 16px;border-bottom:1px solid var(--border);flex-shrink:0">
+      <div class="section-title" style="margin-bottom:4px">🤖 SözLab AI Köməkçisi</div>
+      <div style="font-size:.75rem;color:var(--muted)">Azərbaycan və ingilis dili, SözLab haqqında sual verin</div>
+    </div>
     <div class="ai-chat" id="aiChat">
-      <div class="ai-msg bot">Salam! Mən SözLab AI-yəm. İngilis dili haqqında istənilən sualı soruşun — söz mənası, qrammatika, cümlə nümunəsi. 😊</div>
+      <div class="ai-msg bot">Salam! Mən SözLab AI köməkçisiyəm 👋<br><br>
+        Mənə bunları soruşa bilərsiniz:<br>
+        📚 Söz mənası və istifadəsi<br>
+        🎮 Oyunlar haqqında<br>
+        🔤 Azərbaycan əlifbası<br>
+        📖 Lüğət və qrammatika<br>
+        ⭐ XP sistemi haqqında
+      </div>
+    </div>
+    <div class="ai-chips">
+      <span class="ai-chip">"Ambiguous" nə deməkdir?</span>
+      <span class="ai-chip">Sinonim oyunu necə işləyir?</span>
+      <span class="ai-chip">XP necə qazanıram?</span>
+      <span class="ai-chip">Ə hərfi nə kimi tələffüz olunur?</span>
     </div>
     <div class="ai-input-row">
       <input class="ai-input" id="aiInput" placeholder="Sualınızı yazın...">
       <button class="ai-send" id="aiSendBtn">➤</button>
-    </div>
-  `;
-  const send=async()=>{
+    </div>`;
+
+  v.querySelectorAll('.ai-chip').forEach(chip=>chip.addEventListener('click',()=>{
+    document.getElementById('aiInput').value=chip.textContent;sendAI();
+  }));
+
+  async function sendAI(){
     const inp=document.getElementById('aiInput');
-    const msg=inp.value.trim();
-    if(!msg)return;
+    const msg=inp.value.trim();if(!msg)return;
     inp.value='';
     addAIMsg(msg,'user');
     aiHistory.push({role:'user',content:msg});
-    const thinking=addAIMsg('...','bot');
+
+    const dot=document.createElement('div');dot.className='ai-msg bot';
+    dot.innerHTML='<div class="ai-typing"><span></span><span></span><span></span></div>';
+    document.getElementById('aiChat').appendChild(dot);
+    document.getElementById('aiChat').scrollTop=9999;
+
+    const PLATFORM_INFO=`
+SözLab platforması haqqında tam məlumat:
+- SözLab: Azərbaycan dili öyrənmə platforması
+- 6 oyun: Mənası Nədir (ingilis sözün mənasını tap), Boşluğu Doldur (cümləni tamamla), Uyğunlaşdır (ingilis-azərbaycan cütlərini tap), Flashkart (kartı çevirərək öyrən), Sinonim Tap (eyni mənalı Azərbaycan sözü), Antonim Tap (əks mənalı Azərbaycan sözü)
+- XP sistemi: Oyundan +10 XP, Günün sözündən +5 XP, Yeni söz öyrənmədən +2 XP, Hekayə yazmaqdan +15 XP
+- Səviyyə sistemi: hər 100 XP = 1 səviyyə yüksəlmə
+- Gün seriyası (streak): hər gün daxil olduqda artar
+- Lüğət: B2 və C1 səviyyəli ingilis sözləri, hər sözün Azərbaycan mənası və nümunə cümləsi var
+- Azərbaycan əlifbası: 32 hərf, latın əsaslı (1991-dən), xüsusi hərflər: Ə Ğ X I İ Ö Ş Ü Q Ç
+- Yaradıcı yazı: mövzu verilir, hekayə yazılır, paylaşılır
+- AI köməkçi: yalnız SözLab, Azərbaycan dili və ingilis dili suallarına cavab verir
+- Admin paneli: statistika, istifadəçi idarəsi, söz əlavə etmə, duyuru göndərmə
+`;
     try{
       const res=await fetch('https://api.anthropic.com/v1/messages',{
         method:'POST',
         headers:{'Content-Type':'application/json','anthropic-dangerous-direct-browser-access':'true'},
         body:JSON.stringify({
-          model:'claude-sonnet-4-20250514',max_tokens:400,
-          system:`Sən SözLab platformasının AI ingilis dili müəllimisin. İstifadəçi Azərbaycan dilli tələbədir. Qısa, sadə, faydalı cavablar ver. Sözlər üçün mütləq nümunə cümlə ver.`,
+          model:'claude-sonnet-4-20250514',max_tokens:500,
+          system:`Sən SözLab platformasının AI köməkçisisin. Aşağıdakı məlumatları bilirsən:
+
+${PLATFORM_INFO}
+
+QAYDALAR:
+1. YALNIZ SözLab platforması, Azərbaycan dili və ingilis dili haqqında sual-cavab ver
+2. Siyasət, xəbər, məşhurlar, tarixi hadisələr, texnologiya, yemək resepti, musiqi, film kimi mövzulara CAVAB VERMƏ
+3. Belə hallarda deyirsən: "Üzr istəyirəm, mən yalnız SözLab platforması və dil öyrənmə ilə bağlı sualları cavablandıra bilərəm."
+4. Cavablarını Azərbaycan dilində ver, qısa və aydın ol
+5. Söz mənası soruşulsa, həm mənasını, həm nümunə cümləsini ver`,
           messages:aiHistory
         })
       });
       const d=await res.json();
       const reply=d.content?.[0]?.text||'Cavab alına bilmədi.';
       aiHistory.push({role:'assistant',content:reply});
-      thinking.textContent=reply;
-    }catch(e){thinking.textContent='Xəta baş verdi. Yenidən cəhd edin.';}
+      dot.innerHTML=reply.replace(/\n/g,'<br>');
+    }catch(e){dot.textContent='Xəta baş verdi. Yenidən cəhd edin.';}
     document.getElementById('aiChat')?.scrollTo(0,9999);
-  };
+  }
+
   function addAIMsg(text,role){
     const chat=document.getElementById('aiChat');
-    const d=document.createElement('div');
-    d.className=`ai-msg ${role}`;d.textContent=text;
+    const d=document.createElement('div');d.className=`ai-msg ${role}`;d.textContent=text;
     chat.appendChild(d);chat.scrollTop=chat.scrollHeight;return d;
   }
-  document.getElementById('aiSendBtn').addEventListener('click',send);
-  document.getElementById('aiInput').addEventListener('keydown',e=>{if(e.key==='Enter')send();});
+
+  document.getElementById('aiSendBtn').addEventListener('click',sendAI);
+  document.getElementById('aiInput').addEventListener('keydown',e=>{if(e.key==='Enter')sendAI();});
 }
 
-// ══════════════════════════════════════════════════════
+// ══════════════════════════════════════════════
 // ADMIN PANEL
-// ══════════════════════════════════════════════════════
+// ══════════════════════════════════════════════
 async function openAdmin(){
   showScreen('adminScreen');
   loadAdminStats();
+  renderAdminWords();
 }
+
 async function loadAdminStats(){
   let uc=0,sc=0,ac=0;
   try{const r=await sb.from('profiles').select('id',{count:'exact',head:true});if(r.count!==undefined)uc=r.count;}catch(e){}
@@ -1300,37 +1592,111 @@ async function loadAdminStats(){
   document.getElementById('aStatStories').textContent=sc;
   document.getElementById('aStatWords').textContent=WORDS.length;
   document.getElementById('aStatActive').textContent=ac;
+
+  // System info
+  const si=document.getElementById('sysInfo');
+  if(si){si.innerHTML=`
+    📅 Tarix: ${new Date().toLocaleString('az-AZ')}<br>
+    📝 Toplam söz: ${WORDS.length}<br>
+    🔤 Əlifba hərfi: ${ALPHABET.length}<br>
+    👁️ Admin paneli aktiv`;}
+
+  // Chart
+  let topUsers=[];
+  try{const r=await sb.from('profiles').select('display_name,username,xp').order('xp',{ascending:false}).limit(5);topUsers=r.data||[];}catch(e){}
+  const chart=document.getElementById('adminChart');
+  if(chart&&topUsers.length){
+    const maxXP=Math.max(...topUsers.map(u=>u.xp),1);
+    chart.innerHTML=topUsers.map((u,i)=>{
+      const pct=Math.round((u.xp/maxXP)*100);
+      const colors=['var(--gold)','var(--teal)','var(--purple)','var(--green)','var(--red)'];
+      return`<div class="admin-chart-bar-row">
+        <div class="admin-chart-label">${(u.display_name||u.username||'?').slice(0,10)}</div>
+        <div class="admin-chart-bar"><div class="admin-chart-fill" style="width:${pct}%;background:${colors[i]}"></div></div>
+        <div class="admin-chart-val">${u.xp}</div>
+      </div>`;}).join('');}
 }
+
 async function loadAdminUsers(){
   const div=document.getElementById('adminUsersList');
+  const q=document.getElementById('userSearch')?.value?.toLowerCase()||'';
   let data=[];
-  try{const r=await sb.from('profiles').select().order('xp',{ascending:false}).limit(50);data=r.data||[];}catch(e){}
+  try{const r=await sb.from('profiles').select().order('xp',{ascending:false}).limit(100);data=r.data||[];}catch(e){}
+  if(q)data=data.filter(u=>(u.display_name||u.username||'').toLowerCase().includes(q));
   div.innerHTML=data.length?data.map(u=>`
     <div class="admin-user-row">
       <div class="admin-user-av">${(u.display_name||u.username||'?')[0].toUpperCase()}</div>
-      <div>
-        <div class="admin-user-name">${u.display_name||u.username}</div>
-        <div style="font-size:.72rem;color:var(--muted)">@${u.username} · 🔥${u.streak}</div>
+      <div class="admin-user-info">
+        <div class="admin-user-name">${u.display_name||u.username}<span class="admin-badge">Lv${u.level}</span></div>
+        <div class="admin-user-sub">@${u.username} · 🔥${u.streak} · 📖${(u.learned||[]).length} söz</div>
       </div>
-      <div class="admin-user-xp">${u.xp} XP · Lv${u.level}</div>
+      <div>
+        <div class="admin-user-xp">${u.xp} XP</div>
+        <div class="admin-action-row">
+          <button class="admin-btn-sm admin-btn-xp" onclick="adminAddXP('${u.username}',${u.xp})">+XP</button>
+          <button class="admin-btn-sm admin-btn-del" onclick="adminDelUser('${u.username}')">Sil</button>
+        </div>
+      </div>
     </div>`).join('')
-    :'<p style="color:var(--muted)">İstifadəçi yoxdur.</p>';
+    :'<p style="color:var(--muted)">İstifadəçi tapılmadı.</p>';
 }
+
+window.adminAddXP=async(username,curXP)=>{
+  const amt=prompt('Neçə XP əlavə edilsin?');
+  if(!amt||isNaN(+amt))return;
+  const newXP=curXP+(+amt);
+  const newLvl=levelFromXP(newXP);
+  try{await sb.from('profiles').update({xp:newXP,level:newLvl}).eq('username',username);
+    showToast(`+${amt} XP əlavə edildi`,'teal');loadAdminUsers();}catch(e){showToast('Xəta!','red');}
+};
+window.adminDelUser=async(username)=>{
+  if(!confirm(`"${username}" istifadəçisini silmək istəyirsiniz?`))return;
+  try{await sb.from('stories').delete().eq('username',username);
+    await sb.from('profiles').delete().eq('username',username);
+    showToast('İstifadəçi silindi','red');loadAdminUsers();loadAdminStats();}catch(e){showToast('Xəta!','red');}
+};
+
+function renderAdminWords(){
+  const cnt=document.getElementById('wordCount');if(cnt)cnt.textContent=WORDS.length;
+  const list=document.getElementById('adminWordList');if(!list)return;
+  const q=document.getElementById('wordSearch')?.value?.toLowerCase()||'';
+  const filtered=q?WORDS.filter(w=>w.en.toLowerCase().includes(q)||w.az.toLowerCase().includes(q)):WORDS;
+  list.innerHTML=filtered.map((w,i)=>`
+    <div class="admin-word-item">
+      <span class="en">${w.en}</span>
+      <span class="az">${w.az}</span>
+      <button class="admin-word-del" title="Sil" onclick="adminDelWord(${WORDS.indexOf(w)})">✕</button>
+    </div>`).join('');
+}
+
+window.adminDelWord=(idx)=>{
+  if(!confirm(`"${WORDS[idx].en}" sözünü silmək istəyirsiniz?`))return;
+  WORDS.splice(idx,1);renderAdminWords();showToast('Söz silindi','red');
+  const cnt=document.getElementById('aStatWords');if(cnt)cnt.textContent=WORDS.length;
+};
+
 async function loadAdminStories(){
   const div=document.getElementById('adminStoriesList');
   let data=[];
   try{const r=await sb.from('stories').select().order('created_at',{ascending:false}).limit(50);data=r.data||[];}catch(e){}
   div.innerHTML=data.length?data.map(s=>`
-    <div class="story-card">
+    <div class="story-card" style="margin-bottom:10px">
       <div class="story-meta">
         <div class="story-avatar">${(s.display_name||s.username||'?')[0].toUpperCase()}</div>
         <div class="story-author">${s.display_name||s.username}</div>
         <div class="story-date">${new Date(s.created_at).toLocaleString('az-AZ')}</div>
       </div>
       <div class="story-text">${s.text}</div>
+      <button class="admin-btn-sm admin-btn-del" style="margin-top:8px" onclick="adminDelStory(${s.id})">🗑️ Sil</button>
     </div>`).join('')
     :'<p style="color:var(--muted)">Hekayə yoxdur.</p>';
 }
+
+window.adminDelStory=async(id)=>{
+  if(!confirm('Bu hekayəni silmək istəyirsiniz?'))return;
+  try{await sb.from('stories').delete().eq('id',id);showToast('Hekayə silindi','red');loadAdminStories();}catch(e){}
+};
+
 async function loadAdminAnnounces(){
   const div=document.getElementById('adminAnnounceList');
   let data=[];
@@ -1340,16 +1706,20 @@ async function loadAdminAnnounces(){
       <div class="announce-title">${a.title}</div>
       <div class="announce-body">${a.content}</div>
       <div class="announce-date">${new Date(a.created_at).toLocaleString('az-AZ')}</div>
+      <button class="admin-btn-sm admin-btn-del" style="margin-top:8px" onclick="adminDelAnnounce(${a.id})">🗑️ Sil</button>
     </div>`).join('');
 }
 
-// ══════════════════════════════════════════════════════
+window.adminDelAnnounce=async(id)=>{
+  try{await sb.from('announcements').delete().eq('id',id);showToast('Duyuru silindi','red');loadAdminAnnounces();}catch(e){}
+};
+
+// ══════════════════════════════════════════════
 // INIT
-// ══════════════════════════════════════════════════════
+// ══════════════════════════════════════════════
 window.addEventListener('DOMContentLoaded',async()=>{
   pickDailyWord();
 
-  // Load login stats
   try{
     let uc=0,sc=0;
     const r1=await sb.from('profiles').select('id',{count:'exact',head:true});if(r1.count!==undefined)uc=r1.count;
@@ -1358,37 +1728,27 @@ window.addEventListener('DOMContentLoaded',async()=>{
     document.getElementById('lsStories').textContent=sc;
   }catch(e){}
   document.getElementById('lsWords').textContent=WORDS.length;
-
   hideLoading();
 
   // Login tabs
   document.querySelectorAll('.login-tab').forEach(t=>t.addEventListener('click',function(){
     document.querySelectorAll('.login-tab').forEach(x=>x.classList.remove('active'));
-    this.classList.add('active');
-    loginMode=this.dataset.mode;
+    this.classList.add('active');loginMode=this.dataset.mode;
     document.getElementById('loginBtn').textContent=loginMode==='login'?'🚀 Daxil Ol':'📝 Qeydiyyat';
   }));
-
-  // Login
   document.getElementById('loginBtn').addEventListener('click',doLogin);
   document.getElementById('studentName').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin();});
 
-  // Admin button
+  // Admin
   document.getElementById('adminBtn').addEventListener('click',()=>{
     const pass=prompt('Admin şifrəsi:');
     if(pass===ADMIN_PASS)openAdmin();
     else if(pass!==null)showToast('Yanlış şifrə!','red');
   });
 
-  // Nav buttons
-  document.querySelectorAll('.nav-btn').forEach(b=>b.addEventListener('click',function(){
-    switchView(this.dataset.view);
-  }));
-
-  // Avatar → profile
+  // Nav
+  document.querySelectorAll('.nav-btn').forEach(b=>b.addEventListener('click',function(){switchView(this.dataset.view);}));
   document.getElementById('avatarBtn').addEventListener('click',()=>switchView('Profile'));
-
-  // Admin logout
   document.getElementById('adminLogoutBtn').addEventListener('click',()=>showScreen('loginScreen'));
 
   // Admin tabs
@@ -1401,15 +1761,37 @@ window.addEventListener('DOMContentLoaded',async()=>{
     if(tab==='users')loadAdminUsers();
     if(tab==='stories')loadAdminStories();
     if(tab==='announce')loadAdminAnnounces();
+    if(tab==='stats')loadAdminStats();
   }));
 
-  // Announce type buttons
+  // User search
+  document.getElementById('userSearch')?.addEventListener('input',loadAdminUsers);
+
+  // Word search in admin
+  document.getElementById('wordSearch')?.addEventListener('input',renderAdminWords);
+
+  // Add word
+  document.getElementById('addWordBtn')?.addEventListener('click',()=>{
+    const en=(document.getElementById('wEn').value||'').trim();
+    const az=(document.getElementById('wAz').value||'').trim();
+    const ex=(document.getElementById('wEx').value||'').trim();
+    const tags=(document.getElementById('wTags').value||'').split(',').map(t=>t.trim()).filter(Boolean);
+    if(!en||!az){showToast('İngilis və Azərbaycan sözü mütləqdir!','red');return;}
+    if(WORDS.find(w=>w.en.toLowerCase()===en.toLowerCase())){showToast('Bu söz artıq mövcuddur!','red');return;}
+    WORDS.push({en,az,ex:ex||`${en}.`,exAz:'',tags:tags.length?tags:['B2','Sif']});
+    document.getElementById('wEn').value='';document.getElementById('wAz').value='';
+    document.getElementById('wEx').value='';document.getElementById('wTags').value='';
+    renderAdminWords();showToast(`"${en}" sözü əlavə edildi!`,'teal');
+    const cnt=document.getElementById('aStatWords');if(cnt)cnt.textContent=WORDS.length;
+  });
+
+  // Type buttons
   document.querySelectorAll('.type-btn').forEach(b=>b.addEventListener('click',function(){
     document.querySelectorAll('.type-btn').forEach(x=>x.classList.remove('active'));
     this.classList.add('active');announceType=this.dataset.type;
   }));
 
-  // Send announcement
+  // Send announce
   document.getElementById('aSendBtn').addEventListener('click',async()=>{
     const title=document.getElementById('aTitle').value.trim();
     const content=document.getElementById('aBody').value.trim();
