@@ -224,7 +224,7 @@ input,textarea{font-family:var(--font-body)}
   display:flex;align-items:center;justify-content:center;flex-direction:column;
   user-select:none;transition:transform .15s;position:relative;overflow:hidden}
 .flash-card:active{transform:scale(.97)}
-.flash-card::after{content:'Çevirmək üçün toxun';position:absolute;bottom:12px;font-size:.7rem;color:var(--muted)}
+.flash-card::after{content:'Çevirmək üçün toxun 👆';position:absolute;bottom:12px;font-size:.7rem;color:var(--muted)}
 .flash-front{font-family:var(--font-head);font-size:2rem;font-weight:800;color:var(--gold)}
 .flash-back{font-size:1.1rem;color:var(--teal);font-weight:600}
 .flash-label{font-size:.72rem;color:var(--muted);margin-bottom:10px}
@@ -433,6 +433,7 @@ textarea.admin-input{resize:vertical;min-height:80px;line-height:1.5}
 <div id="loadingOverlay">
   <div class="load-logo">SözLab</div>
   <div class="load-spin"></div>
+  <div style="font-size:.75rem;color:#6b6b85;margin-top:8px">Yüklənir...</div>
 </div>
 <div id="toast"></div>
 <div class="app">
@@ -441,20 +442,20 @@ textarea.admin-input{resize:vertical;min-height:80px;line-height:1.5}
 <div class="screen active" id="loginScreen">
   <div class="login-card">
     <div class="login-logo">SözLab</div>
-    <div class="login-tagline">Azərbaycan dilini öyrən, inkişaf et</div>
+    <div class="login-tagline">Azərbaycan dilini öyrən, inkişaf et 🌟</div>
     <div class="feat-row">
       <div class="feat-pill">🎮 6 Oyun</div>
       <div class="feat-pill">🔤 Əlifba</div>
-      <div class="feat-pill">📚 Lüğət</div>
+      <div class="feat-pill">📚 Ədəbi Lüğət</div>
       <div class="feat-pill">🤖 AI Köməkçi</div>
     </div>
     <div class="login-tabs">
       <button class="login-tab active" data-mode="login">Giriş</button>
       <button class="login-tab" data-mode="register">Qeydiyyat</button>
     </div>
-    <input type="text" id="studentName" class="login-input" placeholder="İstifadəçi adı" autocomplete="off" autocapitalize="none">
+    <input type="text" id="studentName" class="login-input" placeholder="İstifadəçi adınızı daxil edin" autocomplete="off" autocapitalize="none">
     <button id="loginBtn" class="btn-primary">🚀 Daxil Ol</button>
-    <div class="login-divider">admin üçün</div>
+    <div class="login-divider">admin girişi</div>
     <button id="adminBtn" class="btn-admin">🔐 Admin Paneli</button>
     <div class="login-stats">
       <div class="l-stat"><div class="num" id="lsUsers">0</div><div class="lbl">İstifadəçi</div></div>
@@ -530,7 +531,7 @@ textarea.admin-input{resize:vertical;min-height:80px;line-height:1.5}
     <div id="atab-users" style="display:none">
       <div class="admin-section">
         <h3>🔍 Axtarış</h3>
-        <input class="admin-input" id="userSearch" placeholder="Ad axtar..." style="margin-bottom:0">
+        <input class="admin-input" id="userSearch" placeholder="İstifadəçi adı axtar..." style="margin-bottom:0">
       </div>
       <div id="adminUsersList"><p style="color:var(--muted)">Yüklənir...</p></div>
     </div>
@@ -540,16 +541,16 @@ textarea.admin-input{resize:vertical;min-height:80px;line-height:1.5}
       <div class="admin-section">
         <h3>➕ Yeni Söz Əlavə Et</h3>
         <div class="admin-word-editor">
-          <input class="admin-input" id="wEn" placeholder="İngilis sözü (məs: Abundant)" style="margin-bottom:0">
-          <input class="admin-input" id="wAz" placeholder="Azərbaycan mənası (məs: Bol, çoxlu)" style="margin-bottom:0">
-          <input class="admin-input" id="wEx" placeholder="Nümunə cümlə (ingiliscə)" style="margin-bottom:0">
-          <input class="admin-input" id="wTags" placeholder="Teqlər vergüllə (məs: B2,Adj)" style="margin-bottom:0">
+          <input class="admin-input" id="wEn" placeholder="Ədəbi söz (nümunə: Abyaz)" style="margin-bottom:0">
+          <input class="admin-input" id="wAz" placeholder="Mənası (nümunə: Ağ, işıqlı, parlaq)" style="margin-bottom:0">
+          <input class="admin-input" id="wEx" placeholder="Nümunə cümlə (Azərbaycan dilində)" style="margin-bottom:0">
+          <input class="admin-input" id="wTags" placeholder="Teqlər vergüllə (nümunə: Ədəbi,Sif)" style="margin-bottom:0">
           <button class="btn-primary" id="addWordBtn" style="margin-top:4px">➕ Söz Əlavə Et</button>
         </div>
       </div>
       <div class="admin-section">
         <h3>📋 Mövcud Sözlər (<span id="wordCount">0</span>)</h3>
-        <input class="admin-input" id="wordSearch" placeholder="Söz axtar..." style="margin-bottom:8px">
+        <input class="admin-input" id="wordSearch" placeholder="Söz axtarın..." style="margin-bottom:8px">
         <div class="admin-word-list" id="adminWordList"></div>
       </div>
     </div>
@@ -563,8 +564,8 @@ textarea.admin-input{resize:vertical;min-height:80px;line-height:1.5}
     <div id="atab-announce" style="display:none">
       <div class="admin-section">
         <h3>📢 Yeni Duyuru</h3>
-        <input class="admin-input" id="aTitle" placeholder="Başlıq">
-        <textarea class="admin-input" id="aBody" rows="3" placeholder="Məzmun"></textarea>
+        <input class="admin-input" id="aTitle" placeholder="Duyurunun başlığı">
+        <textarea class="admin-input" id="aBody" rows="3" placeholder="Duyurunun mətni"></textarea>
         <div class="type-select">
           <button class="type-btn active" data-type="info">ℹ️ Info</button>
           <button class="type-btn" data-type="success">✅ Uğur</button>
@@ -626,29 +627,49 @@ const ALPHABET=[
 ];
 
 // ══════════════════════════════════════════════
-// SÖZLƏR
+// SÖZLƏR — Azərbaycan ədəbi dili lüğəti
 // ══════════════════════════════════════════════
 let WORDS=[
-  {en:'Ambiguous',az:'Qeyri-müəyyən',ex:'The instructions were ambiguous.',exAz:'Təlimatlar qeyri-müəyyən idi.',tags:['B2','Sif']},
-  {en:'Benevolent',az:'Xeyirxah',ex:'She was a benevolent leader.',exAz:'O, xeyirxah bir rəhbər idi.',tags:['C1','Sif']},
-  {en:'Candid',az:'Açıqürəkli',ex:'He gave a candid response.',exAz:'O, açıqürəkli cavab verdi.',tags:['B2','Sif']},
-  {en:'Diligent',az:'Səylə çalışan',ex:'She is a diligent student.',exAz:'O, səylə çalışan tələbədir.',tags:['B2','Sif']},
-  {en:'Eloquent',az:'Nitiqcil',ex:'An eloquent speech moved the crowd.',exAz:'Nitiqcil çıxış kütləni hərəkətə gətirdi.',tags:['C1','Sif']},
-  {en:'Frugal',az:'Qənaətcil',ex:'He lives a frugal lifestyle.',exAz:'O, qənaətcil həyat tərzi ilə yaşayır.',tags:['B2','Sif']},
-  {en:'Gregarious',az:'Ünsiyyətcil',ex:'She is very gregarious at parties.',exAz:'O, məclislərdə çox ünsiyyətcildir.',tags:['C1','Sif']},
-  {en:'Haughty',az:'Lovğa',ex:'His haughty manner offended others.',exAz:'Onun lovğa münasibəti başqalarını incitdi.',tags:['C1','Sif']},
-  {en:'Innovative',az:'Yenilikçi',ex:'The startup had innovative ideas.',exAz:'Startapın yenilikçi ideyaları var idi.',tags:['B2','Sif']},
-  {en:'Jubilant',az:'Sevincdən coşan',ex:'The team was jubilant after winning.',exAz:'Komanda qazandıqdan sonra sevincdən coşdu.',tags:['C1','Sif']},
-  {en:'Lucid',az:'Aydın, anlaşıqlı',ex:'Give a lucid explanation.',exAz:'Aydın izahat ver.',tags:['C1','Sif']},
-  {en:'Meticulous',az:'Dəqiq, diqqətli',ex:'She is meticulous about details.',exAz:'O, detallar barədə dəqiq davranır.',tags:['C1','Sif']},
-  {en:'Nostalgic',az:'Keçmişə həsrətli',ex:'Old songs make me nostalgic.',exAz:'Köhnə mahnılar məni keçmişə həsrət edir.',tags:['B2','Sif']},
-  {en:'Obsolete',az:'Köhnəlmiş',ex:'Fax machines are obsolete now.',exAz:'Faks cihazları artıq köhnəlmişdir.',tags:['B2','Sif']},
-  {en:'Persevere',az:'Dözümlü olmaq',ex:'You must persevere through hardship.',exAz:'Çətinliklər qarşısında dözümlü olmalısan.',tags:['B2','Fel']},
-  {en:'Resilient',az:'Davamlı, dözümlü',ex:'Children are resilient beings.',exAz:'Uşaqlar davamlı varlıqlardır.',tags:['B2','Sif']},
-  {en:'Serene',az:'Sakit, dinc',ex:'The lake looked serene at dawn.',exAz:'Göl şəfəqdə sakit görünürdü.',tags:['B2','Sif']},
-  {en:'Tenacious',az:'İnadkar',ex:'A tenacious athlete never gives up.',exAz:'İnadkar idmançı heç vaxt təslim olmaz.',tags:['C1','Sif']},
-  {en:'Vivid',az:'Parlaq, canlı',ex:'She has a vivid imagination.',exAz:'Onun parlaq təxəyyülü var.',tags:['B2','Sif']},
-  {en:'Wary',az:'Ehtiyatlı',ex:'Be wary of strangers.',exAz:'Yad adamlardan ehtiyatlı ol.',tags:['B2','Sif']},
+  {en:'Abyaz',az:'Ağ, işıqlı, parlaq',ex:'Abyaz sifətli uşaq sakit yatırdı.',exAz:'Parlaq üzlü uşaq sakit yatırdı.',tags:['Ədəbi','Sif']},
+  {en:'Abır',az:'Hey\'ət, həya, namus',ex:'Abırını gözlə, şərəfinlə yaşa.',exAz:'Həyanı qoru, şərəfinlə yaşa.',tags:['Ədəbi','İs']},
+  {en:'Aciz',az:'Gücsüz, bacarıqsız, zəif',ex:'O, bu ağır yük qarşısında aciz qaldı.',exAz:'O, bu ağır yük qarşısında gücsüz qaldı.',tags:['Ədəbi','Sif']},
+  {en:'Adaş',az:'Eyni adı daşıyan şəxs',ex:'O mənim adaşımdır, ikimiz də Əlirik.',exAz:'O mənim eyni adı daşıyan dostumdu.',tags:['Ədəbi','İs']},
+  {en:'Afaq',az:'Üfüqlər, ətraf aləm',ex:'Afaqda bir ümid işığı göründü.',exAz:'Üfüqlərdə bir ümid işığı göründü.',tags:['Ədəbi','İs']},
+  {en:'Afərin',az:'Tərif, bəyənmə, mədh',ex:'Müəllim şagirdin işinə afərin dedi.',exAz:'Müəllim şagirdin işini təriflədi.',tags:['Ədəbi','Nida']},
+  {en:'Afsus',az:'Heyif, təəssüf, peşmançılıq',ex:'Afsus ki, o gün orada deyildim.',exAz:'Heyif ki, o gün orada deyildim.',tags:['Ədəbi','Nida']},
+  {en:'Ağuş',az:'Qoynun, sinə, qucaq',ex:'Ana uşağını ağuşuna aldı.',exAz:'Ana uşağını qucağına aldı.',tags:['Ədəbi','İs']},
+  {en:'Aləm',az:'Dünya, kainat, mühit',ex:'Bu aləmdə hər şey fanidir.',exAz:'Bu dünyada hər şey keçicidir.',tags:['Ədəbi','İs']},
+  {en:'Alqış',az:'Tərif, mədh, dua',ex:'Xalq qəhrəmanı alqışlarla qarşıladı.',exAz:'Xalq qəhrəmanı təriflə qarşıladı.',tags:['Ədəbi','İs']},
+  {en:'Amal',az:'Arzu, ümid, istək',ex:'Onun ən böyük amalı ədalət idi.',exAz:'Onun ən böyük arzusu ədalət idi.',tags:['Ədəbi','İs']},
+  {en:'Aman',az:'Amanlıq, təvəqqe, yalvarış',ex:'Düşmən aman diləyərək diz çökdü.',exAz:'Düşmən yalvararaq diz çökdü.',tags:['Ədəbi','İs']},
+  {en:'Arifləmək',az:'Bilmək, anlamaq, dərk etmək',ex:'O, həyatın sirlərini tədricən ariflədi.',exAz:'O, həyatın sirlərini tədricən dərk etdi.',tags:['Ədəbi','Fel']},
+  {en:'Aşikar',az:'Aydın, görünən, bəlli',ex:'Həqiqət vaxtla aşikar oldu.',exAz:'Həqiqət vaxtla aydın oldu.',tags:['Ədəbi','Sif']},
+  {en:'Atəş',az:'Od, alov, ehtiras',ex:'Könlündə bir atəş alovlanmışdı.',exAz:'Könlündə bir od alovlanmışdı.',tags:['Ədəbi','İs']},
+  {en:'Bəd',az:'Pis, yaman, eybəcər',ex:'Bəd əməllər sahibini məhv edər.',exAz:'Pis işlər sahibini məhv edər.',tags:['Ədəbi','Sif']},
+  {en:'Bəla',az:'Müsibət, fəlakət, dərd',ex:'Bu bəla onların ailəsini sarsıtdı.',exAz:'Bu müsibət onların ailəsini sarsıtdı.',tags:['Ədəbi','İs']},
+  {en:'Bəsirət',az:'Görüş, dərrakə, anlayış',ex:'Bəsirət sahibi insan aldanmaz.',exAz:'Dərrakəli insan aldanmaz.',tags:['Ədəbi','İs']},
+  {en:'Bidad',az:'Zalımlıq, haqsızlıq',ex:'Bidad edən zalım öz cəzasını alacaq.',exAz:'Zalımlıq edən öz cəzasını alacaq.',tags:['Ədəbi','İs']},
+  {en:'Bixəbər',az:'Xəbərsiz, agah olmayan',ex:'O, başına gələnlərdən tamam bixəbər idi.',exAz:'O, başına gələnlərdən tamam xəbərsiz idi.',tags:['Ədəbi','Sif']},
+  {en:'Cahan',az:'Dünya, aləm, kainat',ex:'Cahan gözəldir — onu gözlə.',exAz:'Dünya gözəldir — onu gözlə.',tags:['Ədəbi','İs']},
+  {en:'Camal',az:'Gözəllik, göyçəklik',ex:'Onun camalı hər kəsi heyran edirdi.',exAz:'Onun gözəlliyi hər kəsi heyran edirdi.',tags:['Ədəbi','İs']},
+  {en:'Can',az:'Həyat, ruh, ömür',ex:'Can sağlığı hər şeydən üstündür.',exAz:'Sağlıq hər şeydən üstündür.',tags:['Ədəbi','İs']},
+  {en:'Cəfakeş',az:'Zəhmətkeş, çox işləyən',ex:'Cəfakeş kəndli torpağı becərdi.',exAz:'Zəhmətkeş kəndli torpağı becərdi.',tags:['Ədəbi','Sif']},
+  {en:'Cəlal',az:'Əzəmət, qüdrət, böyüklük',ex:'Şahın cəlalı hər kəsi heyrətləndirdi.',exAz:'Şahın əzəməti hər kəsi heyrətləndirdi.',tags:['Ədəbi','İs']},
+  {en:'Cəsarət',az:'İgidlik, qorxmazlıq',ex:'Cəsarət göstərən igid öndə gedər.',exAz:'Qorxmazlıq göstərən igid öndə gedər.',tags:['Ədəbi','İs']},
+  {en:'Cilvə',az:'Oynaş, gözəllik etmə',ex:'Gözəlin hər cilvəsi könül oğurlardı.',exAz:'Gözəlin hər hərəkəti könül aparardı.',tags:['Ədəbi','İs']},
+  {en:'Dağdağa',az:'Qarışıqlıq, hay-küy',ex:'Bazarda böyük dağdağa qopdu.',exAz:'Bazarda böyük hay-küy qopdu.',tags:['Ədəbi','İs']},
+  {en:'Dəb',az:'Üsul, adət, qayda',ex:'Bu dəb köhnə zamanlardan gəlir.',exAz:'Bu adət köhnə zamanlardan gəlir.',tags:['Ədəbi','İs']},
+  {en:'Dəbdəbə',az:'Təmtəraq, təntənə',ex:'Toy dəbdəbə ilə keçirildi.',exAz:'Toy təmtəraqla keçirildi.',tags:['Ədəbi','İs']},
+  {en:'Dəm',az:'Vaxt, an, nəfəs',ex:'O dəmdə hər şey donub qalmışdı.',exAz:'O anda hər şey donub qalmışdı.',tags:['Ədəbi','İs']},
+  {en:'Dərrakə',az:'Qavrayış, dərketmə',ex:'Dərrakə sahibi insan səhv etməz.',exAz:'Anlayışlı insan səhv etməz.',tags:['Ədəbi','İs']},
+  {en:'Dərya',az:'Dəniz, çay, böyük su',ex:'Onun bilikləri dərya kimi geniş idi.',exAz:'Onun bilikləri dəniz kimi geniş idi.',tags:['Ədəbi','İs']},
+  {en:'Dəyanət',az:'İnam, etibar, bağlılıq',ex:'Dəyanət sahibi insan çətinlikdə sınmaz.',exAz:'İnamlı insan çətinlikdə sınmaz.',tags:['Ədəbi','İs']},
+  {en:'Dilbər',az:'Sevgili, gözəl, ürək alan',ex:'Dilbər sözlər könülləri fəth edər.',exAz:'Gözəl sözlər könülləri fəth edər.',tags:['Ədəbi','Sif']},
+  {en:'Dilir',az:'Qorxmaz, cəsur, igid',ex:'Dilir döyüşçü heç vaxt geri çəkilmədi.',exAz:'Cəsur döyüşçü heç vaxt geri çəkilmədi.',tags:['Ədəbi','Sif']},
+  {en:'Divanə',az:'Dəli, ağılsız, vurğun',ex:'Eşqindən divanə olmuş şair yazdı.',exAz:'Eşqindən dəli olmuş şair yazdı.',tags:['Ədəbi','Sif']},
+  {en:'Dövran',az:'Zaman, vaxt, gün',ex:'Dövran dönər, hər şey dəyişər.',exAz:'Zaman dönər, hər şey dəyişər.',tags:['Ədəbi','İs']},
+  {en:'Düçar',az:'Uğramış, məruz qalmış',ex:'O, ağır xəstəliyə düçar oldu.',exAz:'O, ağır xəstəliyə məruz qaldı.',tags:['Ədəbi','Sif']},
+  {en:'Düşvar',az:'Çətin, böyük, ağır',ex:'Bu düşvar yolda tək qaldım.',exAz:'Bu çətin yolda tək qaldım.',tags:['Ədəbi','Sif']},
 ];
 
 // ══════════════════════════════════════════════
@@ -767,7 +788,7 @@ function pickDailyWord(){
 // ══════════════════════════════════════════════
 async function doLogin(){
   const username=document.getElementById('studentName').value.trim().toLowerCase().replace(/[^a-z0-9_]/g,'');
-  if(!username||username.length<2){showToast('Ən az 2 hərf daxil edin!','red');return;}
+  if(!username||username.length<2){showToast('Ən az 2 hərf olan ad daxil edin!','red');return;}
   const btn=document.getElementById('loginBtn');
   btn.disabled=true;btn.textContent='Yüklənir...';
   try{
@@ -832,11 +853,11 @@ function renderHome(){
     </div>
     <div class="section-title">📅 Günün Sözü</div>
     <div class="daily-card">
-      <div class="daily-label">Bugünkü söz</div>
+      <div class="daily-label">Bugünkü ədəbi söz</div>
       <div class="daily-word">${dailyWord.en}</div>
-      <div class="daily-meaning">${dailyWord.az}</div>
-      <div style="font-size:.8rem;color:var(--muted);font-style:italic;margin-bottom:10px">"${dailyWord.ex}"</div>
-      <div style="font-size:.78rem;color:var(--purple);margin-bottom:12px">"${dailyWord.exAz||''}"</div>
+      <div class="daily-meaning">📖 ${dailyWord.az}</div>
+      <div style="font-size:.8rem;color:var(--muted);font-style:italic;margin-bottom:6px">📝 "${dailyWord.ex}"</div>
+      <div style="font-size:.78rem;color:var(--purple);margin-bottom:12px">💬 "${dailyWord.exAz||''}"</div>
       <div class="daily-tags">${(dailyWord.tags||[]).map(t=>`<span class="tag">${t}</span>`).join('')}</div>
       ${dailyClaimed
         ?'<span style="color:var(--green);font-size:.85rem">✅ Bu günkü XP alındı!</span>'
@@ -886,7 +907,7 @@ function renderAlpha(){
         • Azərbaycan əlifbası 1991-ci ildən latın qrafikasına əsaslanır<br>
         • 23 samit, 9 sait hərfdən ibarətdir<br>
         • Xüsusi hərflər: Ə, Ğ, X, I, İ, Ö, Ş, Ü, Q, Ç<br>
-        • Böyük əlifba: A B C Ç D E Ə F G Ğ H X I İ J K Q L M N O Ö P R S Ş T U Ü V Y Z
+        • Tam əlifba: A B C Ç D E Ə F G Ğ H X I İ J K Q L M N O Ö P R S Ş T U Ü V Y Z
       </div>
     </div>`;
   const grid=document.getElementById('alphaGrid');
@@ -923,28 +944,28 @@ function renderGames(){
         <div class="game-difficulty">Orta</div>
         <div class="game-icon">🧠</div>
         <div class="game-name">Mənası Nədir?</div>
-        <div class="game-desc">İngilis sözünün Azərbaycan mənasını tap</div>
+        <div class="game-desc">Ədəbi sözün mənasını tap</div>
         <div class="game-xp">+10 XP</div>
       </div>
       <div class="game-card" data-game="fill">
         <div class="game-difficulty">Orta</div>
         <div class="game-icon">✏️</div>
         <div class="game-name">Boşluğu Doldur</div>
-        <div class="game-desc">Cümlədəki çatışmayan sözü tap</div>
+        <div class="game-desc">Cümləni tamamla, sözü tap</div>
         <div class="game-xp">+10 XP</div>
       </div>
       <div class="game-card" data-game="match">
         <div class="game-difficulty">Çətin</div>
         <div class="game-icon">🔗</div>
         <div class="game-name">Uyğunlaşdır</div>
-        <div class="game-desc">İngilis-Azərbaycan cütlərini tap</div>
+        <div class="game-desc">Söz-məna cütlərini uyğunlaşdır</div>
         <div class="game-xp">+10 XP</div>
       </div>
       <div class="game-card" data-game="flash">
         <div class="game-difficulty">Asan</div>
         <div class="game-icon">⚡</div>
         <div class="game-name">Flashkart</div>
-        <div class="game-desc">Kartı çevir, mənasını öyrən</div>
+        <div class="game-desc">Kartı çevir, sözün mənasını öyrən</div>
         <div class="game-xp">+10 XP</div>
       </div>
       <div class="game-card" data-game="synonym">
@@ -1029,9 +1050,9 @@ function startQuiz(v){
     gameHeader(v,'🧠 Mənası Nədir?',idx+1,pool.length);
     v.innerHTML+=`
       <div class="quiz-box" style="margin-top:12px">
-        <div style="font-size:.75rem;color:var(--muted);margin-bottom:8px">Bu ingilis sözünün mənası nədir?</div>
+        <div style="font-size:.75rem;color:var(--muted);margin-bottom:8px">Bu sözün mənası hansıdır?</div>
         <div class="quiz-word-big">${w.en}</div>
-        <div class="quiz-hint" style="font-style:italic">"${w.ex}"</div>
+        <div class="quiz-hint" style="font-style:italic">📝 "${w.ex}"</div>
         <div class="quiz-opts">${opts.map(o=>`<button class="quiz-opt" data-correct="${o.en===w.en}">${o.az}</button>`).join('')}</div>
       </div>`;
     document.getElementById('gback').onclick=gameBack;
@@ -1073,22 +1094,22 @@ function startFill(v){
       <div class="quiz-box" style="margin-top:12px">
         <div style="font-size:.75rem;color:var(--muted);margin-bottom:10px">Mənası: <b style="color:var(--text)">${w.az}</b></div>
         <div class="quiz-q" style="font-size:.95rem;line-height:1.8">${blanked}</div>
-        <input class="fill-input" id="fillIn" placeholder="İngilis sözünü daxil edin..." autocomplete="off" autocapitalize="none" spellcheck="false">
+        <input class="fill-input" id="fillIn" placeholder="Sözü daxil edin..." autocomplete="off" autocapitalize="none" spellcheck="false">
         <div style="display:flex;gap:8px">
           <button class="btn-sm btn-teal" id="fillCheck" style="flex:1">✓ Yoxla</button>
           <button class="btn-sm" style="background:var(--card2);border:1px solid var(--border);flex:1;color:var(--muted)" id="fillSkip">Keç →</button>
         </div>
-        <div style="font-size:.72rem;color:var(--muted);margin-top:8px">İpucu: İlk hərf — <b style="color:var(--gold)">${w.en[0].toUpperCase()}</b></div>
+        <div style="font-size:.72rem;color:var(--muted);margin-top:8px">İpucu: İlk hərf — <b style="color:var(--gold)">${w.en[0].toUpperCase()}</b>, uzunluq: <b style="color:var(--teal)">${w.en.length}</b> hərf</div>
       </div>`;
     document.getElementById('gback').onclick=gameBack;
     const check=()=>{
       const ans=document.getElementById('fillIn').value.trim().toLowerCase();
       if(ans===w.en.toLowerCase()){score++;showToast('✅ Düzgün! +10 XP','teal');spawnConfetti();}
-      else showToast(`❌ Düzgün cavab: ${w.en}`,'red');
+      else showToast(`❌ Düzgün cavab: "${w.en}"  (${w.az})`,'red');
       setTimeout(()=>{idx++;showF();},900);
     };
     document.getElementById('fillCheck').onclick=check;
-    document.getElementById('fillSkip').onclick=()=>{showToast(`Cavab: ${w.en}`,'muted');setTimeout(()=>{idx++;showF();},700);};
+    document.getElementById('fillSkip').onclick=()=>{showToast(`Cavab: "${w.en}" = ${w.az}`,'muted');setTimeout(()=>{idx++;showF();},700);};
     document.getElementById('fillIn').addEventListener('keydown',e=>{if(e.key==='Enter')check();});
     document.getElementById('fillIn').focus();
   }
@@ -1105,16 +1126,16 @@ function startMatch(v){
   function render(){
     gameHeader(v,'🔗 Uyğunlaşdır',matched,pool.length);
     v.innerHTML+=`
-      <div style="font-size:.75rem;color:var(--muted);margin:8px 0 12px">Sol — İngilis, Sağ — Azərbaycan. Cütü tap!</div>
+      <div style="font-size:.75rem;color:var(--muted);margin:8px 0 12px">Sol — söz, Sağ — mənası. Cütü tap!</div>
       <div class="match-container">
         <div>
-          <div class="match-col-title">İngilis</div>
+          <div class="match-col-title">Söz</div>
           <div class="match-items" id="matchLeft">
             ${lefts.map((w,i)=>`<div class="match-item${w._matched?' matched':''}" data-li="${i}">${w._matched?'✓':w.en}</div>`).join('')}
           </div>
         </div>
         <div>
-          <div class="match-col-title">Azərbaycan</div>
+          <div class="match-col-title">Mənası</div>
           <div class="match-items" id="matchRight">
             ${rights.map((w,i)=>`<div class="match-item${w._matched?' matched':''}" data-ri="${i}">${w._matched?'✓':w.az}</div>`).join('')}
           </div>
@@ -1296,13 +1317,15 @@ let vocabFilter='all';
 function renderVocab(){
   const v=document.getElementById('viewVocab');
   v.innerHTML=`
-    <div class="section-title">📚 Söz Lüğəti</div>
-    <input class="vocab-search" id="vocabSearch" placeholder="🔍 Söz axtar...">
+    <div class="section-title">📚 Ədəbi Söz Lüğəti</div>
+    <input class="vocab-search" id="vocabSearch" placeholder="🔍 Söz və ya mənasını axtar...">
     <div class="vocab-filter">
       <button class="vf-btn active" data-vf="all">Hamısı</button>
       <button class="vf-btn" data-vf="learned">Öyrənilənlər</button>
-      <button class="vf-btn" data-vf="B2">B2</button>
-      <button class="vf-btn" data-vf="C1">C1</button>
+      <button class="vf-btn" data-vf="Ədəbi">Ədəbi</button>
+      <button class="vf-btn" data-vf="Sif">Sifət</button>
+      <button class="vf-btn" data-vf="İs">İsim</button>
+      <button class="vf-btn" data-vf="Fel">Fel</button>
     </div>
     <div id="vocabList"></div>`;
   v.querySelectorAll('.vf-btn').forEach(b=>b.addEventListener('click',function(){
@@ -1330,8 +1353,8 @@ function renderWordList(q){
         <div class="tag">${(w.tags||[])[0]||''}</div>
       </div>
       <div class="word-detail">
-        <div class="word-ex">🇬🇧 "${w.ex}"</div>
-        ${w.exAz?`<div class="word-ex-az">🇦🇿 "${w.exAz}"</div>`:''}
+        <div class="word-ex">📝 "${w.ex}"</div>
+        ${w.exAz?`<div class="word-ex-az">💬 "${w.exAz}"</div>`:''}
         <button class="btn-learn${learned?' btn-learned':''}" data-wrd="${w.en}">${learned?'✅ Öyrənildi':'📌 Öyrəndim'}</button>
       </div>
     </div>`;
@@ -1369,8 +1392,8 @@ function renderCreative(){
       <div class="story-prompt-label">💡 Bu mövzudan başla</div>
       <div class="story-prompt-text">${prompt}</div>
     </div>
-    <textarea class="story-area" id="storyArea" placeholder="Hekayənizi buraya yazın... (ən az 30 simvol)" maxlength="1000"></textarea>
-    <div class="char-count"><span id="charCount">0</span>/1000</div>
+    <textarea class="story-area" id="storyArea" placeholder="Hekayənizi buraya yazın... (ən az 30 hərf)" maxlength="1000"></textarea>
+    <div class="char-count"><span id="charCount">0</span>/1000 hərf</div>
     <button class="btn-primary" id="submitStory" style="margin-bottom:20px">📤 Paylaş (+15 XP)</button>
     <div class="section-title">📖 Son Hekayələr</div>
     <div id="storiesList"><p style="color:var(--muted);font-size:.83rem">Yüklənir...</p></div>`;
@@ -1378,7 +1401,7 @@ function renderCreative(){
     document.getElementById('charCount').textContent=this.value.length;});
   document.getElementById('submitStory').addEventListener('click',async()=>{
     const text=document.getElementById('storyArea').value.trim();
-    if(text.length<30){showToast('Ən az 30 simvol yazın!','red');return;}
+    if(text.length<30){showToast('Ən az 30 hərf yazın!','red');return;}
     try{
       await sb.from('stories').insert([{username:currentUser.username,display_name:currentUser.display_name,text,likes:0}]);
       await addXP(15,'– Hekayə');document.getElementById('storyArea').value='';
@@ -1439,8 +1462,8 @@ function renderProfile(){
     </div>
     <div class="profile-section">
       <h3>✏️ Ad dəyişdir</h3>
-      <input class="profile-input" id="newName" value="${u.display_name||u.username}" placeholder="Yeni ad">
-      <button class="btn-sm btn-teal" id="saveNameBtn">Yadda saxla</button>
+      <input class="profile-input" id="newName" value="${u.display_name||u.username}" placeholder="Yeni görünən adınızı yazın">
+      <button class="btn-sm btn-teal" id="saveNameBtn">💾 Yadda saxla</button>
     </div>
     <div class="profile-section">
       <h3>📊 Statistikam</h3>
@@ -1459,7 +1482,7 @@ function renderProfile(){
     </div>`;
   document.getElementById('saveNameBtn').addEventListener('click',async()=>{
     const name=document.getElementById('newName').value.trim();
-    if(!name){showToast('Ad boş ola bilməz!','red');return;}
+    if(!name){showToast('Ad sahəsi boş ola bilməz!','red');return;}
     currentUser.display_name=name;await saveProfile({display_name:name});
     updateTopBar();renderProfile();showToast('Ad yeniləndi!','teal');
   });
@@ -1468,7 +1491,7 @@ function renderProfile(){
     showScreen('loginScreen');document.getElementById('studentName').value='';showToast('Çıxış edildi','muted');
   });
   document.getElementById('deleteBtn').addEventListener('click',async()=>{
-    if(!confirm('Hesabınızı silmək istədiyinizdən əminsiniz?'))return;
+    if(!confirm('Hesabınızı birdəfəlik silmək istədiyinizə əminsiniz? Bu əməliyyat geri alına bilməz!'))return;
     try{await sb.from('stories').delete().eq('username',currentUser.username);
       await sb.from('profiles').delete().eq('username',currentUser.username);}catch(e){}
     currentUser=null;showScreen('loginScreen');showToast('Hesab silindi','red');
@@ -1489,21 +1512,21 @@ function renderAI(){
     <div class="ai-chat" id="aiChat">
       <div class="ai-msg bot">Salam! Mən SözLab AI köməkçisiyəm 👋<br><br>
         Mənə bunları soruşa bilərsiniz:<br>
-        📚 Söz mənası və istifadəsi<br>
+        📚 Ədəbi söz mənası və istifadəsi<br>
         🎮 Oyunlar haqqında<br>
         🔤 Azərbaycan əlifbası<br>
-        📖 Lüğət və qrammatika<br>
+        📖 Lüğət, sinonim, antonim<br>
         ⭐ XP sistemi haqqında
       </div>
     </div>
     <div class="ai-chips">
-      <span class="ai-chip">"Ambiguous" nə deməkdir?</span>
+      <span class="ai-chip">"Afsus" sözünün mənası nədir?</span>
       <span class="ai-chip">Sinonim oyunu necə işləyir?</span>
       <span class="ai-chip">XP necə qazanıram?</span>
-      <span class="ai-chip">Ə hərfi nə kimi tələffüz olunur?</span>
+      <span class="ai-chip">"Dilbər" sözünü cümlədə işlət</span>
     </div>
     <div class="ai-input-row">
-      <input class="ai-input" id="aiInput" placeholder="Sualınızı yazın...">
+      <input class="ai-input" id="aiInput" placeholder="Sualınızı Azərbaycan dilində yazın...">
       <button class="ai-send" id="aiSendBtn">➤</button>
     </div>`;
 
@@ -1525,15 +1548,16 @@ function renderAI(){
 
     const PLATFORM_INFO=`
 SözLab platforması haqqında tam məlumat:
-- SözLab: Azərbaycan dili öyrənmə platforması
-- 6 oyun: Mənası Nədir (ingilis sözün mənasını tap), Boşluğu Doldur (cümləni tamamla), Uyğunlaşdır (ingilis-azərbaycan cütlərini tap), Flashkart (kartı çevirərək öyrən), Sinonim Tap (eyni mənalı Azərbaycan sözü), Antonim Tap (əks mənalı Azərbaycan sözü)
+- SözLab: Azərbaycan ədəbi dili öyrənmə platforması
+- Lüğət: Azərbaycan ədəbi dilindən seçilmiş sözlər (Abyaz, Abır, Aciz, Afaq, Afərin, Afsus, Ağuş, Aləm, Alqış, Amal, Aman, Cahan, Camal, Can, Cəlal, Dəbdəbə, Dilbər, Divanə, Dövran, Dərya və s.)
+- Hər sözün mənası, nümunə cümləsi, Azərbaycan dilindəki izahı var
+- 6 oyun: Mənası Nədir (ədəbi sözün mənasını tap), Boşluğu Doldur (cümləni tamamla), Uyğunlaşdır (söz-məna cütlərini tap), Flashkart (kartı çevirərək öyrən), Sinonim Tap (eyni mənalı Azərbaycan sözü), Antonim Tap (əks mənalı Azərbaycan sözü)
 - XP sistemi: Oyundan +10 XP, Günün sözündən +5 XP, Yeni söz öyrənmədən +2 XP, Hekayə yazmaqdan +15 XP
 - Səviyyə sistemi: hər 100 XP = 1 səviyyə yüksəlmə
 - Gün seriyası (streak): hər gün daxil olduqda artar
-- Lüğət: B2 və C1 səviyyəli ingilis sözləri, hər sözün Azərbaycan mənası və nümunə cümləsi var
 - Azərbaycan əlifbası: 32 hərf, latın əsaslı (1991-dən), xüsusi hərflər: Ə Ğ X I İ Ö Ş Ü Q Ç
 - Yaradıcı yazı: mövzu verilir, hekayə yazılır, paylaşılır
-- AI köməkçi: yalnız SözLab, Azərbaycan dili və ingilis dili suallarına cavab verir
+- AI köməkçi: yalnız SözLab, Azərbaycan ədəbi dili və söz mənası suallarına cavab verir
 - Admin paneli: statistika, istifadəçi idarəsi, söz əlavə etmə, duyuru göndərmə
 `;
     try{
@@ -1547,11 +1571,11 @@ SözLab platforması haqqında tam məlumat:
 ${PLATFORM_INFO}
 
 QAYDALAR:
-1. YALNIZ SözLab platforması, Azərbaycan dili və ingilis dili haqqında sual-cavab ver
+1. YALNIZ SözLab platforması, Azərbaycan ədəbi dili, söz mənası və lüğət haqqında sual-cavab ver
 2. Siyasət, xəbər, məşhurlar, tarixi hadisələr, texnologiya, yemək resepti, musiqi, film kimi mövzulara CAVAB VERMƏ
-3. Belə hallarda deyirsən: "Üzr istəyirəm, mən yalnız SözLab platforması və dil öyrənmə ilə bağlı sualları cavablandıra bilərəm."
+3. Belə hallarda deyirsən: "Üzr istəyirəm, mən yalnız SözLab platforması və Azərbaycan ədəbi dili ilə bağlı sualları cavablandıra bilərəm."
 4. Cavablarını Azərbaycan dilində ver, qısa və aydın ol
-5. Söz mənası soruşulsa, həm mənasını, həm nümunə cümləsini ver`,
+5. Söz mənası soruşulsa, həm mənasını, həm nümunə cümləsini, həm də sinonim/antonimini ver`,
           messages:aiHistory
         })
       });
@@ -1599,7 +1623,7 @@ async function loadAdminStats(){
     📅 Tarix: ${new Date().toLocaleString('az-AZ')}<br>
     📝 Toplam söz: ${WORDS.length}<br>
     🔤 Əlifba hərfi: ${ALPHABET.length}<br>
-    👁️ Admin paneli aktiv`;}
+    👁️ Admin paneli açıqdır`;}
 
   // Chart
   let topUsers=[];
@@ -1642,7 +1666,7 @@ async function loadAdminUsers(){
 }
 
 window.adminAddXP=async(username,curXP)=>{
-  const amt=prompt('Neçə XP əlavə edilsin?');
+  const amt=prompt('Neçə XP əlavə edilsin? (Rəqəm daxil edin)');
   if(!amt||isNaN(+amt))return;
   const newXP=curXP+(+amt);
   const newLvl=levelFromXP(newXP);
@@ -1650,7 +1674,7 @@ window.adminAddXP=async(username,curXP)=>{
     showToast(`+${amt} XP əlavə edildi`,'teal');loadAdminUsers();}catch(e){showToast('Xəta!','red');}
 };
 window.adminDelUser=async(username)=>{
-  if(!confirm(`"${username}" istifadəçisini silmək istəyirsiniz?`))return;
+  if(!confirm(`"${username}" istifadəçisini silmək istədiyinizə əminsiniz?`))return;
   try{await sb.from('stories').delete().eq('username',username);
     await sb.from('profiles').delete().eq('username',username);
     showToast('İstifadəçi silindi','red');loadAdminUsers();loadAdminStats();}catch(e){showToast('Xəta!','red');}
@@ -1693,7 +1717,7 @@ async function loadAdminStories(){
 }
 
 window.adminDelStory=async(id)=>{
-  if(!confirm('Bu hekayəni silmək istəyirsiniz?'))return;
+  if(!confirm('Bu hekayəni silmək istədiyinizə əminsiniz?'))return;
   try{await sb.from('stories').delete().eq('id',id);showToast('Hekayə silindi','red');loadAdminStories();}catch(e){}
 };
 
@@ -1776,12 +1800,12 @@ window.addEventListener('DOMContentLoaded',async()=>{
     const az=(document.getElementById('wAz').value||'').trim();
     const ex=(document.getElementById('wEx').value||'').trim();
     const tags=(document.getElementById('wTags').value||'').split(',').map(t=>t.trim()).filter(Boolean);
-    if(!en||!az){showToast('İngilis və Azərbaycan sözü mütləqdir!','red');return;}
-    if(WORDS.find(w=>w.en.toLowerCase()===en.toLowerCase())){showToast('Bu söz artıq mövcuddur!','red');return;}
+    if(!en||!az){showToast('İngilis və Azərbaycan mənası mütləqdir!','red');return;}
+    if(WORDS.find(w=>w.en.toLowerCase()===en.toLowerCase())){showToast('Bu söz artıq lüğətdədir!','red');return;}
     WORDS.push({en,az,ex:ex||`${en}.`,exAz:'',tags:tags.length?tags:['B2','Sif']});
     document.getElementById('wEn').value='';document.getElementById('wAz').value='';
     document.getElementById('wEx').value='';document.getElementById('wTags').value='';
-    renderAdminWords();showToast(`"${en}" sözü əlavə edildi!`,'teal');
+    renderAdminWords();showToast(`"${en}" sözü lüğətə əlavə edildi!`,'teal');
     const cnt=document.getElementById('aStatWords');if(cnt)cnt.textContent=WORDS.length;
   });
 
@@ -1795,7 +1819,7 @@ window.addEventListener('DOMContentLoaded',async()=>{
   document.getElementById('aSendBtn').addEventListener('click',async()=>{
     const title=document.getElementById('aTitle').value.trim();
     const content=document.getElementById('aBody').value.trim();
-    if(!title||!content){showToast('Başlıq və məzmun daxil edin!','red');return;}
+    if(!title||!content){showToast('Başlıq və mətn daxil edin!','red');return;}
     try{
       await sb.from('announcements').insert([{title,content,type:announceType,created_at:new Date().toISOString()}]);
       document.getElementById('aTitle').value='';document.getElementById('aBody').value='';
