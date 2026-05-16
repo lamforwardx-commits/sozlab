@@ -523,6 +523,7 @@ body.light-mode .theme-toggle::after{left:19px;background:#fff}
     <div class="view" id="viewLeaderboard"></div>
     <div class="view" id="viewProfile"></div>
     <div class="view" id="viewAI" style="display:none;flex-direction:column;height:100%"></div>
+    <div class="view" id="viewAbout" style="display:none;flex-direction:column;height:100%"></div>
   </div>
   <nav class="bottom-nav">
     <button class="nav-btn active" data-view="Home"><span class="icon">🏠</span><span class="lbl">Əsas</span></button>
@@ -530,6 +531,7 @@ body.light-mode .theme-toggle::after{left:19px;background:#fff}
     <button class="nav-btn" data-view="Games"><span class="icon">🎮</span><span class="lbl">Oyunlar</span></button>
     <button class="nav-btn" data-view="Vocab"><span class="icon">📚</span><span class="lbl">Lüğət</span></button>
     <button class="nav-btn" data-view="AI"><span class="icon">🤖</span><span class="lbl">AI</span></button>
+    <button class="nav-btn" data-view="About"><span class="icon">ℹ️</span><span class="lbl">Haqqımızda</span></button>
   </nav>
 </div>
 
@@ -913,10 +915,10 @@ function updateTopBar(){
 function switchView(name){
   document.querySelectorAll('.view').forEach(v=>{v.classList.remove('active');v.style.display='none';});
   const target=document.getElementById('view'+name);
-  if(target){target.classList.add('active');target.style.display=name==='AI'?'flex':'block';}
+  if(target){target.classList.add('active');target.style.display=(name==='AI'||name==='About')?'flex':'block';}
   document.querySelectorAll('.nav-btn').forEach(b=>b.classList.toggle('active',b.dataset.view===name));
   const renders={Home:renderHome,Alpha:renderAlpha,Games:renderGames,Vocab:renderVocab,
-    Creative:renderCreative,Leaderboard:renderLeaderboard,Profile:renderProfile,AI:renderAI};
+    Creative:renderCreative,Leaderboard:renderLeaderboard,Profile:renderProfile,AI:renderAI,About:renderAbout};
   if(renders[name])renders[name]();
 }
 
@@ -939,6 +941,10 @@ function renderHome(){
       <div class="stat-card"><div class="val">${(u.learned||[]).length}</div><div class="lbl">📖 Öyrənilən Söz</div></div>
       <div class="stat-card"><div class="val">${u.level}</div><div class="lbl">⭐ Səviyyə</div></div>
     </div>
+    <div class="section-title">🏆 Bu Həftənin Liderləri</div>
+    <div class="games-grid" style="grid-template-columns:repeat(3,1fr);margin-bottom:16px" id="topLeadersGrid">
+      <div style="text-align:center;padding:12px;color:var(--muted);font-size:.78rem">Yüklənir...</div>
+    </div>
     <div class="section-title">📅 Günün Sözü</div>
     <div class="daily-card">
       <div class="daily-label">Bugünkü ədəbi söz</div>
@@ -959,6 +965,18 @@ function renderHome(){
       await addXP(5,'– Günün sözü');renderHome();});
   }
   loadAnnouncements();
+  // Load top 3 leaders async
+  getTopUsers(3).then(topUsers=>{
+    const grid=document.getElementById('topLeadersGrid');
+    if(!grid)return;
+    if(!topUsers.length){grid.innerHTML='<div style="color:var(--muted);font-size:.78rem;padding:12px">Hələ məlumat yoxdur.</div>';return;}
+    grid.innerHTML=topUsers.map((u,i)=>`
+      <div class="game-card" style="text-align:center;padding:12px">
+        <div style="font-size:1.5rem">${i===0?'🥇':i===1?'🥈':'🥉'}</div>
+        <div style="font-weight:700;font-size:.9rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${u.display_name||u.username}</div>
+        <div style="font-size:.75rem;color:var(--gold)">${u.xp} XP</div>
+      </div>`).join('');
+  });
 }
 
 async function loadAnnouncements(){
@@ -1564,7 +1582,7 @@ function renderProfile(){
     </div>
     <div class="profile-section">
       <h3>📊 Statistikam</h3>
-      <div style="font-size:.83rem;color:var(--muted);line-height:1.8">
+      <div style="font-size:.83rem;color:var(--muted);line-height:1.8" id="profileStats">
         Öyrənilən sözlər: <b style="color:var(--text)">${(u.learned||[]).length}</b><br>
         Ümumi XP: <b style="color:var(--gold)">${u.xp}</b><br>
         Gün seriyası: <b style="color:var(--teal)">🔥${u.streak}</b>
@@ -1582,6 +1600,11 @@ function renderProfile(){
     if(!name){showToast('Ad sahəsi boş ola bilməz!','red');return;}
     currentUser.display_name=name;await saveProfile({display_name:name});
     updateTopBar();renderProfile();showToast('Ad yeniləndi!','teal');
+  });
+  // Load global rank async
+  getUserGlobalRank(u.username).then(rank=>{
+    const stats=document.getElementById('profileStats');
+    if(stats&&rank){stats.innerHTML+=`<br>🏆 Ümumi sıra: <b style="color:var(--gold)">#${rank}</b>`;}
   });
   document.getElementById('logoutBtn').addEventListener('click',()=>{
     currentUser=null;aiHistory=[];currentGame=null;
@@ -1950,6 +1973,134 @@ async function loadAdminAnnounces(){
 
 window.adminDelAnnounce=async(id)=>{
   try{await sb.from('announcements').delete().eq('id',id);showToast('Duyuru silindi','red');loadAdminAnnounces();}catch(e){}
+};
+
+// ══════════════════════════════════════════════
+// TOP USERS
+// ══════════════════════════════════════════════
+async function getTopUsers(limit=3){
+  try{
+    const{data}=await sb.from('profiles').select('username,display_name,xp').order('xp',{ascending:false}).limit(limit);
+    return data||[];
+  }catch(e){return[];}
+}
+
+async function getUserGlobalRank(username){
+  try{
+    const{data}=await sb.from('profiles').select('username,xp').order('xp',{ascending:false});
+    const index=(data||[]).findIndex(u=>u.username===username);
+    return index!==-1?index+1:null;
+  }catch(e){return null;}
+}
+
+// ══════════════════════════════════════════════
+// HAQQIMIZDA / ƏLAQƏ SƏHİFƏSİ
+// ══════════════════════════════════════════════
+function renderAbout(){
+  const v=document.getElementById('viewAbout');
+  v.innerHTML=`
+    <div style="padding:14px 16px;border-bottom:1px solid var(--border);flex-shrink:0">
+      <div class="section-title" style="margin-bottom:4px">ℹ️ SözLab Haqqında</div>
+      <div style="font-size:.75rem;color:var(--muted)">Azərbaycan dilini öyrən, inkişaf etdir</div>
+    </div>
+    <div style="flex:1;overflow-y:auto;padding:16px">
+      <div class="admin-section" style="margin-bottom:16px">
+        <h3>📖 SözLab nədir?</h3>
+        <div style="font-size:.85rem;color:var(--muted);line-height:1.7">
+          SözLab, Azərbaycan ədəbi dilini öyrənmək və inkişaf etdirmək üçün yaradılmış pulsuz bir platformadır.
+          Burada ədəbi sözlərin mənasını öyrənə, oyunlar oynaya, hekayələr yaza və digər istifadəçilərlə yarışa bilərsiniz.
+        </div>
+      </div>
+      <div class="admin-section" style="margin-bottom:16px">
+        <h3>🎯 Məqsədimiz</h3>
+        <div style="font-size:.85rem;color:var(--muted);line-height:1.7">
+          Azərbaycan dilinin zənginliyini qorumaq, ədəbi sözləri gənc nəslə tanıtmaq və dil öyrənməyi əyləncəli hala gətirmək.
+        </div>
+      </div>
+      <div class="admin-section" style="margin-bottom:16px">
+        <h3>📊 Platformada nələr var?</h3>
+        <div style="font-size:.85rem;color:var(--muted);line-height:1.7">
+          • 50+ ədəbi söz və mənaları<br>
+          • 6 fərqli oyun (Mənası Nədir, Boşluq Doldur, Uyğunlaşdır, Flashkart, Sinonim Tap, Antonim Tap)<br>
+          • XP və səviyyə sistemi<br>
+          • Gün seriyası (streak) bonusları<br>
+          • Liderboard (rəqabət)<br>
+          • Hekayə yazma (yaradıcılıq)<br>
+          • Nişanlar (badges) sistemi<br>
+          • Admin panel (istifadəçi idarəsi, söz əlavə etmə, duyurular)
+        </div>
+      </div>
+      <div class="admin-section" style="margin-bottom:16px">
+        <h3>📧 Əlaqə</h3>
+        <div style="font-size:.85rem;color:var(--muted);line-height:1.7">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+            <span>📧 Email:</span>
+            <a href="mailto:sozlab@example.com" style="color:var(--gold);text-decoration:none">sozlab@example.com</a>
+            <button onclick="copyEmail()" style="background:transparent;border:1px solid var(--border);border-radius:12px;padding:4px 10px;font-size:.7rem;cursor:pointer">📋 Kopyala</button>
+          </div>
+          <div>💬 Bildiriş və təkliflərinizi aşağıdakı forma ilə göndərə bilərsiniz.</div>
+        </div>
+      </div>
+      <div class="admin-section" style="margin-bottom:16px;border-left:3px solid var(--gold)">
+        <h3>👨‍💻 Qurucu haqqında</h3>
+        <div style="font-size:.85rem;color:var(--text);line-height:1.7">
+          <p><strong>Mirzəyev Kamal</strong> – 205 nömrəli məktəbin 9B sinif şagirdi.</p>
+          <p>Bu layihə məktəb üçün hazırlanmışdır. Məqsəd Azərbaycan ədəbi dilini təbliğ etmək, şagirdlərə dil öyrənməyi əyləncəli və maraqlı hala gətirməkdir.</p>
+          <p style="margin-top:8px">💐 <strong>Təşəkkürlər:</strong><br>
+          • Elnur müəllimə – bu fikri mənə verdiyi və dəstək olduğu üçün!<br>
+          • Billurə müəllimə (sinif rəhbərimə) – həmişə yanımda olduğu üçün!<br>
+          • Bütün yoldaşlarıma – sınaq və rəy bildirdikləri üçün!</p>
+          <p style="margin-top:8px;font-style:italic;color:var(--gold)">📍 205 nömrəli məktəb · 9B sinfi · 2026</p>
+        </div>
+      </div>
+      <div class="admin-section">
+        <h3>💬 Bildiriş / Təklif Göndər</h3>
+        <input class="admin-input" id="contactName" placeholder="Adınız" value="${currentUser?.display_name||currentUser?.username||''}" style="margin-bottom:8px">
+        <input class="admin-input" id="contactEmail" placeholder="Email (cavab üçün)" style="margin-bottom:8px">
+        <textarea id="contactMsg" rows="4" class="admin-input" placeholder="Mesajınızı yazın..."></textarea>
+        <div style="font-size:.72rem;color:var(--muted);margin-bottom:8px" id="contactCharCounter">0/300 simvol</div>
+        <button class="btn-primary" id="sendContactBtn">📤 Göndər</button>
+      </div>
+    </div>`;
+  const msgArea=document.getElementById('contactMsg');
+  const counter=document.getElementById('contactCharCounter');
+  if(msgArea){
+    msgArea.addEventListener('input',()=>{
+      const len=msgArea.value.length;
+      counter.textContent=`${len}/300 simvol`;
+      counter.style.color=len>300?'var(--red)':'var(--muted)';
+    });
+  }
+  document.getElementById('sendContactBtn')?.addEventListener('click',sendContactMessage);
+}
+
+async function sendContactMessage(){
+  const name=document.getElementById('contactName')?.value.trim()||'Adsız';
+  const email=document.getElementById('contactEmail')?.value.trim()||'';
+  const message=document.getElementById('contactMsg')?.value.trim();
+  const counter=document.getElementById('contactCharCounter');
+  if(!message){showToast('Zəhmət olmasa mesaj yazın!','red');return;}
+  if(message.length<10){showToast('Mesaj ən az 10 hərf olmalıdır','red');return;}
+  if(message.length>300){showToast('Mesaj maksimum 300 hərf ola bilər','red');return;}
+  const spamWords=['reklam','porno','seks','kazino','bonus','pul'];
+  const lowerMsg=message.toLowerCase();
+  for(const w of spamWords){
+    if(lowerMsg.includes(w)){showToast('⚠️ Mesajınız spam söz ehtiva edir!','red');return;}
+  }
+  console.log('📬 Yeni bildiriş!');
+  console.log('Ad:',name);
+  console.log('Email:',email);
+  console.log('Mesaj:',message);
+  console.log('---');
+  showToast('✅ Bildirişiniz göndərildi! Təşəkkürlər.','teal');
+  document.getElementById('contactMsg').value='';
+  document.getElementById('contactEmail').value='';
+  if(counter)counter.textContent='0/300 simvol';
+}
+
+window.copyEmail=()=>{
+  navigator.clipboard.writeText('sozlab@example.com');
+  showToast('Email ünvanı kopyalandı!','teal');
 };
 
 // ══════════════════════════════════════════════
