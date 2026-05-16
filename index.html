@@ -523,7 +523,6 @@ body.light-mode .theme-toggle::after{left:19px;background:#fff}
     <div class="view" id="viewLeaderboard"></div>
     <div class="view" id="viewProfile"></div>
     <div class="view" id="viewAI" style="display:none;flex-direction:column;height:100%"></div>
-    <div class="view" id="viewSupport" style="display:none;flex-direction:column;height:100%"></div>
   </div>
   <nav class="bottom-nav">
     <button class="nav-btn active" data-view="Home"><span class="icon">🏠</span><span class="lbl">Əsas</span></button>
@@ -531,7 +530,6 @@ body.light-mode .theme-toggle::after{left:19px;background:#fff}
     <button class="nav-btn" data-view="Games"><span class="icon">🎮</span><span class="lbl">Oyunlar</span></button>
     <button class="nav-btn" data-view="Vocab"><span class="icon">📚</span><span class="lbl">Lüğət</span></button>
     <button class="nav-btn" data-view="AI"><span class="icon">🤖</span><span class="lbl">AI</span></button>
-    <button class="nav-btn" data-view="Support"><span class="icon">💬</span><span class="lbl">Destek</span></button>
   </nav>
 </div>
 
@@ -550,7 +548,6 @@ body.light-mode .theme-toggle::after{left:19px;background:#fff}
       <button class="admin-tab" data-atab="announce">📢 Duyurular</button>
       <button class="admin-tab" data-atab="top10">🏅 Top 10</button>
       <button class="admin-tab" data-atab="notify">🔔 Bildiriş</button>
-      <button class="admin-tab" data-atab="support">💬 Bildirişlər</button>
     </div>
 
     <!-- STATS -->
@@ -657,14 +654,6 @@ body.light-mode .theme-toggle::after{left:19px;background:#fff}
         <button class="btn-primary" id="sendNotifyBtn">📤 Bildiriş Göndər</button>
       </div>
       <div id="notifyHistory"></div>
-    </div>
-
-    <!-- SUPPORT TICKETS -->
-    <div id="atab-support" style="display:none">
-      <div class="admin-section">
-        <h3>📨 Gələn Bildirişlər</h3>
-        <div id="adminTicketsList"><p style="color:var(--muted)">Yüklənir...</p></div>
-      </div>
     </div>
   </div>
 </div>
@@ -807,33 +796,6 @@ function showToast(msg,color='gold'){
   clearTimeout(t._tid);
   t._tid=setTimeout(()=>t.classList.remove('show'),2800);
 }
-
-// ── SPEECH (burada təyin edilir ki, inline onclick-lər işləsin) ──
-window.speakText=function(text,lang='az-AZ'){
-  if(!window.speechSynthesis)return;
-  window.speechSynthesis.cancel();
-  const utt=new SpeechSynthesisUtterance(text);
-  utt.lang=lang;utt.rate=0.9;utt.pitch=1;
-  window.speechSynthesis.speak(utt);
-};
-
-// ── STREAK POPUP (global ki, onclick işləsin) ──
-window.closeStreakPopup=function(){
-  const p=document.querySelector('.streak-popup');
-  if(p)p.remove();
-};
-
-function showStreakBonus(streak){
-  const div=document.createElement('div');div.className='streak-popup';
-  div.innerHTML=`<div class="streak-popup-box">
-    <div class="streak-popup-icon">🔥</div>
-    <div class="streak-popup-title">${streak} Günlük Seriya!</div>
-    <div class="streak-popup-sub">Tebrik edirik! Hər gün geri qayıdırsın.<br>Davamlılığın sənin ən böyük gücündür!<br><b style="color:var(--gold)">+3 Bonus XP qazandın!</b></div>
-    <button class="btn-primary" onclick="window.closeStreakPopup()">🚀 Davam Et!</button>
-  </div>`;
-  document.body.appendChild(div);
-  div.addEventListener('click',e=>{if(e.target===div)div.remove();});
-}
 function showScreen(id){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
@@ -954,7 +916,7 @@ function switchView(name){
   if(target){target.classList.add('active');target.style.display=name==='AI'?'flex':'block';}
   document.querySelectorAll('.nav-btn').forEach(b=>b.classList.toggle('active',b.dataset.view===name));
   const renders={Home:renderHome,Alpha:renderAlpha,Games:renderGames,Vocab:renderVocab,
-    Creative:renderCreative,Leaderboard:renderLeaderboard,Profile:renderProfile,AI:renderAI,Support:renderSupport};
+    Creative:renderCreative,Leaderboard:renderLeaderboard,Profile:renderProfile,AI:renderAI};
   if(renders[name])renders[name]();
 }
 
@@ -1576,39 +1538,6 @@ async function renderLeaderboard(){
 }
 
 // ══════════════════════════════════════════════
-// BADGES (renderProfile-dan əvvəl olmalı)
-// ══════════════════════════════════════════════
-const BADGES=[
-  {id:'first_word',icon:'🌱',name:'İlk Söz',desc:'İlk sözü öyrəndin',check:u=>(u.learned||[]).length>=1},
-  {id:'first_game',icon:'🎮',name:'İlk Oyun',desc:'İlk oyunu oynadın',check:u=>u.xp>=10},
-  {id:'streak3',icon:'🔥',name:'3 Gün Seriya',desc:'3 gün ardıcıl giriş',check:u=>u.streak>=3},
-  {id:'streak7',icon:'⚡',name:'Həftəlik Seriya',desc:'7 gün ardıcıl giriş',check:u=>u.streak>=7},
-  {id:'words10',icon:'📚',name:'10 Söz',desc:'10 söz öyrəndin',check:u=>(u.learned||[]).length>=10},
-  {id:'words25',icon:'📖',name:'25 Söz',desc:'25 söz öyrəndin',check:u=>(u.learned||[]).length>=25},
-  {id:'xp50',icon:'🏆',name:'50 XP',desc:'50 XP topladın',check:u=>u.xp>=50},
-  {id:'xp200',icon:'💎',name:'200 XP',desc:'200 XP topladın',check:u=>u.xp>=200},
-  {id:'level5',icon:'⭐',name:'Səviyyə 5',desc:'Səviyyə 5-ə çatdın',check:u=>u.level>=5},
-  {id:'story',icon:'✍️',name:'Yazıçı',desc:'İlk hekayəni yazdın',check:u=>u.xp>=15},
-];
-
-function checkBadges(u){
-  const earned=u.badges||[];
-  const newBadges=[];
-  for(const b of BADGES){
-    if(!earned.includes(b.id)&&b.check(u)){
-      newBadges.push(b);earned.push(b.id);
-    }
-  }
-  if(newBadges.length){
-    u.badges=earned;
-    saveProfile({badges:earned});
-    newBadges.forEach(b=>{
-      setTimeout(()=>showToast(`🏅 Yeni nişan: ${b.icon} ${b.name}!`,'gold'),300);
-    });
-  }
-}
-
-// ══════════════════════════════════════════════
 // PROFILE
 // ══════════════════════════════════════════════
 function renderProfile(){
@@ -1756,6 +1685,65 @@ function renderAI(){
 }
 
 // ══════════════════════════════════════════════
+// BADGES
+// ══════════════════════════════════════════════
+const BADGES=[
+  {id:'first_word',icon:'🌱',name:'İlk Söz',desc:'İlk sözü öyrəndin',check:u=>(u.learned||[]).length>=1},
+  {id:'first_game',icon:'🎮',name:'İlk Oyun',desc:'İlk oyunu oynadın',check:u=>u.xp>=10},
+  {id:'streak3',icon:'🔥',name:'3 Gün Seriya',desc:'3 gün ardıcıl giriş',check:u=>u.streak>=3},
+  {id:'streak7',icon:'⚡',name:'Həftəlik Seriya',desc:'7 gün ardıcıl giriş',check:u=>u.streak>=7},
+  {id:'words10',icon:'📚',name:'10 Söz',desc:'10 söz öyrəndin',check:u=>(u.learned||[]).length>=10},
+  {id:'words25',icon:'📖',name:'25 Söz',desc:'25 söz öyrəndin',check:u=>(u.learned||[]).length>=25},
+  {id:'xp50',icon:'🏆',name:'50 XP',desc:'50 XP topladın',check:u=>u.xp>=50},
+  {id:'xp200',icon:'💎',name:'200 XP',desc:'200 XP topladın',check:u=>u.xp>=200},
+  {id:'level5',icon:'⭐',name:'Səviyyə 5',desc:'Səviyyə 5-ə çatdın',check:u=>u.level>=5},
+  {id:'story',icon:'✍️',name:'Yazıçı',desc:'İlk hekayəni yazdın',check:u=>u.xp>=15},
+];
+
+function checkBadges(u){
+  const earned=u.badges||[];
+  const newBadges=[];
+  for(const b of BADGES){
+    if(!earned.includes(b.id)&&b.check(u)){
+      newBadges.push(b);earned.push(b.id);
+    }
+  }
+  if(newBadges.length){
+    u.badges=earned;
+    saveProfile({badges:earned});
+    newBadges.forEach(b=>{
+      setTimeout(()=>showToast(`🏅 Yeni nişan: ${b.icon} ${b.name}!`,'gold'),300);
+    });
+  }
+}
+
+// ══════════════════════════════════════════════
+// SPEECH (Web Speech API)
+// ══════════════════════════════════════════════
+function speakText(text,lang='az-AZ'){
+  if(!window.speechSynthesis)return;
+  window.speechSynthesis.cancel();
+  const utt=new SpeechSynthesisUtterance(text);
+  utt.lang=lang;utt.rate=0.9;utt.pitch=1;
+  window.speechSynthesis.speak(utt);
+}
+
+// ══════════════════════════════════════════════
+// STREAK BONUS POPUP
+// ══════════════════════════════════════════════
+function showStreakBonus(streak){
+  const div=document.createElement('div');div.className='streak-popup';
+  div.innerHTML=`<div class="streak-popup-box">
+    <div class="streak-popup-icon">🔥</div>
+    <div class="streak-popup-title">${streak} Günlük Seriya!</div>
+    <div class="streak-popup-sub">Tebrik edirik! Hər gün geri qayıdırsın.<br>Davamlılığın sənin ən böyük gücündür!<br><b style="color:var(--gold)">+3 Bonus XP qazandın!</b></div>
+    <button class="btn-primary" onclick="this.closest('.streak-popup').remove()">🚀 Davam Et!</button>
+  </div>`;
+  document.body.appendChild(div);
+  div.addEventListener('click',e=>{if(e.target===div)div.remove();});
+}
+
+// ══════════════════════════════════════════════
 // CSV EXPORT
 // ══════════════════════════════════════════════
 function downloadCSV(rows,filename){
@@ -1809,175 +1797,6 @@ async function loadTop10(){
   let byWords=[...data].sort((a,b)=>(b.learned||[]).length-(a.learned||[]).length);
   document.getElementById('top10Words').innerHTML=byWords.map((u,i)=>rowHTML(u,i,(u.learned||[]).length,' söz')).join('');
 }
-
-// ══════════════════════════════════════════════
-// DESTEK / BİLDİRİŞ SİSTEMİ
-// ══════════════════════════════════════════════
-let currentTicketId=null;
-let spamCooldown=false;
-
-function escapeHtml(str){
-  if(!str)return'';
-  return str.replace(/[&<>]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]||m));
-}
-
-function renderSupport(){
-  const v=document.getElementById('viewSupport');
-  v.innerHTML=`
-    <div style="padding:14px 16px;border-bottom:1px solid var(--border);flex-shrink:0">
-      <div class="section-title" style="margin-bottom:4px">💬 Destek və Bildiriş</div>
-      <div style="font-size:.75rem;color:var(--muted)">Oyun xətaları, təkliflər, problemlər – bizə yazın!</div>
-    </div>
-    <div style="flex:1;overflow-y:auto;padding:12px 16px">
-      <div class="admin-section" style="margin-bottom:16px">
-        <h3>📝 Yeni Bildiriş Göndər</h3>
-        <input class="admin-input" id="ticketTitle" placeholder="Başlıq (məsələn: Sinonim oyununda xəta)" style="margin-bottom:8px">
-        <textarea id="ticketMsg" rows="4" class="admin-input" placeholder="Problemi və ya təklifini ətraflı yaz..."></textarea>
-        <div style="font-size:.72rem;color:var(--muted);margin-bottom:8px" id="charCounter">0/500 simvol</div>
-        <button class="btn-primary" id="sendTicketBtn" style="margin-top:0">📤 Bildiriş Göndər</button>
-      </div>
-      <div class="admin-section">
-        <h3>📋 Mənim Bildirişlərim</h3>
-        <div id="userTicketsList"><p style="color:var(--muted);font-size:.83rem">Yüklənir...</p></div>
-      </div>
-    </div>`;
-
-  const msgArea=document.getElementById('ticketMsg');
-  const counter=document.getElementById('charCounter');
-  msgArea?.addEventListener('input',()=>{
-    const len=msgArea.value.length;
-    counter.textContent=`${len}/500 simvol`;
-    counter.style.color=len>500?'var(--red)':'var(--muted)';
-  });
-  document.getElementById('sendTicketBtn')?.addEventListener('click',sendSupportTicket);
-  loadUserTickets();
-}
-
-async function sendSupportTicket(){
-  if(!currentUser){showToast('Zəhmət olmasa daxil olun!','red');return;}
-  if(spamCooldown){showToast('Zəhmət olmasa 30 saniyə gözləyin','red');return;}
-  const title=document.getElementById('ticketTitle').value.trim();
-  const message=document.getElementById('ticketMsg').value.trim();
-  if(!title||!message){showToast('Başlıq və mesaj daxil edin!','red');return;}
-  if(title.length<3){showToast('Başlıq ən az 3 hərf olmalıdır','red');return;}
-  if(message.length<10){showToast('Mesaj ən az 10 hərf olmalıdır','red');return;}
-  if(message.length>500){showToast('Mesaj maksimum 500 hərf ola bilər','red');return;}
-  const spamWords=['reklam','porno','seks','kazino','bonus','pul qazan','kripto','bitcoin'];
-  const lowerMsg=message.toLowerCase();
-  for(const w of spamWords){
-    if(lowerMsg.includes(w)){showToast('⚠️ Bildirişiniz spam söz ehtiva edir!','red');return;}
-  }
-  const sameWordCount=(lowerMsg.match(/\b(\w+)\b/g)||[]).filter((v,i,a)=>a.indexOf(v)!==i).length;
-  if(sameWordCount>5){showToast('⚠️ Çox təkrar ifadələr aşkar edildi!','red');return;}
-  try{
-    await sb.from('support_tickets').insert([{
-      username:currentUser.username,display_name:currentUser.display_name,
-      title,message,status:'open'
-    }]);
-    showToast('✅ Bildiriş göndərildi! Admin ən qısa zamanda cavab verəcək.','teal');
-    document.getElementById('ticketTitle').value='';
-    document.getElementById('ticketMsg').value='';
-    document.getElementById('charCounter').textContent='0/500 simvol';
-    loadUserTickets();
-    spamCooldown=true;
-    setTimeout(()=>{spamCooldown=false;},30000);
-  }catch(e){showToast('Xəta baş verdi!','red');}
-}
-
-async function loadUserTickets(){
-  const div=document.getElementById('userTicketsList');
-  if(!div||!currentUser)return;
-  let data=[];
-  try{
-    const r=await sb.from('support_tickets').select().eq('username',currentUser.username).order('created_at',{ascending:false});
-    data=r.data||[];
-  }catch(e){}
-  if(!data.length){div.innerHTML='<p style="color:var(--muted);font-size:.83rem">Hələ bildiriş göndərməmisiniz.</p>';return;}
-  const statusMap={'open':'⏳ Gözləmədə','in_progress':'⚙️ Baxılır','resolved':'✅ Həll edildi','closed':'🔒 Bağlandı'};
-  div.innerHTML=data.map(t=>`
-    <div class="story-card" style="margin-bottom:12px;border-left:3px solid ${t.status==='resolved'?'var(--green)':t.status==='in_progress'?'var(--gold)':'var(--purple)'}">
-      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;margin-bottom:6px">
-        <div style="font-weight:700;font-size:.9rem">📌 ${escapeHtml(t.title)}</div>
-        <div style="font-size:.7rem;color:var(--muted)">${statusMap[t.status]||t.status}</div>
-      </div>
-      <div style="font-size:.85rem;color:var(--text);margin-bottom:10px;white-space:pre-wrap">${escapeHtml(t.message)}</div>
-      <div style="font-size:.7rem;color:var(--muted);margin-bottom:6px">📅 ${new Date(t.created_at).toLocaleString('az-AZ')}</div>
-      ${t.admin_reply?`
-        <div style="background:var(--card2);border-radius:var(--radius-sm);padding:10px;margin-top:8px;border-left:2px solid var(--teal)">
-          <div style="font-size:.7rem;color:var(--teal);margin-bottom:4px">👨‍💻 Admin cavabı:</div>
-          <div style="font-size:.82rem;color:var(--text)">${escapeHtml(t.admin_reply)}</div>
-          <div style="font-size:.65rem;color:var(--muted);margin-top:4px">${t.replied_at?new Date(t.replied_at).toLocaleString('az-AZ'):''}</div>
-        </div>
-      `:'<div style="font-size:.7rem;color:var(--muted);font-style:italic;margin-top:6px">⏳ Cavab gözlənilir...</div>'}
-      ${t.status!=='closed'?`<button class="admin-btn-sm admin-btn-del" style="margin-top:10px;background:transparent" onclick="window.closeUserTicket(${t.id})">🔒 Bildirişi Bağla</button>`:''}
-    </div>`).join('');
-}
-
-window.closeUserTicket=function(id){
-  if(!confirm('Bu bildirişi bağlamaq istədiyinizə əminsiniz?'))return;
-  sb.from('support_tickets').update({status:'closed'}).eq('id',id).then(()=>{
-    showToast('Bildiriş bağlandı','gold');loadUserTickets();
-  }).catch(()=>showToast('Xəta!','red'));
-};
-
-async function loadAdminTickets(){
-  const div=document.getElementById('adminTicketsList');if(!div)return;
-  let data=[];
-  try{const r=await sb.from('support_tickets').select().order('created_at',{ascending:false});data=r.data||[];}catch(e){}
-  if(!data.length){div.innerHTML='<p style="color:var(--muted)">Heç bir bildiriş yoxdur.</p>';return;}
-  const statusMap={'open':'⏳ Gözləmədə','in_progress':'⚙️ Baxılır','resolved':'✅ Həll edildi','closed':'🔒 Bağlandı'};
-  div.innerHTML=data.map(t=>`
-    <div class="admin-user-row" style="flex-direction:column;align-items:stretch;margin-bottom:14px">
-      <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;margin-bottom:8px">
-        <div style="font-weight:700">${escapeHtml(t.title)}</div>
-        <div style="font-size:.7rem;padding:2px 8px;border-radius:10px;background:var(--card2);color:var(--muted)">${statusMap[t.status]||t.status}</div>
-      </div>
-      <div style="font-size:.8rem;color:var(--muted);margin-bottom:6px">👤 <b>${escapeHtml(t.display_name||t.username)}</b> (@${escapeHtml(t.username)})</div>
-      <div style="background:var(--card2);border-radius:8px;padding:10px;margin-bottom:8px;font-size:.85rem;white-space:pre-wrap">${escapeHtml(t.message)}</div>
-      <div style="font-size:.7rem;color:var(--muted);margin-bottom:10px">📅 ${new Date(t.created_at).toLocaleString('az-AZ')}</div>
-      ${t.admin_reply?`<div style="background:var(--card);border-radius:8px;padding:8px;margin-bottom:10px;border-left:2px solid var(--teal)">
-        <div style="font-size:.7rem;color:var(--teal)">Admin cavabı:</div>
-        <div style="font-size:.82rem;margin-top:4px">${escapeHtml(t.admin_reply)}</div>
-      </div>`:''}
-      <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:flex-start">
-        <select id="status_${t.id}" style="background:var(--bg2);border:1px solid var(--border);border-radius:20px;padding:5px 10px;font-size:.75rem;color:var(--text)">
-          <option value="open" ${t.status==='open'?'selected':''}>⏳ Gözləmədə</option>
-          <option value="in_progress" ${t.status==='in_progress'?'selected':''}>⚙️ Baxılır</option>
-          <option value="resolved" ${t.status==='resolved'?'selected':''}>✅ Həll edildi</option>
-          <option value="closed" ${t.status==='closed'?'selected':''}>🔒 Bağlandı</option>
-        </select>
-        <textarea id="reply_${t.id}" placeholder="Cavab yaz..." style="flex:1;min-width:140px;background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:6px 10px;font-size:.8rem;resize:vertical;color:var(--text)">${escapeHtml(t.admin_reply||'')}</textarea>
-        <div style="display:flex;flex-direction:column;gap:6px">
-          <button class="admin-btn-sm admin-btn-xp" onclick="window.replyToTicket(${t.id})">📨 Cavabla</button>
-          <button class="admin-btn-sm admin-btn-del" onclick="window.deleteTicket(${t.id})">🗑️ Sil</button>
-        </div>
-      </div>
-    </div>`).join('');
-}
-
-window.replyToTicket=async(id)=>{
-  const reply=document.getElementById(`reply_${id}`).value.trim();
-  const status=document.getElementById(`status_${id}`).value;
-  if(!reply&&status==='open'){showToast('Cavab yazın!','red');return;}
-  try{
-    await sb.from('support_tickets').update({
-      admin_reply:reply||null,status,replied_at:new Date().toISOString()
-    }).eq('id',id);
-    showToast('Cavab göndərildi! ✅','teal');
-    loadAdminTickets();
-    loadUserTickets();
-  }catch(e){showToast('Xəta!','red');}
-};
-
-window.deleteTicket=async(id)=>{
-  if(!confirm('Bu bildirişi silmək istədiyinizə əminsiniz?'))return;
-  try{
-    await sb.from('support_tickets').delete().eq('id',id);
-    showToast('Bildiriş silindi','red');
-    loadAdminTickets();
-    loadUserTickets();
-  }catch(e){showToast('Xəta!','red');}
-};
 
 async function loadNotifyHistory(){
   const div=document.getElementById('notifyHistory');if(!div)return;
@@ -2190,7 +2009,6 @@ window.addEventListener('DOMContentLoaded',async()=>{
     if(tab==='stats')loadAdminStats();
     if(tab==='top10')loadTop10();
     if(tab==='notify')loadNotifyHistory();
-    if(tab==='support')loadAdminTickets();
   }));
 
   // User search
