@@ -717,7 +717,7 @@ let WORDS=[
   {en:'Adaş',az:'Eyni adı daşıyan şəxs',ex:'O mənim adaşımdır, ikimiz də Əlirik.',exAz:'O mənim eyni adı daşıyan dostumdu.',tags:['Ədəbi','İs']},
   {en:'Afaq',az:'Üfüqlər, ətraf aləm',ex:'Afaqda bir ümid işığı göründü.',exAz:'Üfüqlərdə bir ümid işığı göründü.',tags:['Ədəbi','İs']},
   {en:'Afərin',az:'Tərif, bəyənmə, mədh',ex:'Müəllim şagirdin işinə afərin dedi.',exAz:'Müəllim şagirdin işini təriflədi.',tags:['Ədəbi','Nida']},
-  {en:'Afsus',az:'Heyif, təəssüf, peşmançılıq',ex:'Afsus ki, o gün orada deyildim.',exAz:'Heyif ki, o gün orada deyildim.',tags:['Ədəbi','Nida']},
+  {en:'Əfsus',az:'Heyif, təəssüf, peşmançılıq',ex:'Əfsus ki, o gün orada deyildim.',exAz:'Heyif ki, o gün orada deyildim.',tags:['Ədəbi','Nida']},
   {en:'Ağuş',az:'Qoynun, sinə, qucaq',ex:'Ana uşağını ağuşuna aldı.',exAz:'Ana uşağını qucağına aldı.',tags:['Ədəbi','İs']},
   {en:'Aləm',az:'Dünya, kainat, mühit',ex:'Bu aləmdə hər şey fanidir.',exAz:'Bu dünyada hər şey keçicidir.',tags:['Ədəbi','İs']},
   {en:'Alqış',az:'Tərif, mədh, dua',ex:'Xalq qəhrəmanı alqışlarla qarşıladı.',exAz:'Xalq qəhrəmanı təriflə qarşıladı.',tags:['Ədəbi','İs']},
@@ -802,7 +802,7 @@ let WORDS=[
   {en:'Sini',az:'Böyük mis nimçə, tepsi',ex:'Sinidə çay gətirildi.',exAz:'Böyük nimçədə çay gətirildi.',tags:['Ədəbi','İs']},
   {en:'Sovqat',az:'Hədiyyə, yadigar',ex:'Yolçu uzaq şəhərdən sovqat gətirdi.',exAz:'Yolçu uzaq şəhərdən hədiyyə gətirdi.',tags:['Ədəbi','İs']},
   {en:'Sayru',az:'Xəstə (qədim söz)',ex:'Sayru adam yataqdan çıxa bilmirdi.',exAz:'Xəstə adam yataqdan çıxa bilmirdi.',tags:['Qədim','Sif']},
-  {en:'Şellənmək',az:'Həvəslə, özündən razı şəkildə yerimək',ex:'Yeni paltarla şellənərək keçdi.',exAz:'Yeni paltarla özündən razı şəkildə keçdi.',tags:['Dialekt','Fel']},
+  {en:'Şellənmək',az:'Həvəslə, özündən razı şəkildə yerimək',ex:'Evdə oturub şəllənirdi.',exAz:'Evdə oturub əylənirdi.',tags:['Dialekt','Fel']},
   {en:'Şütümək',az:'Sürətlə qaçmaq, tələsik hərəkət etmək',ex:'Uşaq meydandan şütüyüb getdi.',exAz:'Uşaq meydandan sürətlə qaçdı.',tags:['Dialekt','Fel']},
   {en:'Şpilka',az:'El arasında tanınan bəzək əşyası (sancaq)',ex:'Saçına şpilka taxdı.',exAz:'Saçına bəzək sancağı taxdı.',tags:['Dialekt','İs']},
   {en:'Tərki-dünya',az:'Dünyadan əlini üzmüş, təcrid olunmuş',ex:'Tərki-dünya insan tənhalıqda yaşadı.',exAz:'Dünyadan üz döndərmiş insan tənhalıqda yaşadı.',tags:['Ədəbi','Sif']},
@@ -844,11 +844,16 @@ const AZ_WORDS=[
   {word:'işıqlı',meaning:'İşığı olan, aydın',synonyms:['aydın','nurlu','parlaq'],antonyms:['qaranlıq','tutqun','dumanlı']},
   {word:'sadə',meaning:'Mürəkkəb olmayan',synonyms:['asan','aydın','anlaşıqlı'],antonyms:['mürəkkəb','çətin','dolaşıq']},
   {word:'ədalətli',meaning:'Haqq-hesabı düz olan',synonyms:['haqlı','düzgün','insaflı'],antonyms:['ədalətsiz','haqsız','zalım']},
-  {word:'şirin',meaning:'Dadı şirin olan, sevimli',synonyms:['dadlı','sevimli','gözəl'],antonyms:['acı','ikrahverici','çirkin']},
+  {word:'şirin',meaning:'Dadı şirin olan, sevimli',synonyms:['dadlı','sevimli','gözəl'],antonyms:['acı','ikrahverici','turş']},
   {word:'uzun',meaning:'Uzunluğu çox olan',synonyms:['hündür','uzunluqlu','dartımlı'],antonyms:['qısa','gödək','kiçik']},
   {word:'səs-küylü',meaning:'Çox səs çıxaran',synonyms:['gurultulu','hay-küylü','gürültülü'],antonyms:['sakit','sessiz','dinc']},
   {word:'cəsur',meaning:'Qorxu bilməyən',synonyms:['igid','mərd','qoçaq'],antonyms:['qorxaq','ürəksiz','cəsarətsiz']},
-  {word:'mehriban',meaning:'Yaxşı münasibətli',synonyms:['sevecən','xoşrəftar','nəvazişkar'],antonyms:['soyuq','kobud','əxlaqsız']},
+  {word:'mehriban',meaning:'Yaxşı münasibətli, xoşrəftar',synonyms:['sevecən','xoşrəftar','nəvazişkar'],antonyms:['kobud','sərt','xasiyyətsiz']},
+  {word:'gec',meaning:'Vaxtından sonra',synonyms:['ləng','yubanan','gecikmə'],antonyms:['tez','erkən','vaxtında']},
+  {word:'isti',meaning:'Temperaturu yüksək olan',synonyms:['qaynar','ilıq','hərarətli'],antonyms:['soyuq','sərin','buzlu']},
+  {word:'ağ',meaning:'Qar rəngli, rəngsiz',synonyms:['açıq','parlaq','bəyaz'],antonyms:['qara','tutqun','tünd']},
+  {word:'dost',meaning:'Yaxın insan, yoldaş',synonyms:['yoldaş','rəfiq','həmkar'],antonyms:['düşmən','rəqib','yad']},
+  {word:'xoşbəxt',meaning:'Şad, bəxtiyar',synonyms:['məsud','şad','bəxtiyar'],antonyms:['bədbəxt','kədərli','zavallı']},
 ];
 
 // ══════════════════════════════════════════════
@@ -1369,18 +1374,41 @@ function startQuiz(v){
 }
 
 // ── FILL BLANK ──
+// Dedicated fill-blank question pool with guaranteed blanks
+const FILL_QUESTIONS=[
+  {word:'alma',sentence:'Ağacdan bir _____ düşdü.',meaning:'meyvə növü'},
+  {word:'bulud',sentence:'Göydə ağ _____ gəzir.',meaning:'göydəki buxar kütləsi'},
+  {word:'kitab',sentence:'Məktəbdə yeni _____ aldım.',meaning:'oxumaq üçün çap əsər'},
+  {word:'çiçək',sentence:'Bağda rəngli _____ açmışdı.',meaning:'bitkinin gözəl hissəsi'},
+  {word:'günəş',sentence:'Səhər _____ doğdu.',meaning:'gün işığının qaynağı'},
+  {word:'dəniz',sentence:'Yay günü _____ kənarında oturduq.',meaning:'böyük su sahəsi'},
+  {word:'uşaq',sentence:'Küçədə oynayan _____ güldü.',meaning:'körpə, kiçik insan'},
+  {word:'məktəb',sentence:'Hər gün _____ gedirəm.',meaning:'təhsil aldığımız yer'},
+  {word:'torpaq',sentence:'Kəndçi _____ şumladı.',meaning:'yer səthi, çöl'},
+  {word:'ürək',sentence:'Onun _____ çox gözəl idi.',meaning:'sevgi orqanı'},
+  {word:'şəhər',sentence:'Böyük _____ işıqları parlayırdı.',meaning:'böyük yaşayış məntəqəsi'},
+  {word:'yağış',sentence:'Gözlənilmədən _____ yağdı.',meaning:'buluddan düşən su damlaları'},
+  {word:'meşə',sentence:'Dərin _____ içindən keçdik.',meaning:'ağaclıq, orman'},
+  {word:'quş',sentence:'Budaqda kiçik bir _____ oxuyurdu.',meaning:'qanadlı canlı'},
+  {word:'saat',sentence:'Divarda asılı _____ dörd vurdu.',meaning:'vaxt ölçən alət'},
+  {word:'yol',sentence:'Uzun _____ boyunca getdik.',meaning:'gediş-gəliş pisti'},
+  {word:'ev',sentence:'Axşam erkən _____ qayıtdım.',meaning:'yaşayış yeri'},
+  {word:'su',sentence:'Susuzluqdan _____ içdim.',meaning:'həyat üçün lazım maye'},
+  {word:'dağ',sentence:'Hündür _____ zirvəsi qarlıydı.',meaning:'böyük təbii təpə'},
+  {word:'bağ',sentence:'Həyətdəki _____ meyvə vermişdi.',meaning:'meyvə bağçası'},
+];
 function startFill(v){
-  const pool=shuffle([...WORDS]).slice(0,4);
+  const pool=shuffle([...FILL_QUESTIONS]).slice(0,5);
   let idx=0,score=0;
   function showF(){
     if(idx>=pool.length){
-      const won=score>=3;
+      const won=score>=4;
       v.innerHTML=`<button class="btn-outline" id="gback" style="margin-bottom:14px">← Oyunlar</button>
         <div class="quiz-box">
           <div class="quiz-result">
             ${won?'🎉':'😊'}
             <div class="score">${score}/${pool.length}</div>
-            <div class="grade">${won?'Əla! +10 XP qazandın!':'3 düzgün cavab lazımdır'}</div>
+            <div class="grade">${won?'Əla! +10 XP qazandın!':'4 düzgün cavab lazımdır'}</div>
           </div>
           <button class="btn-primary" id="retryBtn" style="margin-top:14px">🔄 Yenidən Oyna</button>
         </div>`;
@@ -1389,31 +1417,28 @@ function startFill(v){
       document.getElementById('retryBtn').onclick=()=>startFill(v);
       return;
     }
-    const w=pool[idx];
-    const blanked=w.ex.replace(new RegExp('\\b'+w.en+'\\b','gi'),'_____');
+    const q=pool[idx];
     gameHeader(v,'✏️ Boşluğu Doldur',idx+1,pool.length);
     v.innerHTML+=`
       <div class="quiz-box" style="margin-top:12px">
-        <div style="font-size:.75rem;color:var(--muted);margin-bottom:10px">Mənası: <b style="color:var(--text)">${w.az}</b></div>
-        <div class="quiz-q" style="font-size:.95rem;line-height:1.8">${blanked}</div>
-        <div style="font-size:.72rem;color:var(--muted);margin-bottom:4px">Məna: <b style="color:var(--text);cursor:pointer" id="fillWordHint" title="İzahı gör">${w.az} 💡</b></div>
+        <div style="font-size:.75rem;color:var(--muted);margin-bottom:10px">Boşluğu düzgün söz ilə doldurun:</div>
+        <div class="quiz-q" style="font-size:1.1rem;line-height:2;letter-spacing:.02em">${q.sentence}</div>
+        <div style="font-size:.78rem;color:var(--muted);margin-bottom:4px">İpucu: <b style="color:var(--teal)">${q.meaning}</b> · İlk hərf: <b style="color:var(--gold)">${q.word[0].toUpperCase()}</b> · Uzunluq: <b style="color:var(--purple)">${q.word.length}</b></div>
         <input class="fill-input" id="fillIn" placeholder="Sözü daxil edin..." autocomplete="off" autocapitalize="none" spellcheck="false">
         <div style="display:flex;gap:8px">
           <button class="btn-sm btn-teal" id="fillCheck" style="flex:1">✓ Yoxla</button>
           <button class="btn-sm" style="background:var(--card2);border:1px solid var(--border);flex:1;color:var(--muted)" id="fillSkip">Keç →</button>
         </div>
-        <div style="font-size:.72rem;color:var(--muted);margin-top:8px">İpucu: İlk hərf — <b style="color:var(--gold)">${w.en[0].toUpperCase()}</b>, uzunluq: <b style="color:var(--teal)">${w.en.length}</b> hərf</div>
       </div>`;
     document.getElementById('gback').onclick=gameBack;
-    document.getElementById('fillWordHint')?.addEventListener('click',()=>showWordMeaning(w.en));
     const check=()=>{
-      const ans=document.getElementById('fillIn').value.trim().toLowerCase();
-      if(ans===w.en.toLowerCase()){score++;showToast('✅ Düzgün! +10 XP','teal');spawnConfetti();showWordMeaning(w.en);}
-      else{showToast(`❌ Düzgün cavab: "${w.en}"  (${w.az})`,'red');showWordMeaning(w.en);}
+      const ans=document.getElementById('fillIn').value.trim().toLowerCase().normalize('NFC');
+      if(ans===q.word.toLowerCase()){score++;showToast('✅ Düzgün! +10 XP','teal');spawnConfetti();}
+      else{showToast(`❌ Düzgün cavab: "${q.word}"`,'red');}
       setTimeout(()=>{idx++;showF();},900);
     };
     document.getElementById('fillCheck').onclick=check;
-    document.getElementById('fillSkip').onclick=()=>{showToast(`Cavab: "${w.en}" = ${w.az}`,'muted');setTimeout(()=>{idx++;showF();},700);};
+    document.getElementById('fillSkip').onclick=()=>{showToast(`Cavab: "${q.word}" — ${q.meaning}`,'muted');setTimeout(()=>{idx++;showF();},700);};
     document.getElementById('fillIn').addEventListener('keydown',e=>{if(e.key==='Enter')check();});
     document.getElementById('fillIn').focus();
   }
@@ -1423,14 +1448,51 @@ function startFill(v){
 // ── MATCH ──
 function startMatch(v){
   const pool=shuffle([...WORDS]).slice(0,5);
-  let selLeft=null,selRight=null,matched=0;
+  let selLeft=null,selRight=null,matched=0,lives=3,matchTimer=null,timeLeft=10;
   const lefts=shuffle([...pool]);
   const rights=shuffle([...pool]);
+
+  function renderTimer(){
+    const tEl=document.getElementById('matchTimerEl');
+    if(tEl){tEl.textContent=timeLeft;tEl.style.color=timeLeft<=3?'var(--red)':'var(--gold)';}
+  }
+  function startTimer(){
+    clearInterval(matchTimer);timeLeft=10;renderTimer();
+    matchTimer=setInterval(()=>{
+      timeLeft--;renderTimer();
+      if(timeLeft<=0){
+        clearInterval(matchTimer);
+        lives--;
+        updateLivesMatch();
+        showToast('⏰ Vaxt bitdi! -1 can','red');
+        selLeft=selRight=null;
+        v.querySelectorAll('.match-item.selected').forEach(x=>x.classList.remove('selected'));
+        if(lives<=0){endMatch();}else{startTimer();}
+      }
+    },1000);
+  }
+  function updateLivesMatch(){
+    const lEl=document.getElementById('matchLives');
+    if(lEl)lEl.textContent='❤️'.repeat(Math.max(0,lives))+'🖤'.repeat(Math.max(0,3-lives));
+  }
+  function endMatch(){
+    clearInterval(matchTimer);
+    v.innerHTML=`<button class="btn-outline" id="gback" style="margin-bottom:14px">← Oyunlar</button>
+      <div class="quiz-box"><div class="quiz-result">💔<div class="score">${matched}/${pool.length}</div>
+      <div class="grade">Canlarınız bitdi! Yenidən cəhd edin.</div></div>
+      <button class="btn-primary" id="retryBtn" style="margin-top:14px">🔄 Yenidən Oyna</button></div>`;
+    document.getElementById('gback').onclick=gameBack;
+    document.getElementById('retryBtn').onclick=()=>startMatch(v);
+  }
 
   function render(){
     gameHeader(v,'🔗 Uyğunlaşdır',matched,pool.length);
     v.innerHTML+=`
-      <div style="font-size:.75rem;color:var(--muted);margin:8px 0 12px">Sol — söz, Sağ — mənası. Cütü tap!</div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin:8px 0 12px">
+        <div id="matchLives" style="font-size:1rem">${'❤️'.repeat(lives)}${'🖤'.repeat(3-lives)}</div>
+        <div style="display:flex;align-items:center;gap:6px;font-size:.82rem;color:var(--muted)">⏱ <span id="matchTimerEl" style="font-family:var(--font-head);font-size:1.1rem;font-weight:800;color:var(--gold)">${timeLeft}</span> san</div>
+      </div>
+      <div style="font-size:.75rem;color:var(--muted);margin-bottom:12px">Sol — söz, Sağ — mənası. 10 saniyədə cüt tap! Səhvdə can itirirsiniz!</div>
       <div class="match-container">
         <div>
           <div class="match-col-title">Söz</div>
@@ -1445,13 +1507,13 @@ function startMatch(v){
           </div>
         </div>
       </div>`;
-    document.getElementById('gback').onclick=gameBack;
+    document.getElementById('gback').onclick=()=>{clearInterval(matchTimer);gameBack();};
+    startTimer();
 
     v.querySelectorAll('[data-li]').forEach(b=>b.addEventListener('click',function(){
       if(lefts[+this.dataset.li]._matched)return;
       v.querySelectorAll('[data-li]').forEach(x=>x.classList.remove('selected'));
       selLeft=+this.dataset.li;this.classList.add('selected');
-      showWordMeaning(lefts[selLeft].en);
       tryMatch();
     }));
     v.querySelectorAll('[data-ri]').forEach(b=>b.addEventListener('click',function(){
@@ -1464,9 +1526,11 @@ function startMatch(v){
   function tryMatch(){
     if(selLeft===null||selRight===null)return;
     if(lefts[selLeft].en===rights[selRight].en){
+      clearInterval(matchTimer);
       lefts[selLeft]._matched=rights[selRight]._matched=true;
       matched++;selLeft=selRight=null;
       if(matched===pool.length){
+        clearInterval(matchTimer);
         setTimeout(async()=>{
           v.innerHTML=`<button class="btn-outline" id="gback" style="margin-bottom:14px">← Oyunlar</button>
             <div class="quiz-box"><div class="quiz-result">🎉<div class="score">${pool.length}/${pool.length}</div><div class="grade">Hamısını tapdın! +10 XP!</div></div>
@@ -1478,9 +1542,13 @@ function startMatch(v){
       }
       render();
     }else{
+      // Wrong match: flash and -1 life
       const lEl=v.querySelector(`[data-li="${selLeft}"]`);
       const rEl=v.querySelector(`[data-ri="${selRight}"]`);
       lEl&&lEl.classList.add('wrong-flash');rEl&&rEl.classList.add('wrong-flash');
+      lives--;updateLivesMatch();
+      showToast('❌ Yanlış cüt! -1 can','red');
+      if(lives<=0){setTimeout(()=>endMatch(),500);return;}
       setTimeout(()=>{
         v.querySelectorAll('.wrong-flash').forEach(x=>x.classList.remove('wrong-flash','selected'));
         selLeft=selRight=null;
@@ -2078,58 +2146,87 @@ function startWordscapes(v){
 }
 
 // ══════════════════════════════════════════════
-// HƏRF TETRİSİ (Falling Letters)
+// HƏRF TETRİSİ (Falling Letters) — Tam yenidən yazılmış
+// Hərflər düşür → istifadəçi söz yazır → həmin hərflər yox olur
+// Çətinlik: sürət, uzun sözlər, çox hərf
 // ══════════════════════════════════════════════
 function startFallingLetters(v){
-  const WORD_POOL=shuffle([...CHAIN_WORDS]).slice(0,30);
-  let score=0,lives=3,level=1,typed='',fallingItems=[],animFrame=null,gameRunning=true;
-  let wordQueue=[...WORD_POOL];
-  let lastSpawn=0,spawnInterval=3000;
+  // Azərbaycanca sözlər (uzun sözlərə üstünlük)
+  const TETRIS_WORDS=shuffle([
+    ...CHAIN_WORDS.filter(w=>w.length>=4),
+    'alma','bala','dağ','gül','çay','qar','dəniz','meşə','şəhər','kitab',
+    'uşaq','torpaq','günəş','ulduz','çiçək','bulud','yağış','quş','balıq',
+    'həyat','ürək','vətən','dost','əsgər','insan','sülh','xoşbəxt',
+    'məktəb','müəllim','şagird','bilik','sənət','musiqi','rəqs',
+  ]).filter((w,i,a)=>a.indexOf(w)===i);
+
+  let score=0,lives=3,level=1,gameRunning=true;
+  let fallingLetterGroups=[]; // {letters:[{ch,el,x,y}], word, matched:[]}
+  let animFrame=null,lastSpawn=0;
+  let spawnInterval=2800; // ms between word spawns
+  const ARENA_H=300;
 
   v.innerHTML=`
     <button class="btn-outline" id="gback" style="margin-bottom:10px">← Geri</button>
     <div style="font-family:var(--font-head);font-size:1rem;font-weight:700;margin-bottom:6px">🌧️ Hərf Tetrisi</div>
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-      <div style="font-size:.82rem">Can: <span id="flLives" style="color:var(--red)">❤️❤️❤️</span></div>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;padding:8px 12px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius-sm)">
+      <div style="font-size:.82rem">Can: <span id="flLives">❤️❤️❤️</span></div>
+      <div style="font-size:.82rem;color:var(--purple)">Səviyyə: <span id="flLevel" style="color:var(--gold);font-weight:800">1</span></div>
       <div style="font-size:.82rem;color:var(--gold);font-weight:700">XP: <span id="flScore">0</span></div>
     </div>
-    <div id="flArena" style="position:relative;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);height:260px;overflow:hidden;margin-bottom:10px"></div>
+    <div id="flArena" style="position:relative;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);height:${ARENA_H}px;overflow:hidden;margin-bottom:10px;background:linear-gradient(180deg,var(--bg2) 0%,var(--card) 100%)"></div>
     <div style="display:flex;gap:8px;align-items:center">
-      <input id="flInput" class="fill-input" style="margin:0;flex:1" placeholder="Söz yaz və Enter'a bas..." autocomplete="off" autocapitalize="none" spellcheck="false" autofocus>
-      <div id="flTyped" style="min-width:60px;font-family:var(--font-head);color:var(--teal);font-size:.9rem"></div>
+      <input id="flInput" class="fill-input" style="margin:0;flex:1" placeholder="Söz yazın → Enter..." autocomplete="off" autocapitalize="none" spellcheck="false" autofocus>
+      <button class="btn-sm btn-teal" id="flSubmit">✓</button>
     </div>
-    <div style="font-size:.7rem;color:var(--muted);margin-top:6px;text-align:center">Düşən sözləri yazaraq silin. Söz yerə düşərsə can itirirsiniz!</div>`;
+    <div style="font-size:.7rem;color:var(--muted);margin-top:6px;text-align:center">💡 Düşən hərflərdən söz düzəldin, Enter basın. Hərflər yerə çatmadan silin!</div>`;
 
   document.getElementById('gback').onclick=()=>{gameRunning=false;if(animFrame)cancelAnimationFrame(animFrame);gameBack();};
   const arena=document.getElementById('flArena');
   const inp=document.getElementById('flInput');
   inp.focus();
 
-  function spawnWord(){
-    if(!wordQueue.length)wordQueue=shuffle([...CHAIN_WORDS]);
-    const word=wordQueue.shift();
-    const el=document.createElement('div');
-    el.textContent=word;
-    el.style.cssText=`position:absolute;top:-30px;left:${Math.random()*70+5}%;transform:translateX(-50%);
-      background:var(--card2);border:1px solid var(--border2);border-radius:20px;padding:5px 12px;
-      font-size:.82rem;font-weight:600;color:var(--text);white-space:nowrap;cursor:default`;
-    el.dataset.word=word;
-    el.dataset.y='-30';
-    arena.appendChild(el);
-    fallingItems.push({el,word,y:-30});
+  function updateUI(){
+    const sEl=document.getElementById('flScore');if(sEl)sEl.textContent=score;
+    const lEl=document.getElementById('flLives');if(lEl)lEl.textContent='❤️'.repeat(Math.max(0,lives))+'🖤'.repeat(Math.max(0,3-lives));
+    const lvEl=document.getElementById('flLevel');if(lvEl)lvEl.textContent=level;
   }
 
-  function updateLivesUI(){
-    const el=document.getElementById('flLives');
-    if(el)el.textContent='❤️'.repeat(Math.max(0,lives))+'🖤'.repeat(Math.max(0,3-lives));
+  function spawnWord(){
+    const word=TETRIS_WORDS[Math.floor(Math.random()*TETRIS_WORDS.length)];
+    const letters=[...word]; // array of chars
+    const wordW=letters.length*24+8;
+    const maxX=Math.max(20,arena.offsetWidth-wordW-20);
+    const startX=Math.floor(Math.random()*maxX)+10;
+    const group={word,letters:[],y:-40};
+
+    // Create one container element per word
+    const groupEl=document.createElement('div');
+    groupEl.style.cssText=`position:absolute;top:-40px;left:${startX}px;display:flex;gap:3px;`;
+    groupEl.dataset.word=word;
+
+    letters.forEach((ch,i)=>{
+      const el=document.createElement('div');
+      el.textContent=ch.toUpperCase();
+      el.style.cssText=`width:24px;height:24px;background:var(--card2);border:1.5px solid var(--border2);
+        border-radius:6px;display:flex;align-items:center;justify-content:center;
+        font-family:var(--font-head);font-size:.85rem;font-weight:800;color:var(--text);
+        transition:background .15s,border-color .15s`;
+      groupEl.appendChild(el);
+      group.letters.push({ch,el});
+    });
+    arena.appendChild(groupEl);
+    group.el=groupEl;
+    fallingLetterGroups.push(group);
   }
 
   function endGame(reason){
     gameRunning=false;if(animFrame)cancelAnimationFrame(animFrame);
+    if(score>0)addXP(score,'– Hərf Tetrisi');
     v.innerHTML=`<button class="btn-outline" id="gback" style="margin-bottom:14px">← Oyunlar</button>
       <div class="quiz-box"><div class="quiz-result">🌧️
         <div class="score">${score} XP</div>
-        <div class="grade">${reason}</div>
+        <div class="grade">${reason}<br><span style="font-size:.8rem;color:var(--muted)">Toplanan XP hesabınıza əlavə edildi!</span></div>
       </div>
       <button class="btn-primary" id="retryBtn" style="margin-top:14px">🔄 Yenidən Oyna</button></div>`;
     document.getElementById('gback').onclick=gameBack;
@@ -2138,22 +2235,21 @@ function startFallingLetters(v){
 
   function gameLoop(ts){
     if(!gameRunning)return;
-    const speed=0.4+level*0.15;
-    const arenaH=arena.offsetHeight;
+    const speed=0.5+level*0.3; // sürət səviyyə ilə artır
 
     if(ts-lastSpawn>spawnInterval){
       spawnWord();lastSpawn=ts;
-      spawnInterval=Math.max(1200,3000-level*200);
+      spawnInterval=Math.max(800,2800-level*180); // sürətlə interval azalır
     }
 
-    fallingItems=fallingItems.filter(item=>{
-      item.y+=speed;
-      item.el.style.top=item.y+'px';
-      if(item.y>arenaH-30){
-        item.el.remove();
-        lives--;updateLivesUI();
-        showToast('💔 Can itirdin!','red');
-        if(lives<=0){endGame('Game Over! 💀');return false;}
+    fallingLetterGroups=fallingLetterGroups.filter(group=>{
+      group.y+=speed;
+      group.el.style.top=group.y+'px';
+      if(group.y>ARENA_H-10){
+        group.el.remove();
+        lives--;updateUI();
+        showToast(`💔 "${group.word}" yerə düşdü! -1 can`,'red');
+        if(lives<=0){endGame('Game Over! 💀 Hərflər yerə düşdü!');return false;}
         return false;
       }
       return true;
@@ -2161,33 +2257,42 @@ function startFallingLetters(v){
     animFrame=requestAnimationFrame(gameLoop);
   }
 
-  inp.addEventListener('input',function(){
-    typed=this.value;
-    const tEl=document.getElementById('flTyped');
-    if(tEl)tEl.textContent=typed;
-  });
+  function tryWord(typed){
+    const word=typed.trim().toLowerCase().normalize('NFC');
+    if(!word)return;
+    // Find this word among falling groups
+    const idx=fallingLetterGroups.findIndex(g=>g.word.toLowerCase()===word);
+    if(idx!==-1){
+      const group=fallingLetterGroups[idx];
+      // Animate: flash green then remove
+      group.letters.forEach(l=>{
+        l.el.style.background='var(--green)';l.el.style.borderColor='var(--green)';l.el.style.color='#0a1a10';
+      });
+      setTimeout(()=>{group.el.remove();},250);
+      fallingLetterGroups.splice(idx,1);
+      const len=word.length;
+      const xp=len>=7?10:len>=5?5:len>=3?3:2;
+      score+=xp;
+      level=Math.floor(score/15)+1;
+      updateUI();
+      addXP(xp,'– Hərf Tetrisi');
+      showToast(`✅ "${word}" silindi! +${xp} XP`,'teal');
+      if(xp>=10)spawnConfetti();
+    }else{
+      // Check if word is partially visible (encourage)
+      const hasAny=fallingLetterGroups.some(g=>g.word.toLowerCase().startsWith(word.slice(0,2)));
+      if(word.length>=3&&!hasAny)showToast('Bu söz hazırda düşmür!','red');
+    }
+  }
+
   inp.addEventListener('keydown',function(e){
     if(e.key==='Enter'){
-      const word=this.value.trim().toLowerCase();
-      this.value='';typed='';
-      const tEl=document.getElementById('flTyped');if(tEl)tEl.textContent='';
-      const idx=fallingItems.findIndex(it=>it.word===word);
-      if(idx!==-1){
-        fallingItems[idx].el.remove();
-        fallingItems.splice(idx,1);
-        const len=word.length;
-        const xp=len>=6?10:len>=4?5:2;
-        score+=xp;
-        const sEl=document.getElementById('flScore');if(sEl)sEl.textContent=score;
-        level=Math.floor(score/20)+1;
-        addXP(xp,'– Hərf Tetrisi');
-        showToast(`✅ "${word}" silindi! +${xp} XP`,'teal');
-        if(xp>=10)spawnConfetti();
-      }else{
-        showToast('Bu söz düşmür!','red');
-      }
+      tryWord(this.value);
+      this.value='';
     }
   });
+  document.getElementById('flSubmit').onclick=()=>{tryWord(inp.value);inp.value='';inp.focus();};
+
   requestAnimationFrame(gameLoop);
 }
 
@@ -2604,7 +2709,7 @@ function renderAI(){
       </div>
     </div>
     <div class="ai-chips">
-      <span class="ai-chip">"Afsus" sözünün mənası nədir?</span>
+      <span class="ai-chip">"Əfsus" sözünün mənası nədir?</span>
       <span class="ai-chip">Sinonim oyunu necə işləyir?</span>
       <span class="ai-chip">XP necə qazanıram?</span>
       <span class="ai-chip">"Dilbər" sözünü cümlədə işlət</span>
